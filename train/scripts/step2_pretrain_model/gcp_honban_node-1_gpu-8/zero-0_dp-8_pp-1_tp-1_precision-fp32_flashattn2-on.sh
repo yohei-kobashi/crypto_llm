@@ -6,10 +6,10 @@ echo ""
 # Stores the directory paths as variables.
 ucllm_nedo_dev_train_dir="${HOME}/ucllm_nedo_dev/train"
 megatron_deepspeed_dir="${ucllm_nedo_dev_train_dir}/Megatron-DeepSpeed"
-model_dir="/groups/gcf51099/crypto_llm/models" # この変数は使っていない？
-data_base_dir="/groups/gcf51099/crypto_llm/data"
+model_dir="/tmp" # この変数は使っていない？
+data_base_dir="/tmp"
 train_data_file="${data_base_dir}/datasets/wikipedia/20240301/ja/0.jsonl"
-data_name="wikipedia_chacha20_3"
+data_name="wikipedia_encryption"
 echo "ucllm_nedo_dev_train_dir = ${ucllm_nedo_dev_train_dir}"
 echo "megatron_deepspeed_dir = ${megatron_deepspeed_dir}"
 echo ""
@@ -43,7 +43,6 @@ while [[ ${#} -gt 0 ]]; do
         --train_data_file) train_data_file=${2}; shift ;;
         --data_name) data_name=${2}; shift ;;
         --unique_id) unique_id=${2}; shift ;;
-        --reinitialize_embeddings) reinitialize_embeddings=${2}; shift ;;
         *) echo "Unknown parameter passed: ${1}"; exit 1 ;;
     esac
     # Shifts once per loop to move to the next key/value.

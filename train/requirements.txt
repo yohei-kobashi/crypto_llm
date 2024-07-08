@@ -1,6 +1,4 @@
 # Package Installer for Python
-pip==24.0
-
 ninja==1.11.1
 packaging
 protobuf<3.21.0
@@ -15,6 +13,7 @@ peft>=0.5.0
 tokenizers>=0.14.0
 transformers>=4.34.0
 trl>=0.7.2
+datasets
 
 # Logging
 tensorboard
