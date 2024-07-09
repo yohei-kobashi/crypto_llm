@@ -185,6 +185,7 @@ $ conda activate .venv_train
 ```
 
 ## 8. Model Evaluation
+The code for calculating perplexity was adapted from the Hugging Face documentation. For more details, you can visit the original Hugging Face page [here](https://huggingface.co/docs/transformers/perplexity).
 ```sh
 (.venv_train) $ cd ~/crypto_llm/train/scripts/step6_evaluate_perplexity/
 (.venv_train) $ python evaluate_perplexity.py ${OUTPUT_HF_MODEL_DIR}
