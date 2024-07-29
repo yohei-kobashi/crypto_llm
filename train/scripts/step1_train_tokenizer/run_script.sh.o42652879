@@ -1,0 +1,3012 @@
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_no_encryption_000000_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_no_encryption_000000_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_no_encryption_000000_1234_True_no_encryption.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (310788 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(409) LOG(INFO) Loaded all 992880 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1495038 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=2175295942
+trainer_interface.cc(550) LOG(INFO) Done: 99.95% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=349
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.9995
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 992880 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=1174100386
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000349 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 992880
+trainer_interface.cc(609) LOG(INFO) Done! 23444044
+unigram_model_trainer.cc(602) LOG(INFO) Using 23444044 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=786169 obj=26.0975 num_tokens=230924727 num_tokens/piece=293.734
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=655940 obj=20.3074 num_tokens=232292227 num_tokens/piece=354.136
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=491923 obj=20.2694 num_tokens=232825398 num_tokens/piece=473.296
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=491755 obj=20.2574 num_tokens=233170447 num_tokens/piece=474.16
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=368816 obj=20.267 num_tokens=234025982 num_tokens/piece=634.533
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=368814 obj=20.2616 num_tokens=234047168 num_tokens/piece=634.594
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=276609 obj=20.3058 num_tokens=235505340 num_tokens/piece=851.402
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=276609 obj=20.2924 num_tokens=235504316 num_tokens/piece=851.398
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=207456 obj=20.3792 num_tokens=237370103 num_tokens/piece=1144.19
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=207456 obj=20.3528 num_tokens=237373504 num_tokens/piece=1144.21
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=155592 obj=20.4631 num_tokens=239425601 num_tokens/piece=1538.8
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=155592 obj=20.4402 num_tokens=239445926 num_tokens/piece=1538.93
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=116694 obj=20.5709 num_tokens=241670204 num_tokens/piece=2070.97
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=116694 obj=20.5387 num_tokens=241668025 num_tokens/piece=2070.96
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=87520 obj=20.7046 num_tokens=244154871 num_tokens/piece=2789.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=87520 obj=20.6682 num_tokens=244149748 num_tokens/piece=2789.65
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=65640 obj=20.8619 num_tokens=246928160 num_tokens/piece=3761.85
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=65640 obj=20.819 num_tokens=246923950 num_tokens/piece=3761.79
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=49230 obj=21.0372 num_tokens=249950659 num_tokens/piece=5077.2
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=49230 obj=20.9878 num_tokens=249952505 num_tokens/piece=5077.24
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=36922 obj=21.2419 num_tokens=253419556 num_tokens/piece=6863.65
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=36922 obj=21.1832 num_tokens=253429419 num_tokens/piece=6863.91
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=21.222 num_tokens=254055591 num_tokens/piece=7217.49
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=21.212 num_tokens=254068580 num_tokens/piece=7217.86
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_no_encryption_000000_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_no_encryption_000000_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_no_encryption_000000_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_no_encryption_000000_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_000001_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (363508 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 586867 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1901051 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=875547077
+trainer_interface.cc(550) LOG(INFO) Done: 99.9501% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=444
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999501
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 586867 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=468713438
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000444 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 586867
+trainer_interface.cc(609) LOG(INFO) Done! 5603975
+unigram_model_trainer.cc(602) LOG(INFO) Using 5603975 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=794273 obj=87.3478 num_tokens=174391839 num_tokens/piece=219.562
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=624888 obj=68.5144 num_tokens=175217635 num_tokens/piece=280.398
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=467788 obj=68.2403 num_tokens=175961599 num_tokens/piece=376.157
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=464324 obj=68.0845 num_tokens=176354411 num_tokens/piece=379.809
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=348239 obj=68.0871 num_tokens=176756434 num_tokens/piece=507.572
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=348225 obj=68.0503 num_tokens=176817779 num_tokens/piece=507.769
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=261162 obj=68.1227 num_tokens=177659518 num_tokens/piece=680.266
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=261159 obj=68.0765 num_tokens=177675249 num_tokens/piece=680.334
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=195865 obj=68.2708 num_tokens=179255143 num_tokens/piece=915.197
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=195858 obj=68.2128 num_tokens=179267210 num_tokens/piece=915.292
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=146891 obj=68.5667 num_tokens=181693711 num_tokens/piece=1236.93
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=146886 obj=68.4544 num_tokens=181706859 num_tokens/piece=1237.06
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=110161 obj=69.0151 num_tokens=185014441 num_tokens/piece=1679.49
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=110153 obj=68.8359 num_tokens=185032114 num_tokens/piece=1679.77
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=82608 obj=69.653 num_tokens=189022777 num_tokens/piece=2288.19
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=82599 obj=69.4459 num_tokens=189034342 num_tokens/piece=2288.58
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=61947 obj=70.4482 num_tokens=193521301 num_tokens/piece=3123.98
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=61939 obj=70.1709 num_tokens=193533780 num_tokens/piece=3124.59
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=46454 obj=71.385 num_tokens=198438063 num_tokens/piece=4271.71
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=46452 obj=71.1146 num_tokens=198445667 num_tokens/piece=4272.06
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=72.4297 num_tokens=203686126 num_tokens/piece=5786.54
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35197 obj=72.1708 num_tokens=203693400 num_tokens/piece=5787.24
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_000001_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_000001_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_000001_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000001_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_000001_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_000010_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (135042 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 608151 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1879767 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=957366920
+trainer_interface.cc(550) LOG(INFO) Done: 99.9501% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=616
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999501
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 608151 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=503461867
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000616 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 608151
+trainer_interface.cc(609) LOG(INFO) Done! 8762073
+unigram_model_trainer.cc(602) LOG(INFO) Using 8762073 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=842741 obj=107.543 num_tokens=264937271 num_tokens/piece=314.376
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=738480 obj=90.1461 num_tokens=266262604 num_tokens/piece=360.555
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=553856 obj=90.0036 num_tokens=267253224 num_tokens/piece=482.532
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=553817 obj=89.9037 num_tokens=267929879 num_tokens/piece=483.788
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=415360 obj=90.0044 num_tokens=268944648 num_tokens/piece=647.498
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=415355 obj=89.9703 num_tokens=268964903 num_tokens/piece=647.554
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=311514 obj=90.2865 num_tokens=271155704 num_tokens/piece=870.445
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=311512 obj=90.1743 num_tokens=271162523 num_tokens/piece=870.472
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=233632 obj=90.7885 num_tokens=274721978 num_tokens/piece=1175.87
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=233628 obj=90.6228 num_tokens=274723598 num_tokens/piece=1175.9
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=175221 obj=91.5384 num_tokens=279456476 num_tokens/piece=1594.88
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=175219 obj=91.2867 num_tokens=279530080 num_tokens/piece=1595.32
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=131409 obj=92.5307 num_tokens=285195049 num_tokens/piece=2170.29
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=131407 obj=92.2391 num_tokens=285198152 num_tokens/piece=2170.34
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=98554 obj=93.6892 num_tokens=291684898 num_tokens/piece=2959.65
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=98553 obj=93.3394 num_tokens=291693611 num_tokens/piece=2959.76
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=73914 obj=95.0374 num_tokens=298875137 num_tokens/piece=4043.55
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=73913 obj=94.6775 num_tokens=298874107 num_tokens/piece=4043.59
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=55434 obj=96.5717 num_tokens=306866149 num_tokens/piece=5535.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=55433 obj=96.221 num_tokens=306875166 num_tokens/piece=5535.97
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=41574 obj=98.273 num_tokens=315611913 num_tokens/piece=7591.57
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=41574 obj=97.8567 num_tokens=315630446 num_tokens/piece=7592.02
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=99.12 num_tokens=321116852 num_tokens/piece=9122.64
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=98.8547 num_tokens=321134548 num_tokens/piece=9123.14
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_000010_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_000010_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_000010_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000010_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_000010_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_000100_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (402069 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 597815 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1890103 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=931064826
+trainer_interface.cc(550) LOG(INFO) Done: 99.9501% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=631
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999501
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 597815 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=475108211
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000631 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 597815
+trainer_interface.cc(609) LOG(INFO) Done! 11836224
+unigram_model_trainer.cc(602) LOG(INFO) Using 11836224 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=843886 obj=109.026 num_tokens=300489676 num_tokens/piece=356.079
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=765549 obj=95.3214 num_tokens=302889076 num_tokens/piece=395.649
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=574157 obj=95.2411 num_tokens=304871336 num_tokens/piece=530.989
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=574149 obj=95.1436 num_tokens=306555996 num_tokens/piece=533.931
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=430610 obj=95.4141 num_tokens=309080538 num_tokens/piece=717.774
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=430610 obj=95.2864 num_tokens=309175230 num_tokens/piece=717.994
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=322956 obj=95.9986 num_tokens=314345197 num_tokens/piece=973.338
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=322952 obj=95.7907 num_tokens=314409619 num_tokens/piece=973.549
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=242213 obj=97.0201 num_tokens=322461176 num_tokens/piece=1331.31
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=242212 obj=96.6546 num_tokens=322522496 num_tokens/piece=1331.57
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=181658 obj=98.3719 num_tokens=332805485 num_tokens/piece=1832.04
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=181656 obj=97.9193 num_tokens=332846893 num_tokens/piece=1832.29
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=136242 obj=99.9737 num_tokens=344542001 num_tokens/piece=2528.9
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=136242 obj=99.4701 num_tokens=344603412 num_tokens/piece=2529.35
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=102181 obj=101.795 num_tokens=357417310 num_tokens/piece=3497.88
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=102181 obj=101.285 num_tokens=357462803 num_tokens/piece=3498.33
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=76634 obj=103.78 num_tokens=370964206 num_tokens/piece=4840.73
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=76634 obj=103.285 num_tokens=370988026 num_tokens/piece=4841.04
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=57475 obj=105.894 num_tokens=384814456 num_tokens/piece=6695.34
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=57475 obj=105.405 num_tokens=384902041 num_tokens/piece=6696.86
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=43106 obj=108.144 num_tokens=399441934 num_tokens/piece=9266.5
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=43106 obj=107.636 num_tokens=399513385 num_tokens/piece=9268.16
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=109.562 num_tokens=410038775 num_tokens/piece=11648.8
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=109.214 num_tokens=410090192 num_tokens/piece=11650.3
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_000100_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_000100_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_000100_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000100_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_000100_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_001000_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (510749 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 596685 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1891233 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=927294975
+trainer_interface.cc(550) LOG(INFO) Done: 99.9501% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=630
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999501
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 596685 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=458538682
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000630 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 596685
+trainer_interface.cc(609) LOG(INFO) Done! 11419370
+unigram_model_trainer.cc(602) LOG(INFO) Using 11419370 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=850084 obj=129.995 num_tokens=352460502 num_tokens/piece=414.618
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=796966 obj=117.333 num_tokens=357244408 num_tokens/piece=448.256
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=597718 obj=117.321 num_tokens=361817311 num_tokens/piece=605.331
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=597710 obj=117.141 num_tokens=363769033 num_tokens/piece=608.605
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=448280 obj=117.666 num_tokens=370023612 num_tokens/piece=825.43
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=448278 obj=117.416 num_tokens=370695288 num_tokens/piece=826.932
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=336202 obj=118.573 num_tokens=382496074 num_tokens/piece=1137.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=336200 obj=118.114 num_tokens=382894954 num_tokens/piece=1138.89
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=252146 obj=119.802 num_tokens=399113948 num_tokens/piece=1582.87
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=252145 obj=119.146 num_tokens=399413494 num_tokens/piece=1584.06
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=189103 obj=121.17 num_tokens=418370437 num_tokens/piece=2212.39
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=189103 obj=120.445 num_tokens=418491986 num_tokens/piece=2213.04
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=141827 obj=122.641 num_tokens=438557791 num_tokens/piece=3092.2
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=141827 obj=121.937 num_tokens=438662677 num_tokens/piece=3092.94
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=106368 obj=124.257 num_tokens=459467517 num_tokens/piece=4319.6
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=106367 obj=123.62 num_tokens=459500264 num_tokens/piece=4319.95
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=79774 obj=126.009 num_tokens=480709448 num_tokens/piece=6025.89
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=79774 obj=125.442 num_tokens=480776320 num_tokens/piece=6026.73
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=59830 obj=127.775 num_tokens=501165432 num_tokens/piece=8376.49
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=59830 obj=127.235 num_tokens=501173461 num_tokens/piece=8376.62
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=44872 obj=129.505 num_tokens=520978278 num_tokens/piece=11610.3
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=44872 obj=129.058 num_tokens=520980974 num_tokens/piece=11610.4
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=130.821 num_tokens=537497314 num_tokens/piece=15269.8
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=130.465 num_tokens=537498138 num_tokens/piece=15269.8
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_001000_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_001000_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_001000_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_001000_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_001000_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_010000_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (295234 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 597284 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1890634 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=928506795
+trainer_interface.cc(550) LOG(INFO) Done: 99.9501% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=632
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999501
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 597284 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=456645902
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000632 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 597284
+trainer_interface.cc(609) LOG(INFO) Done! 11273170
+unigram_model_trainer.cc(602) LOG(INFO) Using 11273170 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=835761 obj=134.835 num_tokens=363431839 num_tokens/piece=434.851
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=783131 obj=122.063 num_tokens=368671543 num_tokens/piece=470.766
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=587344 obj=122.057 num_tokens=373080419 num_tokens/piece=635.199
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=587339 obj=121.871 num_tokens=375485993 num_tokens/piece=639.3
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=440494 obj=122.411 num_tokens=381786605 num_tokens/piece=866.724
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=440493 obj=122.153 num_tokens=382569934 num_tokens/piece=868.504
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=330360 obj=123.378 num_tokens=395178315 num_tokens/piece=1196.21
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=330355 obj=122.872 num_tokens=395648931 num_tokens/piece=1197.65
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=247763 obj=124.559 num_tokens=413798143 num_tokens/piece=1670.14
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=247761 obj=123.856 num_tokens=414161470 num_tokens/piece=1671.62
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=185820 obj=125.758 num_tokens=435452131 num_tokens/piece=2343.41
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=185819 obj=124.992 num_tokens=435707886 num_tokens/piece=2344.8
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=139362 obj=127.013 num_tokens=459469820 num_tokens/piece=3296.95
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=139362 obj=126.225 num_tokens=459581396 num_tokens/piece=3297.75
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=104520 obj=128.345 num_tokens=484692566 num_tokens/piece=4637.32
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=104520 obj=127.636 num_tokens=484772482 num_tokens/piece=4638.08
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=78390 obj=129.714 num_tokens=509093919 num_tokens/piece=6494.37
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=78390 obj=129.1 num_tokens=509159586 num_tokens/piece=6495.21
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=58792 obj=131.09 num_tokens=531282096 num_tokens/piece=9036.64
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=58792 obj=130.569 num_tokens=531326488 num_tokens/piece=9037.39
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=44094 obj=132.471 num_tokens=551398221 num_tokens/piece=12505.1
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=44094 obj=132.055 num_tokens=551407165 num_tokens/piece=12505.3
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=133.414 num_tokens=566239052 num_tokens/piece=16086.3
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=133.081 num_tokens=566240414 num_tokens/piece=16086.4
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_010000_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_010000_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_010000_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_010000_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_010000_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_100000_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (132498 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 597063 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1890855 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=927803268
+trainer_interface.cc(550) LOG(INFO) Done: 99.9502% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=633
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.999502
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 597063 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=456255549
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000633 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 597063
+trainer_interface.cc(609) LOG(INFO) Done! 11266466
+unigram_model_trainer.cc(602) LOG(INFO) Using 11266466 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=836168 obj=135.124 num_tokens=363394753 num_tokens/piece=434.595
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=783659 obj=122.343 num_tokens=368628416 num_tokens/piece=470.394
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=587741 obj=122.331 num_tokens=373023369 num_tokens/piece=634.673
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=587738 obj=122.143 num_tokens=375434422 num_tokens/piece=638.779
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=440795 obj=122.694 num_tokens=381782944 num_tokens/piece=866.124
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=440793 obj=122.43 num_tokens=382533612 num_tokens/piece=867.831
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=330585 obj=123.652 num_tokens=395150411 num_tokens/piece=1195.31
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=330583 obj=123.138 num_tokens=395632491 num_tokens/piece=1196.77
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=247935 obj=124.844 num_tokens=413727912 num_tokens/piece=1668.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=247933 obj=124.142 num_tokens=414084756 num_tokens/piece=1670.15
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=185948 obj=126.048 num_tokens=435348167 num_tokens/piece=2341.24
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=185947 obj=125.279 num_tokens=435595490 num_tokens/piece=2342.58
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=139459 obj=127.306 num_tokens=459264768 num_tokens/piece=3293.19
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=139459 obj=126.52 num_tokens=459391665 num_tokens/piece=3294.1
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=104594 obj=128.647 num_tokens=484576497 num_tokens/piece=4632.93
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=104594 obj=127.891 num_tokens=484663612 num_tokens/piece=4633.76
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=78445 obj=130.015 num_tokens=509004797 num_tokens/piece=6488.68
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=78445 obj=129.386 num_tokens=509090953 num_tokens/piece=6489.78
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=58833 obj=131.398 num_tokens=531185849 num_tokens/piece=9028.71
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=58833 obj=130.877 num_tokens=531253198 num_tokens/piece=9029.85
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=44124 obj=132.781 num_tokens=551360716 num_tokens/piece=12495.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=44124 obj=132.36 num_tokens=551368620 num_tokens/piece=12495.9
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=133.728 num_tokens=566415576 num_tokens/piece=16091.4
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=133.389 num_tokens=566417210 num_tokens/piece=16091.4
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_100000_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_100000_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_100000_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_100000_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_100000_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True.jsonl
+  input: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True_no_encryption.jsonl
+  input_format: 
+  model_prefix: tokenizer_wikipedia_latin_poly_000000_1234_True
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 3000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 1
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 1
+  user_defined_symbols: <s>
+  user_defined_symbols: </s>
+  user_defined_symbols: <pad>
+  user_defined_symbols: <CLS>
+  user_defined_symbols: <SEP>
+  user_defined_symbols: <EOD>
+  user_defined_symbols: <MASK>
+  user_defined_symbols: 
+
+  required_chars: 
+  byte_fallback: 1
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 0
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(353) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True.jsonl
+trainer_interface.cc(380) LOG(WARNING) Found too long line (31558 > 4192).
+trainer_interface.cc(382) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(383) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(185) LOG(INFO) Loading corpus: /groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True_no_encryption.jsonl
+trainer_interface.cc(409) LOG(INFO) Loaded all 596782 sentences
+trainer_interface.cc(416) LOG(INFO) Skipped 1891136 too long sentences.
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <pad>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <CLS>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <SEP>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <EOD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <MASK>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: 
+
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x00>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x01>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x02>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x03>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x04>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x05>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x06>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x07>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x08>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x09>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x0F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x10>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x11>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x12>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x13>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x14>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x15>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x16>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x17>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x18>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x19>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x1F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x20>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x21>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x22>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x23>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x24>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x25>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x26>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x27>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x28>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x29>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x2F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x30>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x31>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x32>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x33>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x34>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x35>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x36>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x37>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x38>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x39>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x3F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x40>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x41>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x42>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x43>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x44>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x45>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x46>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x47>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x48>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x49>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x4F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x50>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x51>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x52>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x53>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x54>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x55>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x56>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x57>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x58>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x59>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x5F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x60>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x61>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x62>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x63>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x64>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x65>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x66>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x67>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x68>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x69>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x6F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x70>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x71>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x72>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x73>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x74>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x75>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x76>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x77>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x78>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x79>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x7F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x80>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x81>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x82>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x83>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x84>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x85>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x86>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x87>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x88>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x89>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x8F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x90>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x91>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x92>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x93>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x94>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x95>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x96>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x97>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x98>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x99>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9A>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9B>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9C>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9D>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9E>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0x9F>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xA9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xAF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xB9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xBF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xC9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xCF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xD9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xDF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xE9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xED>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xEF>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF0>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF1>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF2>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF3>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF4>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF5>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF6>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF7>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF8>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xF9>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFA>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFB>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFC>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFD>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFE>
+trainer_interface.cc(425) LOG(INFO) Adding meta_piece: <0xFF>
+trainer_interface.cc(430) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(539) LOG(INFO) all chars count=926808809
+trainer_interface.cc(550) LOG(INFO) Done: 99.95% characters are covered.
+trainer_interface.cc(560) LOG(INFO) Alphabet size=633
+trainer_interface.cc(561) LOG(INFO) Final character coverage=0.9995
+trainer_interface.cc(592) LOG(INFO) Done! preprocessed 596782 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=455728649
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1000633 seed sentencepieces
+trainer_interface.cc(598) LOG(INFO) Tokenizing input sentences with whitespace: 596782
+trainer_interface.cc(609) LOG(INFO) Done! 11249565
+unigram_model_trainer.cc(602) LOG(INFO) Using 11249565 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=836116 obj=135.435 num_tokens=363147885 num_tokens/piece=434.327
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=783410 obj=122.615 num_tokens=368385574 num_tokens/piece=470.233
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=587551 obj=122.61 num_tokens=372808950 num_tokens/piece=634.513
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=587546 obj=122.423 num_tokens=375207890 num_tokens/piece=638.602
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=440656 obj=122.972 num_tokens=381504107 num_tokens/piece=865.764
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=440653 obj=122.707 num_tokens=382282251 num_tokens/piece=867.536
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=330479 obj=123.931 num_tokens=394897362 num_tokens/piece=1194.92
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=330475 obj=123.426 num_tokens=395400674 num_tokens/piece=1196.46
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=247853 obj=125.124 num_tokens=413512136 num_tokens/piece=1668.38
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=247851 obj=124.427 num_tokens=413872695 num_tokens/piece=1669.84
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=185888 obj=126.334 num_tokens=435179475 num_tokens/piece=2341.08
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=185886 obj=125.552 num_tokens=435438964 num_tokens/piece=2342.51
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=139412 obj=127.595 num_tokens=459082311 num_tokens/piece=3292.99
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=139412 obj=126.8 num_tokens=459196282 num_tokens/piece=3293.81
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=104559 obj=128.939 num_tokens=484354616 num_tokens/piece=4632.36
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=104559 obj=128.2 num_tokens=484434607 num_tokens/piece=4633.12
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=78418 obj=130.311 num_tokens=508751144 num_tokens/piece=6487.68
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=78418 obj=129.685 num_tokens=508842412 num_tokens/piece=6488.85
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=58813 obj=131.699 num_tokens=530893968 num_tokens/piece=9026.81
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=58813 obj=131.15 num_tokens=530942042 num_tokens/piece=9027.63
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=44109 obj=133.088 num_tokens=551041400 num_tokens/piece=12492.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=44109 obj=132.659 num_tokens=551055218 num_tokens/piece=12493
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=35200 obj=134.033 num_tokens=565995670 num_tokens/piece=16079.4
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=35200 obj=133.695 num_tokens=565996516 num_tokens/piece=16079.4
+trainer_interface.cc(687) LOG(INFO) Saving model: tokenizer_wikipedia_latin_poly_000000_1234_True.model
+trainer_interface.cc(699) LOG(INFO) Saving vocabs: tokenizer_wikipedia_latin_poly_000000_1234_True.vocab
+trainer_interface.cc(707) LOG(WARNING) The piece [
+] contains escaped characters that break the format of tokenizer_wikipedia_latin_poly_000000_1234_True.vocab
+args = Namespace(input='/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True.jsonl,/groups/gcf51099/crypto_llm/data/encrypted/wikipedia_latin_poly_000000_1234_True_no_encryption.jsonl', model_prefix='tokenizer_wikipedia_latin_poly_000000_1234_True', vocab_size=32000, input_sentence_size=3000000, shuffle_input_sentence=True, num_threads=16, character_coverage=0.9995, model_type='unigram', train_extremely_large_corpus=True)

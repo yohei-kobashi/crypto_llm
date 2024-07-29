@@ -1,0 +1,390 @@
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:07,333] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000001_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000001_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000001_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:17,013] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000001_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000001-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000001-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:24,961] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000010_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000010_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000010_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:34,440] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000010_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000010-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000010-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:42,049] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000100_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000100_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000100_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:51,390] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000100_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000100-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000100-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:53:59,346] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_001000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_001000_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_001000_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:07,237] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_001000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_001000-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_001000-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:16,492] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_010000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_010000_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_010000_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:24,304] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_010000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_010000-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_010000-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:33,886] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_100000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_100000_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_100000_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:41,440] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_100000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_100000-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_100000-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:49,363] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000000_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000000_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:54:58,896] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/wikipedia-poly_000000-no_encryption_text_document.bin or /groups/gcf51099/crypto_llm/data/wikipedia-poly_000000-no_encryption_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-07-22 16:55:06,783] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+No CUDA runtime is found, using CUDA_HOME='/apps/cuda/11.8.0'
+Traceback (most recent call last):
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 23, in <module>
+    from megatron.tokenizer import build_tokenizer
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/__init__.py", line 14, in <module>
+    from .initialize  import initialize_megatron
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/initialize.py", line 19, in <module>
+    from megatron.checkpointing import load_args_from_checkpoint
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/checkpointing.py", line 15, in <module>
+    from .utils import (unwrap_model,
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/utils.py", line 23, in <module>
+    from megatron.model.module import param_is_not_shared
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/__init__.py", line 11, in <module>
+    from .distributed import DistributedDataParallel
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 12, in <module>
+    from .module import MegatronModule
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/module.py", line 13, in <module>
+    _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/ucllm_nedo_dev/train/.venv_train/lib/python3.11/site-packages/torch/cuda/__init__.py", line 247, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
