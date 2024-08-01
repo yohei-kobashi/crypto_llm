@@ -198,7 +198,7 @@ $ source ~/ucllm_nedo_dev/train/.venv_train/bin/activate
 # https://genzouw.com/entry/2019/05/28/090021/1556/
 (.venv_train) $ sed -i "1i source /etc/profile.d/modules.sh && module purge" ~/.bashrc && \
     sed -i "2i module load python/3.11 cuda/11.8 hpcx/2.12" ~/.bashrc && \
-    sed -i "3i source ~/ucllm_nedo_dev/train/.venv_train/bin/activate" ~/.bashrc && \
+    sed -i "3i source ~/crypto_llm/train/.venv_train/bin/activate" ~/.bashrc && \
     sed -i "4i ulimit -n 262144 \n" ~/.bashrc
 ```
 

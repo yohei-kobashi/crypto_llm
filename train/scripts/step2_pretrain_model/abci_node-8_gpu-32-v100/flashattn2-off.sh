@@ -33,6 +33,10 @@ batch_size=1
 seq_len=4096
 precision="fp32"
 
+mp_size=1
+pp_size=1
+zero_stage=0
+
 # Parses the arguments.
 while [[ ${#} -gt 0 ]]; do
     case ${1} in
@@ -52,6 +56,9 @@ while [[ ${#} -gt 0 ]]; do
         --batch_size) batch_size=${2}; shift ;;
         --seq_len) seq_len=${2}; shift ;;
         --precision) precision=${2}; shift ;;
+        --mp_size) mp_size=${2}; shift ;;
+        --pp_size) pp_size=${2}; shift ;;
+        --zero_stage) zero_stage=${2}; shift ;;
         *) echo "Unknown parameter passed: ${1}"; exit 1 ;;
     esac
     # Shifts once per loop to move to the next key/value.
@@ -136,16 +143,28 @@ seq_len=${seq_len}
 # init_std=0.013
 
 ## LLaMA-2 1.1B (TinyLlama 1.1B)
-model_size=1.1
-num_layers=22
+model_size=0.6
+num_layers=12
 num_attn_heads=16
 hidden_size=2048
-ffn_hidden_size=5632
-num_key_value_heads=4
+ffn_hidden_size=2816
+num_key_value_heads=2
 global_batch_size=${global_batch_size}
 lr=2.0e-4
 min_lr=1.0e-5
 init_std=0.013
+
+# ## LLaMA-2 1.1B (TinyLlama 1.1B)
+# model_size=1.1
+# num_layers=22
+# num_attn_heads=16
+# hidden_size=2048
+# ffn_hidden_size=5632
+# num_key_value_heads=4
+# global_batch_size=${global_batch_size}
+# lr=2.0e-4
+# min_lr=1.0e-5
+# init_std=0.013
 
 ## GPT-3 2.7B
 # model_size=2.7
@@ -224,12 +243,12 @@ lr_decay_style="cosine"
 ###############################################################################
 ### Parallelism configs
 ## Model parallelism, 1 is no MP
-mp_size=1
+mp_size=${mp_size}
 
 ## Pipeline parallelism. To disable PP, set pp_size to 1 and no_pp to true.
 ## Note that currently both curriculum learning and random-LTD are NOT
 ## compatible with pipeline parallelism.
-pp_size=1
+pp_size=${pp_size}
 
 # If you plan to use Megatron-DeepSpeed's deepspeed_to_transformers.py to convert
 # the checkpoint from Megatron-DeepSpeed format to Hugging Face Transformers format,
@@ -246,7 +265,7 @@ zero_stage=0
 ## Total number of GPUs.
 num_gpus_pernode=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)
 echo "Number of GPUs per node: $num_gpus_pernode"
-num_node="${SLURM_JOB_NUM_NODES}"
+num_node="${NHOSTS}"
 
 num_gpus=$((${num_gpus_pernode} * ${num_node}))
 
@@ -382,7 +401,6 @@ megatron_options=" \
     --load ${checkpoint_path} \
     --save ${checkpoint_path} \
     --no-async-tensor-model-parallel-allreduce \
-    --use-flash-attn-v2 \
     --tensorboard-queue-size 1 \
     --log-timers-to-tensorboard \
     --log-batch-size-to-tensorboard \
@@ -466,10 +484,19 @@ wandb_options="${wandb_options} \
     --wandb_tag ${wandb_tag}"
 fi
 
-# Sets the master port number to a unique number.
-master_port=$((10000 + (${SLURM_JOB_ID} % 50000)))
 
-deepspeed --master_port ${master_port} \
+# Creates a hostfile.
+script_dir=$(dirname "$0")
+hostfile="${script_dir}/hostfile_jobid-${JOB_ID}"
+while read -r line
+do
+  echo "${line} slots=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)"
+done < "${SGE_JOB_HOSTLIST}" > "${hostfile}"
+echo "hostfile = ${hostfile}"
+cat ${hostfile}
+echo ""
+
+deepspeed --hostfile ${hostfile} \
     ${megatron_deepspeed_dir}/pretrain_gpt.py \
     ${megatron_options} \
     ${data_options} \
