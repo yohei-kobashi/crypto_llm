@@ -27,15 +27,18 @@ wandb_project=""
 wandb_tag=""  # Optional argument.
 unique_id="${host}_${current_time}"
 reinitialize_embeddings="false"
+train_data_exact_num_epochs=""
 
 global_batch_size=384
 batch_size=1
 seq_len=4096
 precision="fp32"
+min_lr=1.0e-5
 
 mp_size=1
 pp_size=1
 zero_stage=0
+jobname=""
 
 # Parses the arguments.
 while [[ ${#} -gt 0 ]]; do
@@ -59,6 +62,9 @@ while [[ ${#} -gt 0 ]]; do
         --mp_size) mp_size=${2}; shift ;;
         --pp_size) pp_size=${2}; shift ;;
         --zero_stage) zero_stage=${2}; shift ;;
+        --min_lr) min_lr=${2}; shift ;;
+        --jobname) jobname=${2}; shift ;;
+        --train_data_exact_num_epochs) train_data_exact_num_epochs=${2}; shift ;;
         *) echo "Unknown parameter passed: ${1}"; exit 1 ;;
     esac
     # Shifts once per loop to move to the next key/value.
@@ -143,28 +149,16 @@ seq_len=${seq_len}
 # init_std=0.013
 
 ## LLaMA-2 1.1B (TinyLlama 1.1B)
-model_size=0.6
-num_layers=12
+model_size=1.1
+num_layers=22
 num_attn_heads=16
 hidden_size=2048
-ffn_hidden_size=2816
-num_key_value_heads=2
+ffn_hidden_size=5632
+num_key_value_heads=4
 global_batch_size=${global_batch_size}
 lr=2.0e-4
-min_lr=1.0e-5
+min_lr=${min_lr}
 init_std=0.013
-
-# ## LLaMA-2 1.1B (TinyLlama 1.1B)
-# model_size=1.1
-# num_layers=22
-# num_attn_heads=16
-# hidden_size=2048
-# ffn_hidden_size=5632
-# num_key_value_heads=4
-# global_batch_size=${global_batch_size}
-# lr=2.0e-4
-# min_lr=1.0e-5
-# init_std=0.013
 
 ## GPT-3 2.7B
 # model_size=2.7
@@ -216,8 +210,8 @@ train_tokens=$((${train_tokens_in_billion} * 1000 * 1000 * 1000))
 ## above, and data efficiency techniques may change num tokens in some samples,
 ## so we just set this config large enough to make sure we have enough
 ## processed data and don't terminate by train_samples.
-train_samples=$(( 300 * 1000 * 1000 * 1000 * 2 / ${seq_len} ))
-#train_samples=$(( ${train_iters} * ${global_batch_size} ))
+#train_samples=$(( 300 * 1000 * 1000 * 1000 * 2 / ${seq_len} ))
+train_samples=$(( ${train_iters} * ${global_batch_size} ))
 train_tokens=$((${train_samples} * ${seq_len}))
 
 ## Another wall-clock time termination condition in minutes. Set it large
@@ -323,20 +317,22 @@ fi
 echo ""
 
 prescale_grad="true"
-jobname="gpt_${model_size}B_tok${train_tokens_in_billion}B"
-jobname="${jobname}_lr${lr}_min${min_lr}_w${lr_warmup_tokens_in_million}M_d${lr_decay_tokens_in_billion}B_${lr_decay_style}"
-jobname="${jobname}_gbs${global_batch_size}_mbs${batch_size}_g${num_gpus}"
-if [[ $zero_stage -gt 0 ]]; then
-    jobname="${jobname}_z${zero_stage}"
-    prescale_grad="false"
+if [ -z "$jobname" ]; then
+    jobname="gpt_${model_size}B_tok${train_tokens_in_billion}B"
+    jobname="${jobname}_lr${lr}_min${min_lr}_w${lr_warmup_tokens_in_million}M_d${lr_decay_tokens_in_billion}B_${lr_decay_style}"
+    jobname="${jobname}_gbs${global_batch_size}_mbs${batch_size}_g${num_gpus}"
+    if [[ $zero_stage -gt 0 ]]; then
+        jobname="${jobname}_z${zero_stage}"
+        prescale_grad="false"
+    fi
+    if [[ $mp_size -gt 1 ]]; then
+        jobname="${jobname}_mp${mp_size}"
+    fi
+    if [ "${no_pp}" = "false" ]; then
+        jobname="${jobname}_pp${pp_size}"
+    fi
+    jobname="${jobname}_seed${seed}_rebase"
 fi
-if [[ $mp_size -gt 1 ]]; then
-    jobname="${jobname}_mp${mp_size}"
-fi
-if [ "${no_pp}" = "false" ]; then
-    jobname="${jobname}_pp${pp_size}"
-fi
-jobname="${jobname}_seed${seed}_rebase"
 
 username=$(whoami)
 log_path="${output_model_dir}/log"
@@ -420,6 +416,11 @@ fi
 if [ "${reinitialize_embeddings}" = "true" ]; then
 megatron_options="${megatron_options} \
     --reinitialize-embeddings"
+fi
+
+if [ -n "${train_data_exact_num_epochs}" ]; then
+megatron_options="${megatron_options} \
+    --train-data-exact-num-epochs ${train_data_exact_num_epochs}"
 fi
 
 if [ "${precision}" = "tf32" ]; then

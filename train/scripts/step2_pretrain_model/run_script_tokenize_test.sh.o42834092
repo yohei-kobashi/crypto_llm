@@ -1,0 +1,23 @@
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:49:16,704] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Opening /groups/gcf51099/crypto_llm/data/test/pseudo_privacy_test.jsonl
+Processed 1000 documents (41038.55035027983 docs/s, 8.184258933114164 MB/s).
+Time to startup: 0.3229494094848633
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000001_1234_True.model
+Both /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000001_1234_True_text_document.bin and /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000001_1234_True_text_document.idx already exist.
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000100_1234_True.model
+Both /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000100_1234_True_text_document.bin and /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000100_1234_True_text_document.idx already exist.
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_010000_1234_True.model
+Both /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_010000_1234_True_text_document.bin and /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_010000_1234_True_text_document.idx already exist.
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000000_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000000_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:49:24,755] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Opening /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000000_1234_True.jsonl
+Processed 1000 documents (22182.812475208775 docs/s, 4.431354090089328 MB/s).
+Time to startup: 0.3912324905395508
