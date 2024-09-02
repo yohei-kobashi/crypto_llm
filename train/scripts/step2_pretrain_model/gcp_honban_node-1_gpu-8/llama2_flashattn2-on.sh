@@ -4,7 +4,7 @@ set -e
 echo ""
 
 # Stores the directory paths as variables.
-ucllm_nedo_dev_train_dir="${HOME}/ucllm_nedo_dev/train"
+ucllm_nedo_dev_train_dir="/work/gb20/b20048/crypto_llm/train"
 megatron_deepspeed_dir="${ucllm_nedo_dev_train_dir}/Megatron-DeepSpeed"
 model_dir="/tmp" # この変数は使っていない？
 data_base_dir="/tmp"
@@ -27,6 +27,21 @@ wandb_project=""
 wandb_tag=""  # Optional argument.
 unique_id="${host}_${current_time}"
 reinitialize_embeddings="false"
+train_data_exact_num_epochs=""
+split="949,50,1"
+untie_embeddings_and_output_weights="false"
+tinyllama="false"
+
+global_batch_size=384
+batch_size=1
+seq_len=4096
+precision="fp32"
+min_lr=1.0e-5
+
+mp_size=1
+pp_size=1
+zero_stage=0
+jobname=""
 
 # Parses the arguments.
 while [[ ${#} -gt 0 ]]; do
@@ -43,6 +58,19 @@ while [[ ${#} -gt 0 ]]; do
         --train_data_file) train_data_file=${2}; shift ;;
         --data_name) data_name=${2}; shift ;;
         --unique_id) unique_id=${2}; shift ;;
+        --global_batch_size) global_batch_size=${2}; shift ;;
+        --batch_size) batch_size=${2}; shift ;;
+        --seq_len) seq_len=${2}; shift ;;
+        --precision) precision=${2}; shift ;;
+        --mp_size) mp_size=${2}; shift ;;
+        --pp_size) pp_size=${2}; shift ;;
+        --zero_stage) zero_stage=${2}; shift ;;
+        --min_lr) min_lr=${2}; shift ;;
+        --jobname) jobname=${2}; shift ;;
+        --train_data_exact_num_epochs) train_data_exact_num_epochs=${2}; shift ;;
+        --split) split=${2}; shift ;;
+        --untie_embeddings_and_output_weights) untie_embeddings_and_output_weights=${2}; shift ;;
+        --tinyllama) tinyllama=${2}; shift ;;
         *) echo "Unknown parameter passed: ${1}"; exit 1 ;;
     esac
     # Shifts once per loop to move to the next key/value.
@@ -73,7 +101,7 @@ echo ""
 ###############################################################################
 ### Main configs
 ## GPT-3 models use 2K sequence length/context window
-seq_len=2048
+seq_len=${seq_len}
 
 ## The "GPT-3 XXX" below are configs from GPT-3 paper
 ## https://arxiv.org/abs/2005.14165, choose based on
@@ -86,15 +114,15 @@ seq_len=2048
 ## We changed min_lr to a lower number (1.0e-6), which we found is able to
 ## provide better zero-shot eval results.
 
-## GPT-3 Small 125M
-# model_size=0.125
-# num_layers=12
-# hidden_size=768
-# num_attn_heads=12
-# global_batch_size=256
-# lr=6.0e-4
-# min_lr=1.0e-6
-# init_std=0.02
+# GPT-3 Small 125M
+model_size=0.125
+num_layers=12
+hidden_size=768
+num_attn_heads=12
+global_batch_size=256
+lr=6.0e-4
+min_lr=1.0e-6
+init_std=0.02
 
 ## GPT-3 Medium 350M
 # model_size=0.35
@@ -117,14 +145,26 @@ seq_len=2048
 # init_std=0.015
 
 ## GPT-3 XL 1.3B
-model_size=1.3
-num_layers=24
-hidden_size=2048
-num_attn_heads=16
-global_batch_size=1536
-lr=2.0e-4
-min_lr=1.0e-6
-init_std=0.013
+# model_size=1.3
+# num_layers=24
+# hidden_size=2048
+# num_attn_heads=16
+# global_batch_size=${global_batch_size}
+# lr=2.0e-4
+# min_lr=1.0e-6
+# init_std=0.013
+
+## LLaMA-2 1.1B (TinyLlama 1.1B)
+# model_size=1.1
+# num_layers=22
+# num_attn_heads=16
+# hidden_size=2048
+# ffn_hidden_size=5632
+# num_key_value_heads=4
+# global_batch_size=${global_batch_size}
+# lr=2.0e-4
+# min_lr=${min_lr}
+# init_std=0.013
 
 ## GPT-3 2.7B
 # model_size=2.7
@@ -176,8 +216,8 @@ train_tokens=$((${train_tokens_in_billion} * 1000 * 1000 * 1000))
 ## above, and data efficiency techniques may change num tokens in some samples,
 ## so we just set this config large enough to make sure we have enough
 ## processed data and don't terminate by train_samples.
-train_samples=$(( 300 * 1000 * 1000 * 1000 * 2 / ${seq_len} ))
-#train_samples=$(( ${train_iters} * ${global_batch_size} ))
+#train_samples=$(( 300 * 1000 * 1000 * 1000 * 2 / ${seq_len} ))
+train_samples=$(( ${train_iters} * ${global_batch_size} ))
 train_tokens=$((${train_samples} * ${seq_len}))
 
 ## Another wall-clock time termination condition in minutes. Set it large
@@ -203,12 +243,12 @@ lr_decay_style="cosine"
 ###############################################################################
 ### Parallelism configs
 ## Model parallelism, 1 is no MP
-mp_size=1
+mp_size=${mp_size}
 
 ## Pipeline parallelism. To disable PP, set pp_size to 1 and no_pp to true.
 ## Note that currently both curriculum learning and random-LTD are NOT
 ## compatible with pipeline parallelism.
-pp_size=1
+pp_size=${pp_size}
 
 # If you plan to use Megatron-DeepSpeed's deepspeed_to_transformers.py to convert
 # the checkpoint from Megatron-DeepSpeed format to Hugging Face Transformers format,
@@ -225,7 +265,12 @@ zero_stage=0
 ## Total number of GPUs.
 num_gpus_pernode=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)
 echo "Number of GPUs per node: $num_gpus_pernode"
-num_node="${SLURM_JOB_NUM_NODES}"
+# # ABCI
+# num_node="${NHOSTS}"
+#wisteria
+num_node=1
+# #geniac
+# num_node="${SLURM_JOB_NUM_NODES}"
 
 num_gpus=$((${num_gpus_pernode} * ${num_node}))
 
@@ -236,7 +281,7 @@ dp_size=$(( ${num_gpus} / ${pp_size} / ${mp_size} ))
 ## Make sure that batch_size <= global_batch_size*pp_size*mp_size/num_gpus
 ## Reduce it manually if GPU OOM
 #batch_size=$(( ${global_batch_size} / ${dp_size} ))
-batch_size=4
+batch_size=${batch_size}
 
 
 ###############################################################################
@@ -283,20 +328,24 @@ fi
 echo ""
 
 prescale_grad="true"
-jobname="gpt_${model_size}B_tok${train_tokens_in_billion}B"
-jobname="${jobname}_lr${lr}_min${min_lr}_w${lr_warmup_tokens_in_million}M_d${lr_decay_tokens_in_billion}B_${lr_decay_style}"
-jobname="${jobname}_gbs${global_batch_size}_mbs${batch_size}_g${num_gpus}"
 if [[ $zero_stage -gt 0 ]]; then
-    jobname="${jobname}_z${zero_stage}"
     prescale_grad="false"
 fi
-if [[ $mp_size -gt 1 ]]; then
-    jobname="${jobname}_mp${mp_size}"
+if [ -z "$jobname" ]; then
+    jobname="gpt_${model_size}B_tok${train_tokens_in_billion}B"
+    jobname="${jobname}_lr${lr}_min${min_lr}_w${lr_warmup_tokens_in_million}M_d${lr_decay_tokens_in_billion}B_${lr_decay_style}"
+    jobname="${jobname}_gbs${global_batch_size}_mbs${batch_size}_g${num_gpus}"
+    if [[ $zero_stage -gt 0 ]]; then
+        jobname="${jobname}_z${zero_stage}"
+    fi
+    if [[ $mp_size -gt 1 ]]; then
+        jobname="${jobname}_mp${mp_size}"
+    fi
+    if [ "${no_pp}" = "false" ]; then
+        jobname="${jobname}_pp${pp_size}"
+    fi
+    jobname="${jobname}_seed${seed}_rebase"
 fi
-if [ "${no_pp}" = "false" ]; then
-    jobname="${jobname}_pp${pp_size}"
-fi
-jobname="${jobname}_seed${seed}_rebase"
 
 username=$(whoami)
 log_path="${output_model_dir}/log"
@@ -337,7 +386,7 @@ megatron_options=" \
     --lr ${lr} \
     --min-lr ${min_lr} \
     --lr-decay-style ${lr_decay_style} \
-    --split 949,50,1 \
+    --split ${split} \
     --log-interval ${log_interval} \
     --eval-interval ${eval_interval} \
     --eval-iters ${eval_iters} \
@@ -346,11 +395,11 @@ megatron_options=" \
     --clip-grad 1.0 \
     --hysteresis 2 \
     --num-workers ${num_workers} \
+    --fp16 \
     --seed ${seed} \
     --load ${checkpoint_path} \
     --save ${checkpoint_path} \
     --no-async-tensor-model-parallel-allreduce \
-    --use-flash-attn-v2 \
     --tensorboard-queue-size 1 \
     --log-timers-to-tensorboard \
     --log-batch-size-to-tensorboard \
@@ -367,9 +416,50 @@ megatron_options="${megatron_options} \
     --log-optimizer-states-to-tensorboard"
 fi
 
+# 開発中のオプション
 if [ "${reinitialize_embeddings}" = "true" ]; then
 megatron_options="${megatron_options} \
     --reinitialize-embeddings"
+fi
+
+# エポック数で学習量を決定
+if [ -n "${train_data_exact_num_epochs}" ]; then
+megatron_options="${megatron_options} \
+    --train-data-exact-num-epochs ${train_data_exact_num_epochs}"
+fi
+
+# tf32オプション
+if [ "${precision}" = "tf32" ]; then
+megatron_options="${megatron_options} \
+    --tf32"
+fi
+
+# tinyllama用のオプション
+if [ "${tinyllama}" = "true" ]; then
+megatron_options="${megatron_options} \
+    --optimizer adam \
+    --no-query-key-layer-scaling \
+    --attention-dropout 0 \
+    --hidden-dropout 0 \
+    --use-rotary-position-embeddings \
+    --swiglu \
+    --normalization rmsnorm \
+    --disable-bias-linear"
+fi
+
+if [ -n "${ffn_hidden_size}" ]; then
+megatron_options="${megatron_options} \
+    --ffn-hidden-size ${ffn_hidden_size}"
+fi
+
+if [ -n "${num_key_value_heads}" ]; then
+megatron_options="${megatron_options} \
+    --num-key-value-heads ${num_key_value_heads}"
+fi
+
+if [ "${untie_embeddings_and_output_weights}" = "true" ]; then
+megatron_options="${megatron_options} \
+    --untie-embeddings-and-output-weights"
 fi
 
 config_json="${deepspeed_config_dir}/ds_config_gbs${global_batch_size}_mbs${batch_size}_log${log_interval}_zero${zero_stage}.json"
@@ -430,9 +520,12 @@ wandb_options="${wandb_options} \
 fi
 
 # Sets the master port number to a unique number.
-master_port=$((10000 + (${SLURM_JOB_ID} % 50000)))
+# s# wisteria
+# master_port=$((10000 + (${PJM_JOBID} % 50000)))
+# master_port=$(shuf -i 55000-60000 -n 1)
 
-deepspeed --master_port ${master_port} \
+# deepspeed --master_port ${master_port} \
+deepspeed \
     ${megatron_deepspeed_dir}/pretrain_gpt.py \
     ${megatron_options} \
     ${data_options} \
