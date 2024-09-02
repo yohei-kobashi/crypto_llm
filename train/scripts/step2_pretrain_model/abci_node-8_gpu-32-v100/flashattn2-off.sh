@@ -259,7 +259,12 @@ zero_stage=0
 ## Total number of GPUs.
 num_gpus_pernode=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)
 echo "Number of GPUs per node: $num_gpus_pernode"
-num_node="${NHOSTS}"
+# # ABCI
+# num_node="${NHOSTS}"
+#wisteria
+num_node="${PJM_NODE}"
+# #geniac
+# num_node="${SLURM_JOB_NUM_NODES}"
 
 num_gpus=$((${num_gpus_pernode} * ${num_node}))
 

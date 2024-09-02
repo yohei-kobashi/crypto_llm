@@ -1,0 +1,17 @@
+bash: /home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/libtinfo.so.6: no version information available (required by bash)
+
+crypto_llm_train_dir = /home/ext_yohei_kobashi_gmail_com/crypto_llm/train
+megatron_deepspeed_dir = /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed
+
+input_tokenizer_file = /storage9/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+output_model_dir = /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True
+save_interval = 500
+wandb_entity = yohei-kobashi
+wandb_project = encrypted_data_LLM
+wandb_tag = 
+
+Number of GPUs per node: 8
+Both /storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document.bin and /storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document.idx already exist.
+
+[2024-08-13 02:42:12,867] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+slurmstepd: error: *** JOB 62401 ON slurm0-a3-ghpc-1 CANCELLED AT 2024-08-13T02:42:18 ***

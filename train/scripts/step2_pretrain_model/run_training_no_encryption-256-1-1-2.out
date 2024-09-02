@@ -1,0 +1,1178 @@
+bash: /home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/libtinfo.so.6: no version information available (required by bash)
+
+crypto_llm_train_dir = /home/ext_yohei_kobashi_gmail_com/crypto_llm/train
+megatron_deepspeed_dir = /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed
+
+input_tokenizer_file = /storage9/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+output_model_dir = /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True
+save_interval = 500
+wandb_entity = yohei-kobashi
+wandb_project = encrypted_data_LLM
+wandb_tag = 
+
+Number of GPUs per node: 8
+Both /storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document.bin and /storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document.idx already exist.
+
+[2024-08-13 03:42:02,040] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:07,350] [WARNING] [runner.py:203:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Detected CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7: setting --include=localhost:0,1,2,3,4,5,6,7
+[2024-08-13 03:42:07,410] [INFO] [runner.py:570:main] cmd = /home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=22418 --enable_each_rank_log=None /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/pretrain_gpt.py --override-opt_param-scheduler --optimizer adam --adam-beta1 0.9 --adam-beta2 0.95 --tensor-model-parallel-size 1 --init-method-std 0.013 --lr-decay-tokens 300000000000 --lr-warmup-tokens 3000000000 --micro-batch-size 2 --exit-duration-in-mins 30000000 --global-batch-size 256 --num-layers 22 --hidden-size 2048 --ffn-hidden-size 5632 --num-attention-heads 16 --num-key-value-heads 4 --no-query-key-layer-scaling --attention-dropout 0 --hidden-dropout 0 --use-rotary-position-embeddings --untie-embeddings-and-output-weights --swiglu --normalization rmsnorm --disable-bias-linear --seq-length 2048 --max-position-embeddings 2048 --train-tokens 26214400 --train-samples 12800 --lr 2.0e-4 --min-lr 1.0e-6 --lr-decay-style cosine --split 949,50,1 --log-interval 10 --eval-interval 1000 --eval-iters 100 --save-interval 500 --weight-decay 0.1 --clip-grad 1.0 --hysteresis 2 --num-workers 0 --seed 1234 --load /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2 --save /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2 --no-async-tensor-model-parallel-allreduce --use-flash-attn-v2 --tensorboard-queue-size 1 --log-timers-to-tensorboard --log-batch-size-to-tensorboard --log-validation-ppl-to-tensorboard --tensorboard-dir /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/tensorboard/tinyllama-1.1B-256-1-1-2_0.latin_wikipedia_no_encryption_000000_1234_True --log-optimizer-states-to-tensorboard --tokenizer-type SentencePieceTokenizer --tokenizer-model /storage9/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model --data-path /storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document --data-impl mmap --deepspeed --deepspeed_config /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/deepspeed_config/ds_config_gbs256_mbs2_log10_zero0.json --zero-stage 0 --pipeline-model-parallel-size 1 --use_wandb --wandb_entity yohei-kobashi --wandb_project encrypted_data_LLM --wandb_group pretrain_gpt_1.1B_0.latin_wikipedia_no_encryption_000000_1234_True
+[2024-08-13 03:42:09,258] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:10,955] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]}
+[2024-08-13 03:42:10,955] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=8, node_rank=0
+[2024-08-13 03:42:10,955] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]})
+[2024-08-13 03:42:10,955] [INFO] [launch.py:163:main] dist_world_size=8
+[2024-08-13 03:42:10,955] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2024-08-13 03:42:13,664] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,691] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,818] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,826] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,862] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,887] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,911] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-08-13 03:42:13,918] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/model/module.py:13: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  _FLOAT_TYPES = [get_accelerator().FloatTensor(0).dtype]
+----------------------------------------------------------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+
+--------------------------------------------------DeepSpeed C++/CUDA extension op report
+
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.--------------------------------------------------
+
+--------------------------------------------------NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+
+JIT compiled ops requires ninja--------------------------------------------------
+
+JIT compiled ops requires ninja
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+ninja .................. ninja[92m[OKAY][0m
+ ..................-------------------------------------------------- 
+[92m[OKAY][0m
+op name-------------------------------------------------- 
+................ op nameinstalled  ..................  installedcompatible 
+.. --------------------------------------------------compatible
+
+--------------------------------------------------
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.evoformer_attn ......... 
+[93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lionasync_io  ............................  [92m[YES][0m [92m[YES][0m......  ......[92m[OKAY][0m 
+[93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lion ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0masync_io ......  [93m[NO][0m...............
+ [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0mfused_adam ......  .............[92m[OKAY][0m 
+[92m[YES][0m ...... [92m[OKAY][0m
+cpu_adamcpu_adam  ..............................  [92m[YES][0m[92m[YES][0m  ............  [92m[OKAY][0m[92m[OKAY][0m
+
+cpu_adagradcpu_adagrad ............ [92m[YES][0m ......  ............[92m[OKAY][0m [92m[YES][0m
+ ...... [92m[OKAY][0m
+cpu_lioncpu_lion ...............  [92m[YES][0m...............  ......[92m[YES][0m  [92m[OKAY][0m...... 
+[92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attnevoformer_attn  .................. [93m[NO][0m  [93m[NO][0m.......  .......[93m[NO][0m 
+[93m[NO][0m
+fused_lambfused_lamb .............  [92m[YES][0m.............  ......[92m[YES][0m  [92m[OKAY][0m......
+ [92m[OKAY][0m
+fused_lionfused_lion  ..........................  [92m[YES][0m[92m[YES][0m  ............  [92m[OKAY][0m[92m[OKAY][0m
+
+inference_core_ops ..... [92m[YES][0m ...... [92m[OKAY][0m
+inference_core_opsinference_core_ops ..... [92m[YES][0m ...... inference_core_ops[92m[OKAY][0m ..... 
+ .....[92m[YES][0m  [92m[YES][0m......  ......[92m[OKAY][0m [92m[OKAY][0m
+
+cutlass_opscutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+ ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ......stochastic_transformer  [92m[OKAY][0m
+. [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+using world size: 8, data-parallel-size: 8, sequence-parallel size: 1, tensor-model-parallel size: 1, pipeline-model-parallel size: 1 
+WARNING: overriding default arguments for tokenizer_type:GPT2BPETokenizer                        with tokenizer_type:SentencePieceTokenizer
+using torch.float32 for parameters ...
+------------------------ arguments ------------------------
+  accumulate_allreduce_grads_in_fp32 .............. False
+  adam_beta1 ...................................... 0.9
+  adam_beta2 ...................................... 0.95
+  adam_eps ........................................ 1e-08
+  add_bias_linear ................................. False
+  add_position_embedding .......................... False
+  adlr_autoresume ................................. False
+  adlr_autoresume_interval ........................ 1000
+  aml_data_download_path .......................... None
+  apply_layernorm_1p .............................. False
+  apply_query_key_layer_scaling ................... False
+  apply_residual_connection_post_layernorm ........ False
+  async_tensor_model_parallel_allreduce ........... False
+  attention_dropout ............................... 0.0
+  attention_softmax_in_fp32 ....................... False
+  barrier_with_L1_time ............................ True
+  bert_binary_head ................................ True
+  bert_embedder_type .............................. megatron
+  bert_load ....................................... None
+  bf16 ............................................ False
+  bias_dropout_fusion ............................. True
+  bias_gelu_fusion ................................ False
+  biencoder_projection_dim ........................ 0
+  biencoder_shared_query_context_model ............ False
+  block_data_path ................................. None
+  checkpoint_activations .......................... False
+  checkpoint_in_cpu ............................... False
+  checkpoint_num_layers ........................... 1
+  classes_fraction ................................ 1.0
+  clip_grad ....................................... 1.0
+  compression_training ............................ False
+  consumed_train_samples .......................... 0
+  consumed_train_tokens ........................... 0
+  consumed_valid_samples .......................... 0
+  contigious_checkpointing ........................ False
+  cpu_optimizer ................................... False
+  cpu_torch_adam .................................. False
+  create_moe_param_group .......................... False
+  curriculum_learning_legacy ...................... False
+  data_cache_path ................................. None
+  data_efficiency_curriculum_learning ............. False
+  data_impl ....................................... mmap
+  data_parallel_random_init ....................... False
+  data_parallel_size .............................. 8
+  data_path ....................................... ['/storage9/crypto_llm/data/wikipedia_latin_no_encryption_000000_1234_True_no_encryption_text_document']
+  data_per_class_fraction ......................... 1.0
+  data_sharding ................................... True
+  dataloader_type ................................. single
+  DDP_impl ........................................ local
+  decoder_num_layers .............................. None
+  decoder_seq_length .............................. None
+  deepscale ....................................... False
+  deepscale_config ................................ None
+  deepspeed ....................................... True
+  deepspeed_activation_checkpointing .............. False
+  deepspeed_config ................................ /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/deepspeed_config/ds_config_gbs256_mbs2_log10_zero0.json
+  deepspeed_mpi ................................... False
+  dino_bottleneck_size ............................ 256
+  dino_freeze_last_layer .......................... 1
+  dino_head_hidden_size ........................... 2048
+  dino_local_crops_number ......................... 10
+  dino_local_img_size ............................. 96
+  dino_norm_last_layer ............................ False
+  dino_teacher_temp ............................... 0.07
+  dino_warmup_teacher_temp ........................ 0.04
+  dino_warmup_teacher_temp_epochs ................. 30
+  distribute_checkpointed_activations ............. False
+  distribute_saved_activations .................... False
+  distributed_backend ............................. nccl
+  distributed_timeout_minutes ..................... 10
+  ds_fused_adam ................................... False
+  ds_inference .................................... False
+  ds_pipeline_enabled ............................. True
+  ds_sequence_parallel_size ....................... 1
+  embedding_path .................................. None
+  embedding_weights_in_fp32 ....................... False
+  empty_unused_memory_level ....................... 0
+  enable_expert_tensor_parallelism ................ False
+  encoder_num_layers .............................. 22
+  encoder_seq_length .............................. 2048
+  end_weight_decay ................................ 0.1
+  eod_mask_loss ................................... False
+  eval_interval ................................... 1000
+  eval_iters ...................................... 100
+  evidence_data_path .............................. None
+  exit_duration_in_mins ........................... 30000000
+  exit_interval ................................... None
+  exit_on_missing_checkpoint ...................... False
+  exit_signal_handler ............................. False
+  expert_interval ................................. 2
+  ffn_hidden_size ................................. 5632
+  finetune ........................................ False
+  force_ds_sequence_parallel ...................... False
+  fp16 ............................................ False
+  fp16_lm_cross_entropy ........................... False
+  fp32_residual_connection ........................ False
+  fp8_amax_compute_algo ........................... most_recent
+  fp8_amax_history_len ............................ 1
+  fp8_e4m3 ........................................ False
+  fp8_hybrid ...................................... False
+  fp8_interval .................................... 1
+  fp8_margin ...................................... 0
+  fp8_wgrad ....................................... True
+  global_batch_size ............................... 256
+  gradient_accumulation_fusion .................... True
+  head_lr_mult .................................... 1.0
+  hidden_dropout .................................. 0.0
+  hidden_size ..................................... 2048
+  hidden_size_teacher ............................. None
+  hysteresis ...................................... 2
+  ict_head_size ................................... None
+  ict_load ........................................ None
+  img_h ........................................... 224
+  img_w ........................................... 224
+  indexer_batch_size .............................. 128
+  indexer_log_interval ............................ 1000
+  inference ....................................... False
+  inference_batch_times_seqlen_threshold .......... 512
+  init_method_std ................................. 0.013
+  init_method_xavier_uniform ...................... False
+  initial_loss_scale .............................. 4294967296
+  iter_per_epoch .................................. 1250
+  kd .............................................. False
+  kd_alpha_ce ..................................... 1
+  kd_beta_ce ...................................... 1
+  kd_temp ......................................... 1.0
+  kv_channels ..................................... 128
+  layernorm_epsilon ............................... 1e-05
+  lazy_mpu_init ................................... None
+  load ............................................ /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2
+  load_teacher .................................... None
+  local_rank ...................................... 0
+  log_batch_size_to_tensorboard ................... True
+  log_interval .................................... 10
+  log_learning_rate_to_tensorboard ................ True
+  log_loss_scale_to_tensorboard ................... True
+  log_memory_to_tensorboard ....................... False
+  log_num_zeros_in_grad ........................... False
+  log_optimizer_states_to_tensorboard ............. True
+  log_params_norm ................................. False
+  log_timers_to_tensorboard ....................... True
+  log_validation_ppl_to_tensorboard ............... True
+  log_world_size_to_tensorboard ................... False
+  loss_scale ...................................... None
+  loss_scale_window ............................... 1000
+  lr .............................................. 0.0002
+  lr_decay_iters .................................. None
+  lr_decay_samples ................................ None
+  lr_decay_style .................................. cosine
+  lr_decay_tokens ................................. 300000000000
+  lr_warmup_fraction .............................. None
+  lr_warmup_iters ................................. 0
+  lr_warmup_samples ............................... 0
+  lr_warmup_tokens ................................ 3000000000
+  make_vocab_size_divisible_by .................... 128
+  mask_factor ..................................... 1.0
+  mask_prob ....................................... 0.15
+  mask_type ....................................... random
+  masked_softmax_fusion ........................... True
+  max_position_embeddings ......................... 2048
+  max_tokens_to_oom ............................... 12000
+  mem_efficient_ln ................................ True
+  memory_centric_tiled_linear ..................... False
+  merge_file ...................................... None
+  micro_batch_size ................................ 2
+  min_loss_scale .................................. 1.0
+  min_lr .......................................... 1e-06
+  mlp_type ........................................ standard
+  mmap_warmup ..................................... False
+  moe_eval_capacity_factor ........................ 1.0
+  moe_expert_parallel_size ........................ 1
+  moe_loss_coeff .................................. 0.1
+  moe_min_capacity ................................ 4
+  moe_token_dropping .............................. True
+  moe_train_capacity_factor ....................... 1.0
+  mos ............................................. False
+  no_load_lr_state ................................ False
+  no_load_optim ................................... None
+  no_load_rng ..................................... None
+  no_persist_layer_norm ........................... False
+  no_pipeline_parallel ............................ False
+  no_save_optim ................................... None
+  no_save_rng ..................................... None
+  normalization ................................... rmsnorm
+  num_attention_heads ............................. 16
+  num_attention_heads_teacher ..................... None
+  num_channels .................................... 3
+  num_classes ..................................... 1000
+  num_experts ..................................... [1]
+  num_experts_switch .............................. None
+  num_experts_teacher ............................. [1]
+  num_key_value_heads ............................. 4
+  num_layers ...................................... 22
+  num_layers_per_virtual_pipeline_stage ........... None
+  num_layers_teacher .............................. None
+  num_workers ..................................... 0
+  onnx_safe ....................................... None
+  openai_gelu ..................................... False
+  optimizer ....................................... adam
+  output_bert_embeddings .......................... False
+  overlap_p2p_comm ................................ False
+  override_opt_param_scheduler .................... True
+  params_dtype .................................... torch.float32
+  partition_activations ........................... False
+  patch_dim ....................................... 16
+  perform_initialization .......................... True
+  pipeline_model_parallel_size .................... 1
+  pipeline_model_parallel_split_rank .............. None
+  profile_backward ................................ False
+  query_in_block_prob ............................. 0.1
+  rampup_batch_size ............................... None
+  random_ltd ...................................... False
+  rank ............................................ 0
+  recompute_granularity ........................... None
+  recompute_method ................................ None
+  recompute_num_layers ............................ 1
+  remote_device ................................... none
+  repeated_dataloader ............................. False
+  reset_attention_mask ............................ False
+  reset_iteration ................................. False
+  reset_position_ids .............................. False
+  retriever_report_topk_accuracies ................ []
+  retriever_score_scaling ......................... False
+  retriever_seq_length ............................ 256
+  retro_add_retriever ............................. False
+  retro_cyclic_train_iters ........................ None
+  retro_encoder_attention_dropout ................. 0.1
+  retro_encoder_hidden_dropout .................... 0.1
+  retro_encoder_layers ............................ 2
+  retro_num_neighbors ............................. 2
+  retro_num_retrieved_chunks ...................... 2
+  retro_return_doc_ids ............................ False
+  retro_workdir ................................... None
+  return_data_index ............................... False
+  rotary_percent .................................. 1.0
+  sample_rate ..................................... 1.0
+  save ............................................ /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2
+  save_interval ................................... 500
+  scatter_gather_tensors_in_pipeline .............. True
+  scattered_embeddings ............................ False
+  seed ............................................ 1234
+  seq_length ...................................... 2048
+  sequence_parallel ............................... False
+  sgd_momentum .................................... 0.9
+  short_seq_prob .................................. 0.1
+  skip_train ...................................... False
+  split ........................................... 949,50,1
+  split_transformers .............................. False
+  squared_relu .................................... False
+  standalone_embedding_stage ...................... False
+  start_weight_decay .............................. 0.1
+  swiglu .......................................... True
+  swin_backbone_type .............................. tiny
+  synchronize_each_layer .......................... False
+  tensor_model_parallel_size ...................... 1
+  tensorboard_dir ................................. /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/tensorboard/tinyllama-1.1B-256-1-1-2_0.latin_wikipedia_no_encryption_000000_1234_True
+  tensorboard_log_interval ........................ 1
+  tensorboard_queue_size .......................... 1
+  test_data_path .................................. None
+  tf32 ............................................ False
+  tile_factor ..................................... 1
+  timing_log_level ................................ 0
+  timing_log_option ............................... minmax
+  titles_data_path ................................ None
+  tokenizer_model ................................. /storage9/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+  tokenizer_type .................................. SentencePieceTokenizer
+  topk ............................................ 1
+  train_data_exact_num_epochs ..................... None
+  train_data_path ................................. None
+  train_desc_path ................................. None
+  train_doc_idx_path .............................. None
+  train_idx_path .................................. None
+  train_iters ..................................... None
+  train_sample_idx_path ........................... None
+  train_samples ................................... 12800
+  train_shuffle_idx_path .......................... None
+  train_tokens .................................... 26214400
+  transformer_impl ................................ local
+  transformer_pipeline_model_parallel_size ........ 1
+  universal_checkpoint ............................ False
+  untie_embeddings_and_output_weights ............. True
+  use_checkpoint_args ............................. False
+  use_checkpoint_opt_param_scheduler .............. False
+  use_contiguous_buffers_in_local_ddp ............. True
+  use_cpu_initialization .......................... None
+  use_dataset_only ................................ False
+  use_distributed_optimizer ....................... False
+  use_flash_attn .................................. True
+  use_flash_attn_triton ........................... False
+  use_flash_attn_v1 ............................... False
+  use_flash_attn_v2 ............................... True
+  use_one_sent_docs ............................... False
+  use_pin_memory .................................. False
+  use_ring_exchange_p2p ........................... False
+  use_rotary_position_embeddings .................. True
+  use_tutel ....................................... False
+  use_wandb ....................................... True
+  valid_data_path ................................. None
+  variable_seq_lengths ............................ False
+  virtual_pipeline_model_parallel_size ............ None
+  vision_backbone_type ............................ vit
+  vision_pretraining .............................. False
+  vision_pretraining_type ......................... classify
+  vocab_extra_ids ................................. 0
+  vocab_file ...................................... None
+  vocab_size ...................................... None
+  wandb_entity .................................... yohei-kobashi
+  wandb_group ..................................... pretrain_gpt_1.1B_0.latin_wikipedia_no_encryption_000000_1234_True
+  wandb_project ................................... encrypted_data_LLM
+  wandb_tag ....................................... None
+  weight_decay .................................... 0.1
+  weight_decay_incr_style ......................... constant
+  world_size ...................................... 8
+  zero_allgather_bucket_size ...................... 0.0
+  zero_contigious_gradients ....................... False
+  zero_reduce_bucket_size ......................... 0.0
+  zero_reduce_scatter ............................. False
+  zero_stage ...................................... 0
+-------------------- end of arguments ---------------------
+setting number of micro-batches to constant 16
+> building SentencePieceTokenizer tokenizer ...
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+ > padded vocab (size: 32003) with 125 dummy tokens (new size: 32128)
+> initializing torch distributed ...
+[2024-08-13 03:42:20,438] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-13 03:42:20,438] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-13 03:42:20,438] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2024-08-13 03:42:20,439] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-13 03:42:20,440] [INFO] [comm.py:637:init_distributed] cdb=None
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lion ............. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+inference_core_ops ..... [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+DeepSpeed C++/CUDA extension op report
+--------------------------------------------------
+NOTE: Ops not installed will be just-in-time (JIT) compiled at
+      runtime if needed. Op compatibility means that your system
+      meet the required dependencies to JIT install the op.
+--------------------------------------------------
+JIT compiled ops requires ninja
+ninja .................. [92m[OKAY][0m
+--------------------------------------------------
+op name ................ installed .. compatible
+--------------------------------------------------
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lion ............. [92m[YES][0m ...... [92m[OKAY][0m
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+inference_core_ops ..... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lion ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+async_io ............... [92m[YES][0m ...... [93m[NO][0m
+fused_adam ............. [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adam ............... [92m[YES][0m ...... [92m[OKAY][0m
+cpu_adagrad ............ [92m[YES][0m ...... [92m[OKAY][0m
+cpu_lion ............... [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+evoformer_attn ......... [93m[NO][0m ....... [93m[NO][0m
+fused_lamb ............. [92m[YES][0m ...... [92m[OKAY][0m
+fused_lion ............. [92m[YES][0m ...... [92m[OKAY][0m
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+inference_core_ops ..... [92m[YES][0m ...... [92m[OKAY][0m
+inference_core_ops ..... [92m[YES][0m ...... [92m[OKAY][0m
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+cutlass_ops ............ [92m[YES][0m ...... [92m[OKAY][0m
+quantizer .............. [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+ragged_device_ops ...... [92m[YES][0m ...... [92m[OKAY][0m
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+ragged_ops ............. [92m[YES][0m ...... [92m[OKAY][0m
+random_ltd ............. [92m[YES][0m ...... [92m[OKAY][0m
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+sparse_attn ............ [93m[NO][0m ....... [93m[NO][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+spatial_inference ...... [92m[YES][0m ...... [92m[OKAY][0m
+transformer ............ [92m[YES][0m ...... [92m[OKAY][0m
+stochastic_transformer . [92m[YES][0m ...... [92m[OKAY][0m
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+transformer_inference .. [92m[YES][0m ...... [92m[OKAY][0m
+--------------------------------------------------
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+DeepSpeed general environment info:
+torch install path ............... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch']
+torch version .................... 2.2.0
+deepspeed install path ........... ['/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/deepspeed']
+deepspeed info ................... 0.12.4, unknown, unknown
+torch cuda version ............... 11.8
+torch hip version ................ None
+nvcc version ..................... 11.8
+deepspeed wheel compiled w. ...... torch 2.2, cuda 11.8
+shared memory (/dev/shm) size .... 921.29 GB
+[2024-08-13 03:42:20,647] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-13 03:42:20,667] [INFO] [comm.py:637:init_distributed] cdb=None
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+**** Git info for Megatron: git_hash=26f6f9f git_branch=main ****
+[2024-08-13 03:42:20,740] [INFO] [comm.py:637:init_distributed] cdb=None
+> setting tensorboard ...
+[2024-08-13 03:42:21,071] [INFO] [comm.py:637:init_distributed] cdb=None
+> initialized tensor model parallel with size 1
+> initialized pipeline model parallel with size 1
+> setting random seeds to 1234 ...
+> initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 3952 and data parallel seed: 1234
+> compiling dataset index builder ...
+make: Entering directory '/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/data'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/data'
+>>> done with dataset index builder. Compilation time: 0.048 seconds
+WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
+> compiling and loading fused kernels ...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_upper_triang_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_upper_triang_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_softmax_cuda...
+[rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank1]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank3]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank2]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank7]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+>>> done with compiling and loading fused kernels. Compilation time: 12.881 seconds
+[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank0]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+time to initialize megatron (seconds): 16.717
+[after megatron is initialized] datetime: 2024-08-13 03:42:34 
+wandb: Currently logged in as: yohei-kobashi. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.17.6
+wandb: Run data is saved locally in /home/ext_yohei_kobashi_gmail_com/crypto_llm/train/scripts/step2_pretrain_model/wandb/run-20240813_034235-3oara0j2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run slurm0-a3-ghpc-4
+wandb: ⭐️ View project at https://wandb.ai/yohei-kobashi/encrypted_data_LLM
+wandb: 🚀 View run at https://wandb.ai/yohei-kobashi/encrypted_data_LLM/runs/3oara0j2
+building GPT model ...
+[2024-08-13 03:42:40,134] [INFO] [utils.py:795:see_memory_usage] Before Building Model
+[2024-08-13 03:42:40,135] [INFO] [utils.py:796:see_memory_usage] MA 0.0 GB         Max_MA 1.46 GB         CA 0.0 GB         Max_CA 1 GB 
+[2024-08-13 03:42:40,135] [INFO] [utils.py:803:see_memory_usage] CPU Virtual Memory:  used = 20.88 GB, percent = 1.1%
+SEED_LAYERS=False BASE_SEED=1234 SEED_FN=None
+Using topology: {ProcessCoord(pipe=0, data=0, model=0): 0, ProcessCoord(pipe=0, data=1, model=0): 1, ProcessCoord(pipe=0, data=2, model=0): 2, ProcessCoord(pipe=0, data=3, model=0): 3, ProcessCoord(pipe=0, data=4, model=0): 4, ProcessCoord(pipe=0, data=5, model=0): 5, ProcessCoord(pipe=0, data=6, model=0): 6, ProcessCoord(pipe=0, data=7, model=0): 7}
+[2024-08-13 03:42:40,138] [INFO] [module.py:375:_partition_layers] Partitioning pipeline stages with method type:transformer
+stage=0 layers=26
+     0: _to_float16
+     1: EmbeddingPipe
+     2: ParallelTransformerLayerPipe
+     3: ParallelTransformerLayerPipe
+     4: ParallelTransformerLayerPipe
+     5: ParallelTransformerLayerPipe
+     6: ParallelTransformerLayerPipe
+     7: ParallelTransformerLayerPipe
+     8: ParallelTransformerLayerPipe
+     9: ParallelTransformerLayerPipe
+    10: ParallelTransformerLayerPipe
+    11: ParallelTransformerLayerPipe
+    12: ParallelTransformerLayerPipe
+    13: ParallelTransformerLayerPipe
+    14: ParallelTransformerLayerPipe
+    15: ParallelTransformerLayerPipe
+    16: ParallelTransformerLayerPipe
+    17: ParallelTransformerLayerPipe
+    18: ParallelTransformerLayerPipe
+    19: ParallelTransformerLayerPipe
+    20: ParallelTransformerLayerPipe
+    21: ParallelTransformerLayerPipe
+    22: ParallelTransformerLayerPipe
+    23: ParallelTransformerLayerPipe
+    24: MixedFusedRMSNorm
+    25: LMHeadPipe
+  loss: CrossEntropy
+[2024-08-13 03:42:40,361] [INFO] [utils.py:795:see_memory_usage] After Building Model
+[2024-08-13 03:42:40,362] [INFO] [utils.py:796:see_memory_usage] MA 4.19 GB         Max_MA 4.22 GB         CA 4.22 GB         Max_CA 4 GB 
+[2024-08-13 03:42:40,363] [INFO] [utils.py:803:see_memory_usage] CPU Virtual Memory:  used = 21.07 GB, percent = 1.1%
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 1123641344
+setting training iterations to 50
+> learning rate decay style: cosine
+DeepSpeed is enabled.
+[2024-08-13 03:42:40,364] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed info: version=0.12.4, git-hash=unknown, git-branch=unknown
+[2024-08-13 03:42:47,592] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2024-08-13 03:42:47,594] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2024-08-13 03:42:47,594] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2024-08-13 03:42:47,595] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2024-08-13 03:42:47,595] [INFO] [logging.py:96:log_dist] [Rank 0] Creating fp16 optimizer with dynamic loss scale
+[2024-08-13 03:42:47,682] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,702] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = FusedAdam
+[2024-08-13 03:42:47,702] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2024-08-13 03:42:47,702] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = <megatron.optimizer_param_scheduler.OptimizerParamScheduler object at 0x14b0ac96e970>
+[2024-08-13 03:42:47,702] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0], mom=[(0.9, 0.95), (0.9, 0.95)]
+[2024-08-13 03:42:47,703] [INFO] [config.py:979:print] DeepSpeedEngine configuration:
+[2024-08-13 03:42:47,703] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,703] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,703] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,703] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,703] [INFO] [config.py:983:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2024-08-13 03:42:47,703] [INFO] [config.py:983:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2024-08-13 03:42:47,703] [INFO] [config.py:983:print]   amp_enabled .................. False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   amp_params ................... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   bfloat16_enabled ............. False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   checkpoint_parallel_write_pipeline  False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   checkpoint_tag_validation_enabled  True
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   checkpoint_tag_validation_fail  False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x14b0ac932a60>
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   communication_data_type ...... None
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   curriculum_enabled_legacy .... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   curriculum_params_legacy ..... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   data_efficiency_enabled ...... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   dataloader_drop_last ......... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   disable_allgather ............ False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   dump_state ................... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   dynamic_loss_scale_args ...... {'init_scale': 2048, 'scale_window': 500, 'delayed_shift': 2, 'consecutive_hysteresis': False, 'min_scale': 1}
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   eigenvalue_enabled ........... False
+[2024-08-13 03:42:47,704] [INFO] [config.py:983:print]   eigenvalue_gas_boundary_resolution  1
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_layer_num ......... 0
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_max_iter .......... 100
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_stability ......... 1e-06
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_tol ............... 0.01
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   eigenvalue_verbose ........... False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   elasticity_enabled ........... False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   fp16_auto_cast ............... False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   fp16_enabled ................. True
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   fp16_master_weights_and_gradients  False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   global_rank .................. 0
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   grad_accum_dtype ............. None
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   gradient_accumulation_steps .. 16
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   gradient_clipping ............ 1.0
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   gradient_predivide_factor .... 1.0
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   initial_dynamic_scale ........ 2048
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   load_universal_checkpoint .... False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   loss_scale ................... 0
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   memory_breakdown ............. False
+[2024-08-13 03:42:47,705] [INFO] [config.py:983:print]   mics_hierarchial_params_gather  False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   mics_shard_size .............. -1
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
+[2024-08-13 03:42:47,706] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   optimizer_legacy_fusion ...... False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   optimizer_name ............... None
+[2024-08-13 03:42:47,706] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   optimizer_params ............. None
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   pld_enabled .................. False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   pld_params ................... False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   prescale_gradients ........... True
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   scheduler_name ............... None
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   scheduler_params ............. None
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   seq_parallel_communication_data_type  torch.float32
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   sparse_attention ............. None
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   sparse_gradients_enabled ..... False
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   steps_per_print .............. 10
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   train_batch_size ............. 256
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   train_micro_batch_size_per_gpu  2
+[2024-08-13 03:42:47,706] [INFO] [config.py:983:print]   use_data_before_expert_parallel_  False
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   use_node_local_storage ....... False
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   wall_clock_breakdown ......... False
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   weight_quantization_config ... None
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   world_size ................... 8
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   zero_allow_untested_optimizer  False
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   zero_config .................. stage=0 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500,000,000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   zero_enabled ................. False
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   zero_force_ds_cpu_optimizer .. True
+[2024-08-13 03:42:47,707] [INFO] [config.py:983:print]   zero_optimization_stage ...... 0
+[2024-08-13 03:42:47,707] [INFO] [config.py:969:print_user_config]   json = {
+    "train_batch_size": 256, 
+    "train_micro_batch_size_per_gpu": 2, 
+    "steps_per_print": 10, 
+    "zero_optimization": {
+        "stage": 0
+    }, 
+    "gradient_clipping": 1.0, 
+    "prescale_gradients": true, 
+    "fp16": {
+        "enabled": true, 
+        "loss_scale": 0, 
+        "loss_scale_window": 500, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1, 
+        "initial_scale_power": 11
+    }, 
+    "wall_clock_breakdown": false
+}
+[2024-08-13 03:42:47,707] [INFO] [engine.py:99:__init__] CONFIG: micro_batches=16 micro_batch_size=2
+[2024-08-13 03:42:47,707] [INFO] [engine.py:139:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[2024-08-13 03:42:48,618] [INFO] [engine.py:158:__init__] RANK=0 STAGE=0 LAYERS=26 [0, 26) STAGE_PARAMS=1123641344 (1123.641M) TOTAL_PARAMS=1123641344 (1123.641M) UNIQUE_PARAMS=1123641344 (1123.641M)
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2024-08-13 03:42:48,635] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+WARNING: could not find the metadata file /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2 
+    will not load any checkpoints and will start from random
+(min, max) time across ranks (ms):
+    load-checkpoint ................................: (5.02, 5.14)
+[after model, optimizer, and learning rate scheduler are built] datetime: 2024-08-13 03:42:48 
+> building train, validation, and test datasets ...
+ > datasets target sizes (minimum size):
+    train:      12800
+    validation: 25600
+    test:       25600
+> building train, validation, and test datasets for GPT ...
+Single data path provided for train, valid & test
+ > building dataset index ...
+    reading sizes...
+    reading pointers...
+    reading document index...
+    creating numpy buffer of mmap...
+    creating memory view of numpy buffer...
+ > finished creating indexed dataset in 0.004059 seconds
+    number of documents: 250886
+ > dataset split:
+    train:
+     document indices in [0, 238091) total of 238091 documents
+    validation:
+     document indices in [238091, 250635) total of 12544 documents
+    test:
+     document indices in [250635, 250886) total of 251 documents
+ > loading doc-idx mapping from /storage9/crypto_llm/data/index-cache/85868591af2831c3ab710ecdc5c99a9f_doc_idx.npy
+ > loading sample-idx mapping from /storage9/crypto_llm/data/index-cache/85868591af2831c3ab710ecdc5c99a9f_sample_idx.npy
+ > loading shuffle-idx mapping from /storage9/crypto_llm/data/index-cache/85868591af2831c3ab710ecdc5c99a9f_shuffle_idx.npy
+    loaded indexed file in 0.063 seconds
+    total number of samples: 424970
+    total number of epochs: 1
+ > loading doc-idx mapping from /storage9/crypto_llm/data/index-cache/f029a75945f6b28115b7421d12f80076_doc_idx.npy
+ > loading sample-idx mapping from /storage9/crypto_llm/data/index-cache/f029a75945f6b28115b7421d12f80076_sample_idx.npy
+ > loading shuffle-idx mapping from /storage9/crypto_llm/data/index-cache/f029a75945f6b28115b7421d12f80076_shuffle_idx.npy
+    loaded indexed file in 0.078 seconds
+    total number of samples: 45742
+    total number of epochs: 2
+ > loading doc-idx mapping from /storage9/crypto_llm/data/index-cache/60628e54571bb1e20b95c73cb27d333e_doc_idx.npy
+ > loading sample-idx mapping from /storage9/crypto_llm/data/index-cache/60628e54571bb1e20b95c73cb27d333e_sample_idx.npy
+ > loading shuffle-idx mapping from /storage9/crypto_llm/data/index-cache/60628e54571bb1e20b95c73cb27d333e_shuffle_idx.npy
+    loaded indexed file in 0.033 seconds
+    total number of samples: 25865
+    total number of epochs: 77
+> finished creating GPT datasets ...
+[after dataloaders are built] datetime: 2024-08-13 03:42:58 
+done with setup ...
+training ...(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (8649.33, 8710.25)
+    train/valid/test-data-iterators-setup ..........: (9580.75, 9641.00)
+
+[before the start of training step] datetime: 2024-08-13 03:42:59 
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[2024-08-13 03:43:26,289] [INFO] [logging.py:96:log_dist] [Rank 0] step=10, skipped=0, lr=[3.1457280000000004e-07, 3.1457280000000004e-07], mom=[(0.9, 0.95), (0.9, 0.95)]
+steps: 10 loss: 10.4332 iter time (s): 2.483 samples/sec: 103.103
+ iteration       10/      50 | consumed samples:         2560 | consumed tokens:      5242880 | elapsed time per iteration (ms): 2695.1 | learning rate: 3.146E-07 | global batch size:   256 | lm loss: 1.052794E+01 | loss scale: 2048.0 | grad norm: 26.456 | num zeros: 0.0 | actual seqlen:  2048 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 94.988 | tokens per gpu per second (tgs): 24316.954 | TFLOPs: 195.68 |
+[Rank 0] (after 10 iterations) memory (MB) | allocated: 15582.46142578125 | max allocated: 26300.13720703125 | reserved: 31348.0 | max reserved: 31348.0
+/home/ext_yohei_kobashi_gmail_com/miniconda3/envs/.venv_train2/lib/python3.9/site-packages/torch/autograd/__init__.py:266: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987277512/work/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:63.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[2024-08-13 03:43:53,802] [INFO] [logging.py:96:log_dist] [Rank 0] step=20, skipped=0, lr=[6.640981333333333e-07, 6.640981333333333e-07], mom=[(0.9, 0.95), (0.9, 0.95)]
+steps: 20 loss: 9.5935 iter time (s): 2.467 samples/sec: 103.756
+ iteration       20/      50 | consumed samples:         5120 | consumed tokens:     10485760 | elapsed time per iteration (ms): 2751.5 | learning rate: 6.641E-07 | global batch size:   256 | lm loss: 9.981941E+00 | loss scale: 2048.0 | grad norm: 26.333 | num zeros: 0.0 | actual seqlen:  2048 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 93.041 | tokens per gpu per second (tgs): 23818.428 | TFLOPs: 191.67 |
+[2024-08-13 03:44:21,806] [INFO] [logging.py:96:log_dist] [Rank 0] step=30, skipped=0, lr=[1.0136234666666667e-06, 1.0136234666666667e-06], mom=[(0.9, 0.95), (0.9, 0.95)]
+steps: 30 loss: 8.5450 iter time (s): 2.531 samples/sec: 101.126
+ iteration       30/      50 | consumed samples:         7680 | consumed tokens:     15728640 | elapsed time per iteration (ms): 2808.9 | learning rate: 1.014E-06 | global batch size:   256 | lm loss: 8.952299E+00 | loss scale: 2048.0 | grad norm: 10.316 | num zeros: 0.0 | actual seqlen:  2048 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 91.140 | tokens per gpu per second (tgs): 23331.820 | TFLOPs: 187.76 |
+[2024-08-13 03:44:49,927] [INFO] [logging.py:96:log_dist] [Rank 0] step=40, skipped=0, lr=[1.3631488000000001e-06, 1.3631488000000001e-06], mom=[(0.9, 0.95), (0.9, 0.95)]
+steps: 40 loss: 8.0387 iter time (s): 2.512 samples/sec: 101.910
+ iteration       40/      50 | consumed samples:        10240 | consumed tokens:     20971520 | elapsed time per iteration (ms): 2820.6 | learning rate: 1.363E-06 | global batch size:   256 | lm loss: 8.243433E+00 | loss scale: 2048.0 | grad norm: 4.920 | num zeros: 0.0 | actual seqlen:  2048 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 90.760 | tokens per gpu per second (tgs): 23234.666 | TFLOPs: 186.97 |
+[2024-08-13 03:45:17,436] [INFO] [logging.py:96:log_dist] [Rank 0] step=50, skipped=0, lr=[1.7126741333333333e-06, 1.7126741333333333e-06], mom=[(0.9, 0.95), (0.9, 0.95)]
+steps: 50 loss: 7.7795 iter time (s): 2.438 samples/sec: 105.022
+ iteration       50/      50 | consumed samples:        12800 | consumed tokens:     26214400 | elapsed time per iteration (ms): 2755.4 | learning rate: 1.713E-06 | global batch size:   256 | lm loss: 7.899982E+00 | loss scale: 2048.0 | grad norm: 4.043 | num zeros: 0.0 | actual seqlen:  2048 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 92.908 | tokens per gpu per second (tgs): 23784.451 | TFLOPs: 191.40 |
+[after training is done] datetime: 2024-08-13 03:45:17 
+saving checkpoint at iteration      50 to /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2
+[2024-08-13 03:45:17,935] [INFO] [logging.py:96:log_dist] [Rank 0] [Torch] Checkpoint global_step50 is about to be saved!
+[2024-08-13 03:45:17,980] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,980] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,981] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,981] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,982] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,984] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:17,986] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+[2024-08-13 03:45:18,047] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_01-model_00-model_states.pt...
+[2024-08-13 03:45:19,157] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_01-model_00-model_states.pt.
+[2024-08-13 03:45:19,203] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_02-model_00-model_states.pt...
+[2024-08-13 03:45:19,809] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_02-model_00-model_states.pt.
+[2024-08-13 03:45:19,859] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_03-model_00-model_states.pt...
+[2024-08-13 03:45:20,852] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_03-model_00-model_states.pt.
+[2024-08-13 03:45:20,901] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_04-model_00-model_states.pt...
+[2024-08-13 03:45:21,640] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_04-model_00-model_states.pt.
+[2024-08-13 03:45:21,684] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_05-model_00-model_states.pt...
+[2024-08-13 03:45:22,531] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_05-model_00-model_states.pt.
+[2024-08-13 03:45:22,560] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_06-model_00-model_states.pt...
+[2024-08-13 03:45:23,406] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_06-model_00-model_states.pt.
+[2024-08-13 03:45:23,435] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_07-model_00-model_states.pt...
+[2024-08-13 03:45:24,295] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_07-model_00-model_states.pt.
+[2024-08-13 03:45:24,332] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_08-model_00-model_states.pt...
+[2024-08-13 03:45:25,200] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_08-model_00-model_states.pt.
+[2024-08-13 03:45:25,230] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_09-model_00-model_states.pt...
+[2024-08-13 03:45:25,792] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_09-model_00-model_states.pt.
+[2024-08-13 03:45:25,822] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_10-model_00-model_states.pt...
+[2024-08-13 03:45:26,307] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_10-model_00-model_states.pt.
+[2024-08-13 03:45:26,347] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_11-model_00-model_states.pt...
+[2024-08-13 03:45:27,378] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_11-model_00-model_states.pt.
+[2024-08-13 03:45:27,414] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_12-model_00-model_states.pt...
+[2024-08-13 03:45:28,034] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_12-model_00-model_states.pt.
+[2024-08-13 03:45:28,064] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_13-model_00-model_states.pt...
+[2024-08-13 03:45:28,669] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_13-model_00-model_states.pt.
+[2024-08-13 03:45:28,679] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_14-model_00-model_states.pt...
+[2024-08-13 03:45:29,212] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_14-model_00-model_states.pt.
+[2024-08-13 03:45:29,250] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_15-model_00-model_states.pt...
+[2024-08-13 03:45:30,415] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_15-model_00-model_states.pt.
+[2024-08-13 03:45:30,425] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_16-model_00-model_states.pt...
+[2024-08-13 03:45:31,444] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_16-model_00-model_states.pt.
+[2024-08-13 03:45:31,472] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_17-model_00-model_states.pt...
+[2024-08-13 03:45:32,328] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_17-model_00-model_states.pt.
+[2024-08-13 03:45:32,340] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_18-model_00-model_states.pt...
+[2024-08-13 03:45:32,891] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_18-model_00-model_states.pt.
+[2024-08-13 03:45:32,929] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_19-model_00-model_states.pt...
+[2024-08-13 03:45:33,448] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_19-model_00-model_states.pt.
+[2024-08-13 03:45:33,457] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_20-model_00-model_states.pt...
+[2024-08-13 03:45:33,904] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_20-model_00-model_states.pt.
+[2024-08-13 03:45:33,931] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_21-model_00-model_states.pt...
+[2024-08-13 03:45:34,387] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_21-model_00-model_states.pt.
+[2024-08-13 03:45:34,397] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_22-model_00-model_states.pt...
+[2024-08-13 03:45:34,988] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_22-model_00-model_states.pt.
+[2024-08-13 03:45:35,024] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_23-model_00-model_states.pt...
+[2024-08-13 03:45:35,514] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_23-model_00-model_states.pt.
+[2024-08-13 03:45:35,523] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_24-model_00-model_states.pt...
+[2024-08-13 03:45:35,532] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_24-model_00-model_states.pt.
+[2024-08-13 03:45:35,596] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_25-model_00-model_states.pt...
+[2024-08-13 03:45:36,200] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/layer_25-model_00-model_states.pt.
+[2024-08-13 03:45:36,209] [INFO] [logging.py:96:log_dist] [Rank 0] Saving model checkpoint: /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/mp_rank_00_model_states.pt
+[2024-08-13 03:45:36,209] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/mp_rank_00_model_states.pt...
+[2024-08-13 03:47:21,334] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2/global_step50/mp_rank_00_model_states.pt.
+[2024-08-13 03:47:21,336] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step50 is ready now!
+  successfully saved checkpoint at iteration      50 to /storage9/crypto_llm/models/0.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B-256-1-1-2
+slurmstepd: error: *** JOB 62418 ON slurm0-a3-ghpc-4 CANCELLED AT 2024-08-13T03:47:22 ***

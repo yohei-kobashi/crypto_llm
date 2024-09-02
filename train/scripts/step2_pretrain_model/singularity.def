@@ -1,0 +1,59 @@
+Bootstrap: docker
+From: nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update && apt-get install -y \
+        wget \
+        git \
+        build-essential \
+        libssl-dev \
+        zlib1g-dev \
+        libbz2-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        curl \
+        llvm \
+        libncurses5-dev \
+        libncursesw5-dev \
+        xz-utils \
+        tk-dev \
+        libffi-dev \
+        liblzma-dev \
+        python3-distutils \
+        python-openssl \
+        bzip2 \
+        openssl \
+        libaio-dev \
+        && rm -rf /var/lib/apt/lists/*
+
+    # pyenvのインストール
+    git clone https://github.com/pyenv/pyenv.git /pyenv
+
+    export PYENV_ROOT="/pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(/pyenv/bin/pyenv init --path)"
+    eval "$(/pyenv/bin/pyenv init -)"
+
+    # Python 3.11.7のインストール
+    /pyenv/bin/pyenv install 3.11.7
+    /pyenv/bin/pyenv global 3.11.7
+
+%environment
+    # 環境変数の設定
+    export PATH=/usr/bin/python3.11:/b20048/crypto_llm/train/.venv_wisteria/bin:/pyenv/shims:$PATH
+    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+    export TRITON_CACHE_DIR=/b20048/data_cache
+    export HF_HOME=/b20048/data_cache
+    export NCCL_IB_DISABLE=1
+    
+    # pyenv
+    export PYENV_ROOT="/pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(/pyenv/bin/pyenv init --path)"
+    eval "$(/pyenv/bin/pyenv init -)"
+
+%runscript
+    # コンテナ起動時に実行されるコマンド
+    echo "コンテナが起動されました"
+    exec /bin/bash
