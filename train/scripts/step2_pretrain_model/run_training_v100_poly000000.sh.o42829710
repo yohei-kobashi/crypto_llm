@@ -1,0 +1,85 @@
+
+ssh_config_file = /home/acf16449gb/.ssh/config
+
+SSH configuration has been updated.
+Host g0108
+    HostName g0108
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0113
+    HostName g0113
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0115
+    HostName g0115
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0120
+    HostName g0120
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0121
+    HostName g0121
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0123
+    HostName g0123
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0125
+    HostName g0125
+    Port 2222
+    StrictHostKeyChecking no
+
+Host g0126
+    HostName g0126
+    Port 2222
+    StrictHostKeyChecking no
+
+
+
+ucllm_nedo_dev_train_dir = /home/acf16449gb/ucllm_nedo_prod/train
+megatron_deepspeed_dir = /home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+output_model_dir = /groups/gcf51099/crypto_llm/models/0.latin_wikipedia_poly_000000_1234_True
+save_interval = 1000
+wandb_entity = yohei-kobashi
+wandb_project = encrypted_data_LLM
+wandb_tag = other_gpu
+
+Number of GPUs per node: 4
+Both /groups/gcf51099/crypto_llm/data/wikipedia_latin_poly_000000_1234_True_no_encryption_text_document.bin and /groups/gcf51099/crypto_llm/data/wikipedia_latin_poly_000000_1234_True_no_encryption_text_document.idx already exist.
+
+hostfile = ./abci_node-8_gpu-32-v100/hostfile_jobid-42829710
+g0108 slots=4
+g0113 slots=4
+g0115 slots=4
+g0120 slots=4
+g0121 slots=4
+g0123 slots=4
+g0125 slots=4
+g0126 slots=4
+
+[2024-08-12 03:39:17,168] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/deepspeed/launcher/runner.py", line 441, in main
+    subprocess.check_call(ssh_check_cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, shell=True)
+  File "/apps/rocky8/python/3.11.9/lib/python3.11/subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'ssh -o PasswordAuthentication=no g0108 hostname' returned non-zero exit status 255.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/bin/deepspeed", line 6, in <module>
+    main()
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/deepspeed/launcher/runner.py", line 443, in main
+    raise RuntimeError(
+RuntimeError: Using hostfile at ./abci_node-8_gpu-32-v100/hostfile_jobid-42829710 but host=g0108 was not reachable via ssh. If you are running with a single node please remove ./abci_node-8_gpu-32-v100/hostfile_jobid-42829710 or setup passwordless ssh.

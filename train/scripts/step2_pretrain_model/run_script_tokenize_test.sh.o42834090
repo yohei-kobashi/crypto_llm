@@ -1,0 +1,40 @@
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:46:29,025] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Process Process-1:
+Traceback (most recent call last):
+  File "/apps/rocky8/python/3.11.9/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/apps/rocky8/python/3.11.9/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/acf16449gb/ucllm_nedo_prod/train/Megatron-DeepSpeed/tools/preprocess_data.py", line 141, in process_json_file
+    fin = open(input_file_name, 'r', encoding='utf-8')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True.jsonl'
+Opening /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_no_encryption_000000_1234_True.jsonl
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000001_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000001_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000001_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:46:38,207] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Opening /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000001_1234_True.jsonl
+Processed 1000 documents (36943.15359275635 docs/s, 7.35656279176282 MB/s).
+Time to startup: 0.4438314437866211
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000100_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000100_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000100_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:46:46,382] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Opening /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000100_1234_True.jsonl
+Processed 1000 documents (32033.482262191163 docs/s, 6.397128346125941 MB/s).
+Time to startup: 0.37369251251220703
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_010000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_010000_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_010000_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:46:54,450] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Opening /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_010000_1234_True.jsonl
+Processed 1000 documents (29184.46669496302 docs/s, 5.830040983321388 MB/s).
+Time to startup: 0.3871798515319824
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+Either /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000000_1234_True_text_document.bin or /groups/gcf51099/crypto_llm/data/test/wikipedia_latin_poly_000000_1234_True_text_document.idx doesn't exist yet, so preprocess the data.
+[2024-08-14 06:47:02,499] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)

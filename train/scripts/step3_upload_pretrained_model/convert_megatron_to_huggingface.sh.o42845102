@@ -1,0 +1,367 @@
+
+Extracting PyTorch state dictionary from /groups/gcf51099/crypto_llm/models/megatron/1.latin_wikipedia_poly_000000_1234_True/iter_0001400/mp_rank_00/model_optim_rng.pt
+[2024-08-16 12:38:43,837] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Converting
+layer 0
+layer 1
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 2
+layer 3
+layer 4
+layer 5
+layer 6
+layer 7
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 8
+layer 9
+layer 10
+layer 11
+layer 12
+layer 13
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 14
+layer 15
+layer 16
+layer 17
+layer 18
+layer 19
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 20
+layer 21
+layer 22
+layer 23
+layer 24
+layer 25
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 26
+layer 27
+layer 28
+layer 29
+layer 30
+layer 31
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 32
+layer 33
+layer 34
+layer 35
+layer 36
+layer 37
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 38
+layer 39
+layer 40
+layer 41
+layer 42
+layer 43
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 44
+layer 45
+layer 46
+layer 47
+layer 48
+layer 49
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 50
+layer 51
+layer 52
+layer 53
+layer 54
+layer 55
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 56
+layer 57
+layer 58
+layer 59
+layer 60
+layer 61
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 62
+layer 63
+layer 64
+layer 65
+layer 66
+layer 67
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 68
+layer 69
+layer 70
+layer 71
+layer 72
+layer 73
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 74
+layer 75
+layer 76
+layer 77
+layer 78
+layer 79
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 80
+layer 81
+layer 82
+layer 83
+layer 84
+layer 85
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 86
+layer 87
+layer 88
+layer 89
+layer 90
+layer 91
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 92
+layer 93
+layer 94
+layer 95
+layer 96
+layer 97
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 98
+layer 99
+layer 100
+layer 101
+layer 102
+layer 103
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 104
+layer 105
+layer 106
+layer 107
+layer 108
+layer 109
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 110
+layer 111
+layer 112
+layer 113
+layer 114
+layer 115
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 116
+layer 117
+layer 118
+layer 119
+layer 120
+layer 121
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 122
+layer 123
+layer 124
+layer 125
+layer 126
+layer 127
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 128
+layer 129
+layer 130
+layer 131
+layer 132
+# transformer.wte.weight                           : torch.Size([32128, 2048])
+# transformer.h.0.ln_1.weight                      : torch.Size([2048])
+# transformer.h.0.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.0.attn.masked_bias                 : torch.Size([])
+# transformer.h.0.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.0.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.0.ln_2.weight                      : torch.Size([2048])
+# transformer.h.0.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.0.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.1.ln_1.weight                      : torch.Size([2048])
+# transformer.h.1.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.1.attn.masked_bias                 : torch.Size([])
+# transformer.h.1.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.1.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.1.ln_2.weight                      : torch.Size([2048])
+# transformer.h.1.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.1.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.2.ln_1.weight                      : torch.Size([2048])
+# transformer.h.2.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.2.attn.masked_bias                 : torch.Size([])
+# transformer.h.2.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.2.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.2.ln_2.weight                      : torch.Size([2048])
+# transformer.h.2.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.2.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.3.ln_1.weight                      : torch.Size([2048])
+# transformer.h.3.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.3.attn.masked_bias                 : torch.Size([])
+# transformer.h.3.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.3.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.3.ln_2.weight                      : torch.Size([2048])
+# transformer.h.3.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.3.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.4.ln_1.weight                      : torch.Size([2048])
+# transformer.h.4.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.4.attn.masked_bias                 : torch.Size([])
+# transformer.h.4.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.4.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.4.ln_2.weight                      : torch.Size([2048])
+# transformer.h.4.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.4.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.5.ln_1.weight                      : torch.Size([2048])
+# transformer.h.5.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.5.attn.masked_bias                 : torch.Size([])
+# transformer.h.5.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.5.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.5.ln_2.weight                      : torch.Size([2048])
+# transformer.h.5.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.5.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.6.ln_1.weight                      : torch.Size([2048])
+# transformer.h.6.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.6.attn.masked_bias                 : torch.Size([])
+# transformer.h.6.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.6.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.6.ln_2.weight                      : torch.Size([2048])
+# transformer.h.6.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.6.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.7.ln_1.weight                      : torch.Size([2048])
+# transformer.h.7.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.7.attn.masked_bias                 : torch.Size([])
+# transformer.h.7.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.7.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.7.ln_2.weight                      : torch.Size([2048])
+# transformer.h.7.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.7.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.8.ln_1.weight                      : torch.Size([2048])
+# transformer.h.8.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.8.attn.masked_bias                 : torch.Size([])
+# transformer.h.8.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.8.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.8.ln_2.weight                      : torch.Size([2048])
+# transformer.h.8.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.8.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.9.ln_1.weight                      : torch.Size([2048])
+# transformer.h.9.attn.bias                        : torch.Size([1, 1, 2048, 2048])
+# transformer.h.9.attn.masked_bias                 : torch.Size([])
+# transformer.h.9.attn.c_attn.weight               : torch.Size([2048, 3072])
+# transformer.h.9.attn.c_proj.weight               : torch.Size([2048, 2048])
+# transformer.h.9.ln_2.weight                      : torch.Size([2048])
+# transformer.h.9.mlp.c_fc.weight                  : torch.Size([2048, 11264])
+# transformer.h.9.mlp.c_proj.weight                : torch.Size([5632, 2048])
+# transformer.h.10.ln_1.weight                     : torch.Size([2048])
+# transformer.h.10.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.10.attn.masked_bias                : torch.Size([])
+# transformer.h.10.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.10.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.10.ln_2.weight                     : torch.Size([2048])
+# transformer.h.10.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.10.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.11.ln_1.weight                     : torch.Size([2048])
+# transformer.h.11.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.11.attn.masked_bias                : torch.Size([])
+# transformer.h.11.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.11.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.11.ln_2.weight                     : torch.Size([2048])
+# transformer.h.11.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.11.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.12.ln_1.weight                     : torch.Size([2048])
+# transformer.h.12.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.12.attn.masked_bias                : torch.Size([])
+# transformer.h.12.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.12.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.12.ln_2.weight                     : torch.Size([2048])
+# transformer.h.12.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.12.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.13.ln_1.weight                     : torch.Size([2048])
+# transformer.h.13.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.13.attn.masked_bias                : torch.Size([])
+# transformer.h.13.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.13.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.13.ln_2.weight                     : torch.Size([2048])
+# transformer.h.13.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.13.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.14.ln_1.weight                     : torch.Size([2048])
+# transformer.h.14.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.14.attn.masked_bias                : torch.Size([])
+# transformer.h.14.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.14.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.14.ln_2.weight                     : torch.Size([2048])
+# transformer.h.14.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.14.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.15.ln_1.weight                     : torch.Size([2048])
+# transformer.h.15.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.15.attn.masked_bias                : torch.Size([])
+# transformer.h.15.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.15.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.15.ln_2.weight                     : torch.Size([2048])
+# transformer.h.15.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.15.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.16.ln_1.weight                     : torch.Size([2048])
+# transformer.h.16.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.16.attn.masked_bias                : torch.Size([])
+# transformer.h.16.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.16.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.16.ln_2.weight                     : torch.Size([2048])
+# transformer.h.16.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.16.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.17.ln_1.weight                     : torch.Size([2048])
+# transformer.h.17.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.17.attn.masked_bias                : torch.Size([])
+# transformer.h.17.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.17.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.17.ln_2.weight                     : torch.Size([2048])
+# transformer.h.17.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.17.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.18.ln_1.weight                     : torch.Size([2048])
+# transformer.h.18.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.18.attn.masked_bias                : torch.Size([])
+# transformer.h.18.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.18.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.18.ln_2.weight                     : torch.Size([2048])
+# transformer.h.18.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.18.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.19.ln_1.weight                     : torch.Size([2048])
+# transformer.h.19.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.19.attn.masked_bias                : torch.Size([])
+# transformer.h.19.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.19.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.19.ln_2.weight                     : torch.Size([2048])
+# transformer.h.19.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.19.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.20.ln_1.weight                     : torch.Size([2048])
+# transformer.h.20.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.20.attn.masked_bias                : torch.Size([])
+# transformer.h.20.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.20.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.20.ln_2.weight                     : torch.Size([2048])
+# transformer.h.20.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.20.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.h.21.ln_1.weight                     : torch.Size([2048])
+# transformer.h.21.attn.bias                       : torch.Size([1, 1, 2048, 2048])
+# transformer.h.21.attn.masked_bias                : torch.Size([])
+# transformer.h.21.attn.c_attn.weight              : torch.Size([2048, 3072])
+# transformer.h.21.attn.c_proj.weight              : torch.Size([2048, 2048])
+# transformer.h.21.ln_2.weight                     : torch.Size([2048])
+# transformer.h.21.mlp.c_fc.weight                 : torch.Size([2048, 11264])
+# transformer.h.21.mlp.c_proj.weight               : torch.Size([5632, 2048])
+# transformer.ln_f.weight                          : torch.Size([32128, 2048])
+# lm_head.weight                                   : torch.Size([32128, 2048])
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/models/megatron_gpt2/convert_megatron_gpt2_checkpoint.py", line 427, in <module>
+    main()
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/models/megatron_gpt2/convert_megatron_gpt2_checkpoint.py", line 395, in main
+    tokenizer_model_name = ds_args.tokenizer_name_or_path
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Namespace' object has no attribute 'tokenizer_name_or_path'

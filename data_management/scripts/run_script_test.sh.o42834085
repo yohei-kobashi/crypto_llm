@@ -1,0 +1,12 @@
+type: poly
+key length: 1
+finished!
+type: poly
+key length: 100
+finished!
+type: poly
+key length: 10000
+finished!
+type: poly
+key length: 0
+finished!

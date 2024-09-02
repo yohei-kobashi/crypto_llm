@@ -31,114 +31,114 @@ bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
     --data_name ${data}_${lang}_${encryption}_no_encryption \
     --workers 20
 
-# poly, key length == 1
-encryption="poly_000001_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 1
+# encryption="poly_000001_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == 10
-encryption="poly_000010_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 10
+# encryption="poly_000010_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == 100
-encryption="poly_000100_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 100
+# encryption="poly_000100_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == 1000
-encryption="poly_001000_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 1000
+# encryption="poly_001000_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == 10000
-encryption="poly_010000_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 10000
+# encryption="poly_010000_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == 100000
-encryption="poly_100000_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == 100000
+# encryption="poly_100000_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20
 
-# poly, key length == max
-encryption="poly_000000_1234_True"
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
-    --data_name ${data}_${lang}_${encryption} \
-    --workers 20
-# no encryption (continual pretraining)
-bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
-    --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
-    --data_base_dir /groups/gcf51099/crypto_llm/data \
-    --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
-    --data_name ${data}_${lang}_${encryption}_no_encryption \
-    --workers 20
+# # poly, key length == max
+# encryption="poly_000000_1234_True"
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${encryption}.jsonl \
+#     --data_name ${data}_${lang}_${encryption} \
+#     --workers 20
+# # no encryption (continual pretraining)
+# bash ./gcp_honban_node-1_gpu-8/tokenization.sh \
+#     --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${data}_${lang}_${encryption}.model \
+#     --data_base_dir /groups/gcf51099/crypto_llm/data \
+#     --train_data_file /groups/gcf51099/crypto_llm/data/encrypted/${data}_${lang}_${plain}_no_encryption.jsonl \
+#     --data_name ${data}_${lang}_${encryption}_no_encryption \
+#     --workers 20

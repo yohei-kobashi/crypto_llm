@@ -1,0 +1,264 @@
+
+crypto_llm_train_dir = /home/acf16449gb/crypto_llm/train
+megatron_deepspeed_dir = /home/acf16449gb/crypto_llm/train/Megatron-DeepSpeed
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+input_model_max_length = 2048
+input_model_dir = /groups/gcf51099/crypto_llm/models/1.latin_wikipedia_poly_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1400/
+output_tokenizer_and_model_dir = /groups/gcf51099/crypto_llm/models/hf/test/
+
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+args = Namespace(input_tokenizer_file='/groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model', input_model_max_length=2048, output_tokenizer_dir='/groups/gcf51099/crypto_llm/models/hf/test/')
+Converting the sentencepiece tokenizer to the huggingface tokenizer...
+Comparing the sentencepiece tokenizer and the huggingface tokenizer...
+==================================================================
+
+input text: "### Test for Japanese: 大嘗祭は、皇室行事。"
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁Japanese", ":", "▁", "大", "<0xE5>", "<0x98>", "<0x97>", "<0xE7>", "<0xA5>", "<0xAD>", "<0xE3>", "<0x81>", "<0xAF>", "、", "<0xE7>", "<0x9A>", "<0x87>", "<0xE5>", "<0xAE>", "<0xA4>", "<0xE8>", "<0xA1>", "<0x8C>", "<0xE4>", "<0xBA>", "<0x8B>", "<0xE3>", "<0x80>", "<0x82>"]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁Japanese", ":", "▁", "大", "<0xE5>", "<0x98>", "<0x97>", "<0xE7>", "<0xA5>", "<0xAD>", "<0xE3>", "<0x81>", "<0xAF>", "、", "<0xE7>", "<0x9A>", "<0x87>", "<0xE5>", "<0xAE>", "<0xA4>", "<0xE8>", "<0xA1>", "<0x8C>", "<0xE4>", "<0xBA>", "<0x8B>", "<0xE3>", "<0x80>", "<0x82>"]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 5520, 291, 267, 9906, 238, 161, 160, 240, 174, 182, 236, 138, 184, 11477, 240, 163, 144, 238, 183, 173, 241, 170, 149, 237, 195, 148, 236, 137, 139]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 5520, 291, 267, 9906, 238, 161, 160, 240, 174, 182, 236, 138, 184, 11477, 240, 163, 144, 238, 183, 173, 241, 170, 149, 237, 195, 148, 236, 137, 139]
+
+decoded text
+-> Pass sp: "### Test for Japanese: 大嘗祭は、皇室行事。"
+-> Pass hf: "### Test for Japanese: 大嘗祭は、皇室行事。"
+
+==================================================================
+
+input text: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁special", "▁to", "ken", ":", "▁", "<s>", "▁", "</s>", "▁", "<pad>", "▁", "<CLS>", "▁", "<SEP>", "▁", "<EOD>", "▁", "<MASK>"]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁special", "▁to", "ken", ":", "▁", "<s>", "▁", "</s>", "▁", "<pad>", "▁", "<CLS>", "▁", "<SEP>", "▁", "<EOD>", "▁", "<MASK>"]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 9852, 810, 6513, 291, 267, 1, 267, 2, 267, 3, 267, 4, 267, 5, 267, 6, 267, 7]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 9852, 810, 6513, 291, 267, 1, 267, 2, 267, 3, 267, 4, 267, 5, 267, 6, 267, 7]
+
+decoded text
+-> Pass sp: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+-> Pass hf: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+
+==================================================================
+
+input text: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁new", "line", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "\n", "▁", "1", "▁new", "line", ".", "▁", "\n", "\n", "▁", "2", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "▁", "3", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "\n", "▁", "4", "▁new", "line", "s", "."]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁new", "line", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "\n", "▁", "1", "▁new", "line", ".", "▁", "\n", "\n", "▁", "2", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "▁", "3", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "\n", "▁", "4", "▁new", "line", "s", "."]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 1710, 1363, 841, 744, 14767, 770, 12709, 1407, 291, 267, 8, 267, 268, 1710, 1363, 277, 267, 8, 8, 267, 269, 1710, 1363, 275, 277, 267, 8, 8, 8, 267, 270, 1710, 1363, 275, 277, 267, 8, 8, 8, 8, 267, 271, 1710, 1363, 275, 277]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 1710, 1363, 841, 744, 14767, 770, 12709, 1407, 291, 267, 8, 267, 268, 1710, 1363, 277, 267, 8, 8, 267, 269, 1710, 1363, 275, 277, 267, 8, 8, 8, 267, 270, 1710, 1363, 275, 277, 267, 8, 8, 8, 8, 267, 271, 1710, 1363, 275, 277]
+
+decoded text
+-> Pass sp: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+-> Pass hf: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+
+==================================================================
+
+input text: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁white", "space", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "1", "▁space", ".", "▁", "▁", "2", "▁space", "s", ".", "▁▁▁", "3", "▁space", "s", ".", "▁▁▁▁", "4", "▁space", "s", "."]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁white", "space", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "1", "▁space", ".", "▁", "▁", "2", "▁space", "s", ".", "▁▁▁", "3", "▁space", "s", ".", "▁▁▁▁", "4", "▁space", "s", "."]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 10095, 10807, 841, 744, 14767, 770, 12709, 1407, 291, 267, 268, 9362, 277, 267, 267, 269, 9362, 275, 277, 909, 270, 9362, 275, 277, 908, 271, 9362, 275, 277]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 10095, 10807, 841, 744, 14767, 770, 12709, 1407, 291, 267, 268, 9362, 277, 267, 267, 269, 9362, 275, 277, 909, 270, 9362, 275, 277, 908, 271, 9362, 275, 277]
+
+decoded text
+-> Pass sp: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+-> Pass hf: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+
+args = Namespace(input_folder='/groups/gcf51099/crypto_llm/models/1.latin_wikipedia_poly_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1400/', output_folder='/groups/gcf51099/crypto_llm/models/hf/test/', target_tp=1, target_pp=1, activation_function='swiglu', for_release=False)
+Converting DeepSpeed checkpoint in /groups/gcf51099/crypto_llm/models/1.latin_wikipedia_poly_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1400/ to HF Transformers checkpoint in /groups/gcf51099/crypto_llm/models/hf/test/
+[2024-08-15 03:20:59,535] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Converting to HF Checkpoint
+layer 0
+layer 1
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 2
+layer 3
+layer 4
+layer 5
+layer 6
+layer 7
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 8
+layer 9
+layer 10
+layer 11
+layer 12
+layer 13
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 14
+layer 15
+layer 16
+layer 17
+layer 18
+layer 19
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 20
+layer 21
+layer 22
+layer 23
+layer 24
+layer 25
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 26
+layer 27
+layer 28
+layer 29
+layer 30
+layer 31
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 32
+layer 33
+layer 34
+layer 35
+layer 36
+layer 37
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 38
+layer 39
+layer 40
+layer 41
+layer 42
+layer 43
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 44
+layer 45
+layer 46
+layer 47
+layer 48
+layer 49
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 50
+layer 51
+layer 52
+layer 53
+layer 54
+layer 55
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 56
+layer 57
+layer 58
+layer 59
+layer 60
+layer 61
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 62
+layer 63
+layer 64
+layer 65
+layer 66
+layer 67
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 68
+layer 69
+layer 70
+layer 71
+layer 72
+layer 73
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 74
+layer 75
+layer 76
+layer 77
+layer 78
+layer 79
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 80
+layer 81
+layer 82
+layer 83
+layer 84
+layer 85
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 86
+layer 87
+layer 88
+layer 89
+layer 90
+layer 91
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 92
+layer 93
+layer 94
+layer 95
+layer 96
+layer 97
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 98
+layer 99
+layer 100
+layer 101
+layer 102
+layer 103
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 104
+layer 105
+layer 106
+layer 107
+layer 108
+layer 109
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 110
+layer 111
+layer 112
+layer 113
+layer 114
+layer 115
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 116
+layer 117
+layer 118
+layer 119
+layer 120
+layer 121
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 122
+layer 123
+layer 124
+layer 125
+layer 126
+layer 127
+Original shape: torch.Size([3072, 2048])
+Saved shape: (8, 3, 128, 2048)
+layer 128
+layer 129
+layer 130
+layer 131
+layer 132
+Saving config to "/groups/gcf51099/crypto_llm/models/hf/test/config.json"
+Saving checkpoint to "/groups/gcf51099/crypto_llm/models/hf/test/pytorch_model.bin"
+Now add tokenizer files and upload to the hub
+
+Finished converting the tokenizer and the pretrained model to HuggingFace Transformers format.
+

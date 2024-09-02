@@ -1,0 +1,3 @@
+/home/acf16449gb/miniconda3/envs/.venv_data/lib/python3.11/site-packages/torch/cuda/__init__.py:619: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+  0%|          | 0/2 [00:00<?, ?it/s]/var/spool/uge/execd/g0820/job_scripts/42824154: line 12: 4071068 Killed                  python extract_pseudo_privacy_sentences.py
