@@ -15,12 +15,8 @@ module load cuda/11.8
 module load cudnn/8.8.0  
 module list
 
-export WORK_HOME=/work/gb20/b20048
-export CONDARC=$WORK_HOME/miniconda3/.condarc
-export CONDA_ROOT=$WORK_HOME/miniconda3
-export CONDA_PREFIX=$WORK_HOME/miniconda3
-export HOME=$WORK_HOME
-export CONDA_ENVS_PATH=$WORK_HOME/miniconda3
+export HOME=/work/gb20/b20048
+export WORK_HOME=$HOME/crypto_llm/train
 
 # NOTE if needed, conda installation
 # conda env remove -n deep -y
@@ -30,9 +26,7 @@ export CONDA_ENVS_PATH=$WORK_HOME/miniconda3
 #rm ~/miniconda3/miniconda.sh
 
 echo "* Creating conda environment"
-source $WORK_HOME/miniconda3/etc/profile.d/conda.sh
-conda config --file $CONDARC --set auto_update_conda false
-conda config --add pkgs_dirs $WORK_HOME/cache
+source $HOME/miniconda3/etc/profile.d/conda.sh
 conda deactivate
 conda create -n deep python=3.9 -y
 conda activate deep
@@ -40,7 +34,6 @@ conda activate deep
 echo "* Installing pytorch"
 pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
 cd $WORK_HOME
-cd crypto_llm/train
 pip install -r requirements.txt
 pip install deepspeed-kernels
 
@@ -52,12 +45,14 @@ ds_report
 
 echo "* Installing NVIDIA apex"
 cd $WORK_HOME
-cd crypto_llm/train/apex
+git clone https://github.com/NVIDIA/apex
+cd apex
 pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
 
 echo "* Installing Megatron-DeepSpeed"
 cd $WORK_HOME
-cd crypto_llm/train/Megatron-DeepSpeed
+git clone https://github.com/microsoft/Megatron-DeepSpeed
+cd Megatron-DeepSpeed
 python setup.py install
 
 cd $WORK_HOME
