@@ -114,15 +114,15 @@ seq_len=${seq_len}
 ## We changed min_lr to a lower number (1.0e-6), which we found is able to
 ## provide better zero-shot eval results.
 
-# GPT-3 Small 125M
-model_size=0.125
-num_layers=12
-hidden_size=768
-num_attn_heads=12
-global_batch_size=256
-lr=6.0e-4
-min_lr=1.0e-6
-init_std=0.02
+# # GPT-3 Small 125M
+# model_size=0.125
+# num_layers=12
+# hidden_size=768
+# num_attn_heads=12
+# global_batch_size=256
+# lr=6.0e-4
+# min_lr=1.0e-6
+# init_std=0.02
 
 ## GPT-3 Medium 350M
 # model_size=0.35
@@ -154,17 +154,17 @@ init_std=0.02
 # min_lr=1.0e-6
 # init_std=0.013
 
-## LLaMA-2 1.1B (TinyLlama 1.1B)
-# model_size=1.1
-# num_layers=22
-# num_attn_heads=16
-# hidden_size=2048
-# ffn_hidden_size=5632
-# num_key_value_heads=4
-# global_batch_size=${global_batch_size}
-# lr=2.0e-4
-# min_lr=${min_lr}
-# init_std=0.013
+# LLaMA-2 1.1B (TinyLlama 1.1B)
+model_size=1.1
+num_layers=22
+num_attn_heads=16
+hidden_size=2048
+ffn_hidden_size=5632
+num_key_value_heads=4
+global_batch_size=${global_batch_size}
+lr=2.0e-4
+min_lr=${min_lr}
+init_std=0.013
 
 ## GPT-3 2.7B
 # model_size=2.7
@@ -395,11 +395,11 @@ megatron_options=" \
     --clip-grad 1.0 \
     --hysteresis 2 \
     --num-workers ${num_workers} \
-    --fp16 \
     --seed ${seed} \
     --load ${checkpoint_path} \
     --save ${checkpoint_path} \
     --no-async-tensor-model-parallel-allreduce \
+    --use-flash-attn-v2 \
     --tensorboard-queue-size 1 \
     --log-timers-to-tensorboard \
     --log-batch-size-to-tensorboard \

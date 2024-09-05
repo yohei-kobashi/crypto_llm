@@ -30,6 +30,7 @@ reinitialize_embeddings="false"
 train_data_exact_num_epochs=""
 split="949,50,1"
 untie_embeddings_and_output_weights="false"
+tinyllama="false"
 
 global_batch_size=384
 batch_size=1
@@ -69,6 +70,7 @@ while [[ ${#} -gt 0 ]]; do
         --train_data_exact_num_epochs) train_data_exact_num_epochs=${2}; shift ;;
         --split) split=${2}; shift ;;
         --untie_embeddings_and_output_weights) untie_embeddings_and_output_weights=${2}; shift ;;
+        --tinyllama) tinyllama=${2}; shift ;;
         *) echo "Unknown parameter passed: ${1}"; exit 1 ;;
     esac
     # Shifts once per loop to move to the next key/value.
@@ -112,7 +114,7 @@ seq_len=${seq_len}
 ## We changed min_lr to a lower number (1.0e-6), which we found is able to
 ## provide better zero-shot eval results.
 
-## GPT-3 Small 125M
+# # GPT-3 Small 125M
 # model_size=0.125
 # num_layers=12
 # hidden_size=768
@@ -152,7 +154,7 @@ seq_len=${seq_len}
 # min_lr=1.0e-6
 # init_std=0.013
 
-## LLaMA-2 1.1B (TinyLlama 1.1B)
+# LLaMA-2 1.1B (TinyLlama 1.1B)
 model_size=1.1
 num_layers=22
 num_attn_heads=16
@@ -360,7 +362,6 @@ data_options=" \
 ## offline data analysis&indexing.
 megatron_options=" \
     --override-opt_param-scheduler \
-    --optimizer adam \
     --adam-beta1 0.9 \
     --adam-beta2 0.95 \
     --tensor-model-parallel-size ${mp_size} \
@@ -372,16 +373,7 @@ megatron_options=" \
     --global-batch-size ${global_batch_size} \
     --num-layers ${num_layers} \
     --hidden-size ${hidden_size} \
-    --ffn-hidden-size ${ffn_hidden_size} \
     --num-attention-heads ${num_attn_heads} \
-    --num-key-value-heads ${num_key_value_heads} \
-    --no-query-key-layer-scaling \
-    --attention-dropout 0 \
-    --hidden-dropout 0 \
-    --use-rotary-position-embeddings \
-    --swiglu \
-    --normalization rmsnorm \
-    --disable-bias-linear \
     --seq-length ${seq_len} \
     --max-position-embeddings ${seq_len} \
     --train-tokens ${train_tokens} \
@@ -419,19 +411,45 @@ megatron_options="${megatron_options} \
     --log-optimizer-states-to-tensorboard"
 fi
 
+# 開発中のオプション
 if [ "${reinitialize_embeddings}" = "true" ]; then
 megatron_options="${megatron_options} \
     --reinitialize-embeddings"
 fi
 
+# エポック数で学習量を決定
 if [ -n "${train_data_exact_num_epochs}" ]; then
 megatron_options="${megatron_options} \
     --train-data-exact-num-epochs ${train_data_exact_num_epochs}"
 fi
 
+# tf32オプション
 if [ "${precision}" = "tf32" ]; then
 megatron_options="${megatron_options} \
     --tf32"
+fi
+
+# tinyllama用のオプション
+if [ "${tinyllama}" = "true" ]; then
+megatron_options="${megatron_options} \
+    --optimizer adam \
+    --no-query-key-layer-scaling \
+    --attention-dropout 0 \
+    --hidden-dropout 0 \
+    --use-rotary-position-embeddings \
+    --swiglu \
+    --normalization rmsnorm \
+    --disable-bias-linear"
+fi
+
+if [ -n "${ffn_hidden_size}" ]; then
+megatron_options="${megatron_options} \
+    --ffn-hidden-size ${ffn_hidden_size}"
+fi
+
+if [ -n "${num_key_value_heads}" ]; then
+megatron_options="${megatron_options} \
+    --num-key-value-heads ${num_key_value_heads}"
 fi
 
 if [ "${untie_embeddings_and_output_weights}" = "true" ]; then
