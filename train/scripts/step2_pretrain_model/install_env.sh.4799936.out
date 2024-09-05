@@ -1,0 +1,727 @@
+* Loading modules
+Currently Loaded Modulefiles:
+ 1) gcc/8.3.1(default)   2) cuda/11.8   3) cudnn/8.8.0  
+* Creating conda environment
+* Installing Megatron-DeepSpeed
+Found existing installation: megatron_core 0.2.0
+Uninstalling megatron_core-0.2.0:
+  Successfully uninstalled megatron_core-0.2.0
+running install
+/work/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+!!
+
+        ********************************************************************************
+        Please avoid running ``setup.py`` directly.
+        Instead, use pypa/build, pypa/installer or other
+        standards-based tools.
+
+        See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+        ********************************************************************************
+
+!!
+  self.initialize_options()
+/work/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/setuptools/_distutils/cmd.py:66: EasyInstallDeprecationWarning: easy_install command is deprecated.
+!!
+
+        ********************************************************************************
+        Please avoid running ``setup.py`` and ``easy_install``.
+        Instead, use pypa/build, pypa/installer or other
+        standards-based tools.
+
+        See https://github.com/pypa/setuptools/issues/917 for details.
+        ********************************************************************************
+
+!!
+  self.initialize_options()
+running bdist_egg
+running egg_info
+writing megatron_core.egg-info/PKG-INFO
+writing dependency_links to megatron_core.egg-info/dependency_links.txt
+writing requirements to megatron_core.egg-info/requires.txt
+writing top-level names to megatron_core.egg-info/top_level.txt
+reading manifest file 'megatron_core.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.tr' under directory 'megatron/fused_kernels'
+warning: no files found matching '*.cuh' under directory 'megatron/fused_kernels'
+warning: no files found matching '*.cc' under directory 'megatron/fused_kernels'
+adding license file 'LICENSE'
+writing manifest file 'megatron_core.egg-info/SOURCES.txt'
+installing library code to build/bdist.linux-x86_64/egg
+running install_lib
+running build_py
+copying megatron/initialize.py -> build/lib/megatron
+copying megatron/global_vars.py -> build/lib/megatron
+copying megatron/checkpointing.py -> build/lib/megatron
+copying megatron/utils.py -> build/lib/megatron
+copying megatron/__init__.py -> build/lib/megatron
+copying megatron/arguments.py -> build/lib/megatron
+copying megatron/timers.py -> build/lib/megatron
+copying megatron/training.py -> build/lib/megatron
+copying tools/hf2megads_weight_converter.py -> build/lib/tools
+copying tools/preprocess_data.py -> build/lib/tools
+copying tests/unit_tests/test_utilities.py -> build/lib/tests/unit_tests
+copying tests/models/test_gpt_embedding.py -> build/lib/tests/models
+copying tests/models/test_gpt_model.py -> build/lib/tests/models
+copying tests/transformer/test_parallel_mlp.py -> build/lib/tests/transformer
+copying tests/pipeline_parallel/test_schedules.py -> build/lib/tests/pipeline_parallel
+copying megatron/tokenizer/tokenizer.py -> build/lib/megatron/tokenizer
+copying megatron/model/language_model.py -> build/lib/megatron/model
+copying megatron/model/transformer.py -> build/lib/megatron/model
+copying megatron/model/rotary_pos_embedding.py -> build/lib/megatron/model
+copying megatron/model/module.py -> build/lib/megatron/model
+copying megatron/model/__init__.py -> build/lib/megatron/model
+copying megatron/model/gpt_model.py -> build/lib/megatron/model
+copying megatron/core/tensor_parallel/layers.py -> build/lib/megatron/core/tensor_parallel
+creating build/bdist.linux-x86_64/egg
+creating build/bdist.linux-x86_64/egg/tests
+copying build/lib/tests/test_megatron.py -> build/bdist.linux-x86_64/egg/tests
+creating build/bdist.linux-x86_64/egg/tests/functional_tests
+creating build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/python_test_utils/check_slurm_job_completion.py -> build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/python_test_utils/test_ci_pipeline.py -> build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/python_test_utils/test_resume_checkpoint_pipeline.py -> build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/python_test_utils/__init__.py -> build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/python_test_utils/get_test_results_from_tensorboard_logs.py -> build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils
+copying build/lib/tests/functional_tests/__init__.py -> build/bdist.linux-x86_64/egg/tests/functional_tests
+creating build/bdist.linux-x86_64/egg/tests/unit_tests
+copying build/lib/tests/unit_tests/test_utilities.py -> build/bdist.linux-x86_64/egg/tests/unit_tests
+copying build/lib/tests/unit_tests/__init__.py -> build/bdist.linux-x86_64/egg/tests/unit_tests
+copying build/lib/tests/unit_tests/test_utils.py -> build/bdist.linux-x86_64/egg/tests/unit_tests
+copying build/lib/tests/unit_tests/test_basic.py -> build/bdist.linux-x86_64/egg/tests/unit_tests
+copying build/lib/tests/unit_tests/test_parallel_state.py -> build/bdist.linux-x86_64/egg/tests/unit_tests
+creating build/bdist.linux-x86_64/egg/tests/models
+copying build/lib/tests/models/test_gpt_embedding.py -> build/bdist.linux-x86_64/egg/tests/models
+copying build/lib/tests/models/__init__.py -> build/bdist.linux-x86_64/egg/tests/models
+copying build/lib/tests/models/test_gpt_model.py -> build/bdist.linux-x86_64/egg/tests/models
+creating build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_transformer_config.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_core_attention.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_module.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/__init__.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_parallel_mlp.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_parallel_attention.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_parallel_transformer_block.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/transformer/test_parallel_transformer_layer.py -> build/bdist.linux-x86_64/egg/tests/transformer
+copying build/lib/tests/__init__.py -> build/bdist.linux-x86_64/egg/tests
+copying build/lib/tests/conftest.py -> build/bdist.linux-x86_64/egg/tests
+copying build/lib/tests/run_megatron.py -> build/bdist.linux-x86_64/egg/tests
+creating build/bdist.linux-x86_64/egg/tests/pipeline_parallel
+copying build/lib/tests/pipeline_parallel/test_schedules.py -> build/bdist.linux-x86_64/egg/tests/pipeline_parallel
+copying build/lib/tests/pipeline_parallel/__init__.py -> build/bdist.linux-x86_64/egg/tests/pipeline_parallel
+creating build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/communication.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/tokenization.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/__init__.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/forward_step.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/sampling.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/api.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/generation.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/text_generation/beam_utils.py -> build/bdist.linux-x86_64/egg/megatron/text_generation
+copying build/lib/megatron/p2p_communication.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/initialize.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/global_vars.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/checkpointing.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/utils.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/dist_signal_handler.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/profiler.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/indexer.py -> build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/Makefile -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/blendable_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/image_folder.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/prompt_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/gpt_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/t5_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/data_samplers.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/dataset_utils.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/bert_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/realm_index.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/vit_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/orqa_wiki_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/__init__.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/realm_dataset_utils.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/ict_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/helpers.cpp -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/indexed_dataset.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/biencoder_dataset_utils.py -> build/bdist.linux-x86_64/egg/megatron/data
+copying build/lib/megatron/data/autoaugment.py -> build/bdist.linux-x86_64/egg/megatron/data
+creating build/bdist.linux-x86_64/egg/megatron/tokenizer
+copying build/lib/megatron/tokenizer/bert_tokenization.py -> build/bdist.linux-x86_64/egg/megatron/tokenizer
+copying build/lib/megatron/tokenizer/gpt2_tokenization.py -> build/bdist.linux-x86_64/egg/megatron/tokenizer
+copying build/lib/megatron/tokenizer/tokenizer.py -> build/bdist.linux-x86_64/egg/megatron/tokenizer
+copying build/lib/megatron/tokenizer/__init__.py -> build/bdist.linux-x86_64/egg/megatron/tokenizer
+copying build/lib/megatron/microbatches.py -> build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/optimizer/optimizer.py -> build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/optimizer/__init__.py -> build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/optimizer/clip_grads.py -> build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/optimizer/distrib_optimizer.py -> build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/optimizer/grad_scaler.py -> build/bdist.linux-x86_64/egg/megatron/optimizer
+copying build/lib/megatron/enums.py -> build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/biencoder_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/rmsnorm.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/utils.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/language_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/transformer.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/fused_softmax.py -> build/bdist.linux-x86_64/egg/megatron/model
+creating build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/inpainting.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/knn_monitor.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/utils.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/esvit_swin_backbone.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/vit_backbone.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/swin_backbone.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/mit_backbone.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/classification.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/__init__.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/vision/dino.py -> build/bdist.linux-x86_64/egg/megatron/model/vision
+copying build/lib/megatron/model/rotary_pos_embedding.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/fused_layer_norm.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/distributed.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/fused_bias_gelu.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/enums.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/module.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/classification.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/__init__.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/fused_rmsnorm.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/t5_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/gpt_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/bert_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/multiple_choice.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/model/realm_model.py -> build/bdist.linux-x86_64/egg/megatron/model
+copying build/lib/megatron/__init__.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/arguments.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/text_generation_utils.py -> build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_softmax.cpp -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_masked_softmax.cpp -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+creating build/bdist.linux-x86_64/egg/megatron/fused_kernels/tests
+copying build/lib/megatron/fused_kernels/tests/test_fused_kernels.py -> build/bdist.linux-x86_64/egg/megatron/fused_kernels/tests
+copying build/lib/megatron/fused_kernels/tests/__init__.py -> build/bdist.linux-x86_64/egg/megatron/fused_kernels/tests
+copying build/lib/megatron/fused_kernels/scaled_masked_softmax_cuda.cu -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_upper_triang_masked_softmax.h -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/type_shim.h -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_softmax_cuda.cu -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_masked_softmax.h -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/__init__.py -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_upper_triang_masked_softmax.cpp -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/compat.h -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+copying build/lib/megatron/fused_kernels/scaled_upper_triang_masked_softmax_cuda.cu -> build/bdist.linux-x86_64/egg/megatron/fused_kernels
+creating build/bdist.linux-x86_64/egg/megatron/core
+copying build/lib/megatron/core/utils.py -> build/bdist.linux-x86_64/egg/megatron/core
+creating build/bdist.linux-x86_64/egg/megatron/core/sequence_parallel
+copying build/lib/megatron/core/sequence_parallel/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/sequence_parallel
+copying build/lib/megatron/core/sequence_parallel/cross_entropy.py -> build/bdist.linux-x86_64/egg/megatron/core/sequence_parallel
+creating build/bdist.linux-x86_64/egg/megatron/core/models
+copying build/lib/megatron/core/models/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/models
+creating build/bdist.linux-x86_64/egg/megatron/core/models/gpt
+copying build/lib/megatron/core/models/gpt/gpt_embedding.py -> build/bdist.linux-x86_64/egg/megatron/core/models/gpt
+copying build/lib/megatron/core/models/gpt/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/models/gpt
+copying build/lib/megatron/core/models/gpt/gpt_model.py -> build/bdist.linux-x86_64/egg/megatron/core/models/gpt
+creating build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/utils.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/mlp.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/transformer_layer.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/attention.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/core_attention.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/enums.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/module.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/transformer_block.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+copying build/lib/megatron/core/transformer/transformer_config.py -> build/bdist.linux-x86_64/egg/megatron/core/transformer
+creating build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/mappings.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/utils.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/random.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/layers.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/weight_grad_store.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/data.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/tensor_parallel/cross_entropy.py -> build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel
+copying build/lib/megatron/core/enums.py -> build/bdist.linux-x86_64/egg/megatron/core
+creating build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/fusions/fused_softmax.py -> build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/fusions/fused_layer_norm.py -> build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/fusions/fused_bias_dropout.py -> build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/fusions/fused_bias_gelu.py -> build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/fusions/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/fusions
+copying build/lib/megatron/core/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core
+copying build/lib/megatron/core/package_info.py -> build/bdist.linux-x86_64/egg/megatron/core
+copying build/lib/megatron/core/parallel_state.py -> build/bdist.linux-x86_64/egg/megatron/core
+copying build/lib/megatron/core/model_parallel_config.py -> build/bdist.linux-x86_64/egg/megatron/core
+creating build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/core/pipeline_parallel/p2p_communication.py -> build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/core/pipeline_parallel/schedules.py -> build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/core/pipeline_parallel/deepspeed_zbh1_engine.py -> build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/core/pipeline_parallel/__init__.py -> build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/core/pipeline_parallel/deepspeed_zbh1_schedule.py -> build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel
+copying build/lib/megatron/optimizer_param_scheduler.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/memory.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/text_generation_server.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/timers.py -> build/bdist.linux-x86_64/egg/megatron
+copying build/lib/megatron/training.py -> build/bdist.linux-x86_64/egg/megatron
+creating build/bdist.linux-x86_64/egg/tools
+creating build/bdist.linux-x86_64/egg/tools/retro
+creating build/bdist.linux-x86_64/egg/tools/retro/db
+copying build/lib/tools/retro/db/utils.py -> build/bdist.linux-x86_64/egg/tools/retro/db
+copying build/lib/tools/retro/db/build.py -> build/bdist.linux-x86_64/egg/tools/retro/db
+copying build/lib/tools/retro/db/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro/db
+copying build/lib/tools/retro/db/dataset.py -> build/bdist.linux-x86_64/egg/tools/retro/db
+copying build/lib/tools/retro/utils.py -> build/bdist.linux-x86_64/egg/tools/retro
+creating build/bdist.linux-x86_64/egg/tools/retro/query
+copying build/lib/tools/retro/query/utils.py -> build/bdist.linux-x86_64/egg/tools/retro/query
+copying build/lib/tools/retro/query/chunk_dataset.py -> build/bdist.linux-x86_64/egg/tools/retro/query
+copying build/lib/tools/retro/query/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro/query
+copying build/lib/tools/retro/query/query.py -> build/bdist.linux-x86_64/egg/tools/retro/query
+copying build/lib/tools/retro/query/retro_dataset.py -> build/bdist.linux-x86_64/egg/tools/retro/query
+creating build/bdist.linux-x86_64/egg/tools/retro/index
+copying build/lib/tools/retro/index/utils.py -> build/bdist.linux-x86_64/egg/tools/retro/index
+creating build/bdist.linux-x86_64/egg/tools/retro/index/indexes
+copying build/lib/tools/retro/index/indexes/faiss_base.py -> build/bdist.linux-x86_64/egg/tools/retro/index/indexes
+copying build/lib/tools/retro/index/indexes/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro/index/indexes
+copying build/lib/tools/retro/index/indexes/faiss_par_add.py -> build/bdist.linux-x86_64/egg/tools/retro/index/indexes
+copying build/lib/tools/retro/index/build.py -> build/bdist.linux-x86_64/egg/tools/retro/index
+copying build/lib/tools/retro/index/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro/index
+copying build/lib/tools/retro/index/index.py -> build/bdist.linux-x86_64/egg/tools/retro/index
+copying build/lib/tools/retro/index/factory.py -> build/bdist.linux-x86_64/egg/tools/retro/index
+copying build/lib/tools/retro/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro
+copying build/lib/tools/retro/external_libs.py -> build/bdist.linux-x86_64/egg/tools/retro
+creating build/bdist.linux-x86_64/egg/tools/retro/cli
+copying build/lib/tools/retro/cli/__main__.py -> build/bdist.linux-x86_64/egg/tools/retro/cli
+copying build/lib/tools/retro/cli/__init__.py -> build/bdist.linux-x86_64/egg/tools/retro/cli
+copying build/lib/tools/retro/cli/cli.py -> build/bdist.linux-x86_64/egg/tools/retro/cli
+copying build/lib/tools/retro/main.py -> build/bdist.linux-x86_64/egg/tools/retro
+copying build/lib/tools/hf2megads_weight_converter.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/merge_datasets.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/run_text_generation_server.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/linter.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/preprocess_data.py -> build/bdist.linux-x86_64/egg/tools
+creating build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/embed.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/utils.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/__init__.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/huggingface.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/external_libs.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/bert_embedding/dataset.py -> build/bdist.linux-x86_64/egg/tools/bert_embedding
+copying build/lib/tools/checkpoint_loader_megatron.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/checkpoint_saver_megatron.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/generate_samples_gpt.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/preprocess_data_nmt.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/__init__.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/text_generation_cli.py -> build/bdist.linux-x86_64/egg/tools
+copying build/lib/tools/checkpoint_util.py -> build/bdist.linux-x86_64/egg/tools
+byte-compiling build/bdist.linux-x86_64/egg/tests/test_megatron.py to test_megatron.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils/check_slurm_job_completion.py to check_slurm_job_completion.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils/test_ci_pipeline.py to test_ci_pipeline.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils/test_resume_checkpoint_pipeline.py to test_resume_checkpoint_pipeline.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/python_test_utils/get_test_results_from_tensorboard_logs.py to get_test_results_from_tensorboard_logs.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/functional_tests/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/unit_tests/test_utilities.py to test_utilities.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/unit_tests/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/unit_tests/test_utils.py to test_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/unit_tests/test_basic.py to test_basic.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/unit_tests/test_parallel_state.py to test_parallel_state.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/models/test_gpt_embedding.py to test_gpt_embedding.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/models/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/models/test_gpt_model.py to test_gpt_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_transformer_config.py to test_transformer_config.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_core_attention.py to test_core_attention.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_module.py to test_module.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_parallel_mlp.py to test_parallel_mlp.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_parallel_attention.py to test_parallel_attention.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_parallel_transformer_block.py to test_parallel_transformer_block.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/transformer/test_parallel_transformer_layer.py to test_parallel_transformer_layer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/conftest.py to conftest.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/run_megatron.py to run_megatron.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/pipeline_parallel/test_schedules.py to test_schedules.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tests/pipeline_parallel/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/communication.py to communication.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/tokenization.py to tokenization.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/forward_step.py to forward_step.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/sampling.py to sampling.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/api.py to api.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/generation.py to generation.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation/beam_utils.py to beam_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/p2p_communication.py to p2p_communication.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/initialize.py to initialize.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/global_vars.py to global_vars.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/checkpointing.py to checkpointing.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/dist_signal_handler.py to dist_signal_handler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/profiler.py to profiler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/indexer.py to indexer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/blendable_dataset.py to blendable_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/image_folder.py to image_folder.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/prompt_dataset.py to prompt_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/gpt_dataset.py to gpt_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/t5_dataset.py to t5_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/data_samplers.py to data_samplers.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/dataset_utils.py to dataset_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/bert_dataset.py to bert_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/realm_index.py to realm_index.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/vit_dataset.py to vit_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/orqa_wiki_dataset.py to orqa_wiki_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/realm_dataset_utils.py to realm_dataset_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/ict_dataset.py to ict_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/indexed_dataset.py to indexed_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/biencoder_dataset_utils.py to biencoder_dataset_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/data/autoaugment.py to autoaugment.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/tokenizer/bert_tokenization.py to bert_tokenization.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/tokenizer/gpt2_tokenization.py to gpt2_tokenization.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/tokenizer/tokenizer.py to tokenizer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/tokenizer/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/microbatches.py to microbatches.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer/optimizer.py to optimizer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer/clip_grads.py to clip_grads.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer/distrib_optimizer.py to distrib_optimizer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer/grad_scaler.py to grad_scaler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/enums.py to enums.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/biencoder_model.py to biencoder_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/rmsnorm.py to rmsnorm.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/language_model.py to language_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/transformer.py to transformer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/fused_softmax.py to fused_softmax.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/inpainting.py to inpainting.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/knn_monitor.py to knn_monitor.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/esvit_swin_backbone.py to esvit_swin_backbone.cpython-39.pyc
+build/bdist.linux-x86_64/egg/megatron/model/vision/esvit_swin_backbone.py:729: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or pretrained_layers[0] is '*'
+build/bdist.linux-x86_64/egg/megatron/model/vision/esvit_swin_backbone.py:788: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or (len(frozen_layers) > 0 and frozen_layers[0] is '*')
+build/bdist.linux-x86_64/egg/megatron/model/vision/esvit_swin_backbone.py:799: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or (len(frozen_layers) > 0 and frozen_layers[0] is '*')
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/vit_backbone.py to vit_backbone.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/swin_backbone.py to swin_backbone.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/mit_backbone.py to mit_backbone.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/classification.py to classification.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/vision/dino.py to dino.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/rotary_pos_embedding.py to rotary_pos_embedding.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/fused_layer_norm.py to fused_layer_norm.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/distributed.py to distributed.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/fused_bias_gelu.py to fused_bias_gelu.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/enums.py to enums.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/module.py to module.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/classification.py to classification.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/fused_rmsnorm.py to fused_rmsnorm.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/t5_model.py to t5_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/gpt_model.py to gpt_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/bert_model.py to bert_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/multiple_choice.py to multiple_choice.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/model/realm_model.py to realm_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/arguments.py to arguments.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation_utils.py to text_generation_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/fused_kernels/tests/test_fused_kernels.py to test_fused_kernels.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/fused_kernels/tests/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/fused_kernels/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/sequence_parallel/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/sequence_parallel/cross_entropy.py to cross_entropy.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/models/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/models/gpt/gpt_embedding.py to gpt_embedding.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/models/gpt/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/models/gpt/gpt_model.py to gpt_model.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/mlp.py to mlp.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/transformer_layer.py to transformer_layer.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/attention.py to attention.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/core_attention.py to core_attention.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/enums.py to enums.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/module.py to module.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/transformer_block.py to transformer_block.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/transformer/transformer_config.py to transformer_config.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/mappings.py to mappings.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/random.py to random.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/layers.py to layers.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/weight_grad_store.py to weight_grad_store.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/data.py to data.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/tensor_parallel/cross_entropy.py to cross_entropy.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/enums.py to enums.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/fusions/fused_softmax.py to fused_softmax.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/fusions/fused_layer_norm.py to fused_layer_norm.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/fusions/fused_bias_dropout.py to fused_bias_dropout.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/fusions/fused_bias_gelu.py to fused_bias_gelu.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/fusions/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/package_info.py to package_info.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/parallel_state.py to parallel_state.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/model_parallel_config.py to model_parallel_config.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel/p2p_communication.py to p2p_communication.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel/schedules.py to schedules.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel/deepspeed_zbh1_engine.py to deepspeed_zbh1_engine.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/core/pipeline_parallel/deepspeed_zbh1_schedule.py to deepspeed_zbh1_schedule.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/optimizer_param_scheduler.py to optimizer_param_scheduler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/memory.py to memory.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/text_generation_server.py to text_generation_server.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/timers.py to timers.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/megatron/training.py to training.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/db/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/db/build.py to build.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/db/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/db/dataset.py to dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/query/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/query/chunk_dataset.py to chunk_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/query/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/query/query.py to query.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/query/retro_dataset.py to retro_dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/indexes/faiss_base.py to faiss_base.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/indexes/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/indexes/faiss_par_add.py to faiss_par_add.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/build.py to build.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/index.py to index.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/index/factory.py to factory.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/external_libs.py to external_libs.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/cli/__main__.py to __main__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/cli/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/cli/cli.py to cli.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/retro/main.py to main.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/hf2megads_weight_converter.py to hf2megads_weight_converter.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/merge_datasets.py to merge_datasets.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/run_text_generation_server.py to run_text_generation_server.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/linter.py to linter.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/preprocess_data.py to preprocess_data.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/embed.py to embed.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/utils.py to utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/huggingface.py to huggingface.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/external_libs.py to external_libs.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/bert_embedding/dataset.py to dataset.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/checkpoint_loader_megatron.py to checkpoint_loader_megatron.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/checkpoint_saver_megatron.py to checkpoint_saver_megatron.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/generate_samples_gpt.py to generate_samples_gpt.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/preprocess_data_nmt.py to preprocess_data_nmt.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/text_generation_cli.py to text_generation_cli.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/tools/checkpoint_util.py to checkpoint_util.cpython-39.pyc
+creating build/bdist.linux-x86_64/egg/EGG-INFO
+copying megatron_core.egg-info/PKG-INFO -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying megatron_core.egg-info/SOURCES.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying megatron_core.egg-info/dependency_links.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying megatron_core.egg-info/requires.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying megatron_core.egg-info/top_level.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+megatron.data.__pycache__.dataset_utils.cpython-39: module references __file__
+megatron.fused_kernels.__pycache__.__init__.cpython-39: module references __file__
+tools.__pycache__.checkpoint_loader_megatron.cpython-39: module references __file__
+tools.__pycache__.checkpoint_saver_megatron.cpython-39: module references __file__
+tools.__pycache__.generate_samples_gpt.cpython-39: module references __file__
+tools.__pycache__.hf2megads_weight_converter.cpython-39: module references __file__
+tools.__pycache__.linter.cpython-39: module references __file__
+tools.__pycache__.merge_datasets.cpython-39: module references __file__
+tools.__pycache__.preprocess_data.cpython-39: module references __file__
+tools.__pycache__.preprocess_data_nmt.cpython-39: module references __file__
+tools.__pycache__.run_text_generation_server.cpython-39: module references __file__
+creating 'dist/megatron_core-0.2.0-py3.9.egg' and adding 'build/bdist.linux-x86_64/egg' to it
+removing 'build/bdist.linux-x86_64/egg' (and everything under it)
+Processing megatron_core-0.2.0-py3.9.egg
+creating /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/megatron_core-0.2.0-py3.9.egg
+Extracting megatron_core-0.2.0-py3.9.egg to /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+/work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/megatron_core-0.2.0-py3.9.egg/megatron/model/vision/esvit_swin_backbone.py:729: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or pretrained_layers[0] is '*'
+/work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/megatron_core-0.2.0-py3.9.egg/megatron/model/vision/esvit_swin_backbone.py:788: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or (len(frozen_layers) > 0 and frozen_layers[0] is '*')
+/work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/megatron_core-0.2.0-py3.9.egg/megatron/model/vision/esvit_swin_backbone.py:799: SyntaxWarning: "is" with a literal. Did you mean "=="?
+  or (len(frozen_layers) > 0 and frozen_layers[0] is '*')
+Adding megatron-core 0.2.0 to easy-install.pth file
+detected new path './megatron_core-0.2.0-py3.9.egg'
+
+Installed /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/megatron_core-0.2.0-py3.9.egg
+Processing dependencies for megatron-core==0.2.0
+Searching for regex==2024.7.24
+Best match: regex 2024.7.24
+Adding regex 2024.7.24 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for torch==2.1.0+cu118
+Best match: torch 2.1.0+cu118
+Adding torch 2.1.0+cu118 to easy-install.pth file
+Installing convert-caffe2-to-onnx script to /work/gb20/b20048/miniconda3/envs/deep/bin
+Installing convert-onnx-to-caffe2 script to /work/gb20/b20048/miniconda3/envs/deep/bin
+Installing torchrun script to /work/gb20/b20048/miniconda3/envs/deep/bin
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for pybind11==2.13.5
+Best match: pybind11 2.13.5
+Adding pybind11 2.13.5 to easy-install.pth file
+Installing pybind11-config script to /work/gb20/b20048/miniconda3/envs/deep/bin
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for triton==2.1.0
+Best match: triton 2.1.0
+Adding triton 2.1.0 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for fsspec==2024.2.0
+Best match: fsspec 2024.2.0
+Adding fsspec 2024.2.0 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for Jinja2==3.1.3
+Best match: Jinja2 3.1.3
+Adding Jinja2 3.1.3 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for networkx==3.2.1
+Best match: networkx 3.2.1
+Adding networkx 3.2.1 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for sympy==1.12
+Best match: sympy 1.12
+Adding sympy 1.12 to easy-install.pth file
+Installing isympy script to /work/gb20/b20048/miniconda3/envs/deep/bin
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for typing-extensions==4.12.2
+Best match: typing-extensions 4.12.2
+Adding typing-extensions 4.12.2 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages/setuptools/_vendor
+Searching for filelock==3.13.1
+Best match: filelock 3.13.1
+Adding filelock 3.13.1 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for MarkupSafe==2.1.5
+Best match: MarkupSafe 2.1.5
+Adding MarkupSafe 2.1.5 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Searching for mpmath==1.3.0
+Best match: mpmath 1.3.0
+Adding mpmath 1.3.0 to easy-install.pth file
+
+Using /work/02/gb20/b20048/miniconda3/envs/deep/lib/python3.9/site-packages
+Finished processing dependencies for megatron-core==0.2.0
+* Confirming packages
+Package                 Version
+----------------------- -------------------
+absl-py                 2.1.0
+accelerate              0.33.0
+aiohappyeyeballs        2.4.0
+aiohttp                 3.10.5
+aiosignal               1.3.1
+annotated-types         0.7.0
+apex                    0.1
+async-timeout           4.0.3
+attrs                   24.2.0
+autocommand             2.2.2
+backports.tarfile       1.2.0
+bitsandbytes            0.43.3
+certifi                 2022.12.7
+chardet                 5.2.0
+charset-normalizer      2.1.1
+click                   8.1.7
+cmake                   3.30.2
+datasets                2.21.0
+deepspeed               0.12.4
+deepspeed-kernels       0.0.1.dev1698255861
+dill                    0.3.8
+docker-pycreds          0.4.0
+docstring_parser        0.16
+einops                  0.8.0
+eval_type_backport      0.2.0
+filelock                3.13.1
+flash-attn              2.5.0
+frozenlist              1.4.1
+fsspec                  2024.2.0
+gitdb                   4.0.11
+GitPython               3.1.43
+grpcio                  1.66.1
+hjson                   3.1.0
+huggingface-hub         0.24.6
+idna                    3.4
+importlib_metadata      8.4.0
+importlib_resources     6.4.0
+inflect                 7.3.1
+jaraco.context          5.3.0
+jaraco.functools        4.0.1
+jaraco.text             3.12.1
+Jinja2                  3.1.3
+joblib                  1.4.2
+Markdown                3.7
+markdown-it-py          3.0.0
+MarkupSafe              2.1.5
+mdurl                   0.1.2
+megatron_core           0.2.0
+more-itertools          10.3.0
+mpmath                  1.3.0
+multidict               6.0.5
+multiprocess            0.70.16
+networkx                3.2.1
+ninja                   1.11.1
+nltk                    3.9.1
+numpy                   1.26.3
+ordered-set             4.1.0
+packaging               24.1
+pandas                  2.2.2
+peft                    0.12.0
+pillow                  10.2.0
+pip                     24.2
+platformdirs            4.2.2
+protobuf                3.20.3
+psutil                  6.0.0
+py-cpuinfo              9.0.0
+pyarrow                 17.0.0
+pybind11                2.13.5
+pydantic                2.8.2
+pydantic_core           2.20.1
+Pygments                2.18.0
+pynvml                  11.5.3
+python-dateutil         2.9.0.post0
+pytz                    2024.1
+PyYAML                  6.0.2
+regex                   2024.7.24
+requests                2.32.3
+rich                    13.8.0
+safetensors             0.4.4
+sentencepiece           0.2.0
+sentry-sdk              2.13.0
+setproctitle            1.3.3
+setuptools              72.1.0
+shtab                   1.7.1
+six                     1.16.0
+smmap                   5.0.1
+sympy                   1.12
+tensorboard             2.17.1
+tensorboard-data-server 0.7.2
+tokenizers              0.19.1
+tomli                   2.0.1
+torch                   2.1.0+cu118
+torchaudio              2.1.0+cu118
+torchvision             0.16.0+cu118
+tqdm                    4.66.5
+transformers            4.44.2
+triton                  2.1.0
+trl                     0.10.1
+typeguard               4.3.0
+typing_extensions       4.9.0
+tyro                    0.8.10
+tzdata                  2024.1
+urllib3                 1.26.13
+wandb                   0.17.8
+Werkzeug                3.0.4
+wheel                   0.43.0
+xxhash                  3.5.0
+yarl                    1.9.7
+zipp                    3.20.1

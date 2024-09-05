@@ -51,7 +51,7 @@ pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation -
 
 echo "* Installing Megatron-DeepSpeed"
 cd $WORK_HOME
-git clone https://github.com/microsoft/Megatron-DeepSpeed
+git clone https://github.com/matsuolab/Megatron-DeepSpeed.git
 cd Megatron-DeepSpeed
 python setup.py install
 
