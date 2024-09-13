@@ -1,0 +1,8 @@
+
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/Megatron-DeepSpeed/tools/convert_checkpoint/deepspeed_llama2_to_transformers.py", line 15, in <module>
+    from transformers.models.megatron_gpt2.convert_megatron_llama2_checkpoint import convert_megatron_checkpoint
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/models/megatron_gpt2/convert_megatron_llama2_checkpoint.py", line 242
+    hidden_size = val.size(0) // 
+                                 ^
+SyntaxError: invalid syntax

@@ -1,0 +1,6 @@
+/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/convert_slow_tokenizer.py:562: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+My father is my sister's</s>takingnumtakingtakingtakingnumagingnumagingnumagingnumaging groupnumaging group numbernumaging group number number number number number number number numbernumaging number group number number number number number number number number number

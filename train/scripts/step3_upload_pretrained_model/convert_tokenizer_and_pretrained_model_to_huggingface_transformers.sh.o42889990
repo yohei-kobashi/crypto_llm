@@ -1,0 +1,80 @@
+
+crypto_llm_train_dir = /home/acf16449gb/crypto_llm/train
+megatron_deepspeed_dir = /home/acf16449gb/crypto_llm/train/Megatron-DeepSpeed
+
+input_tokenizer_file = /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model
+input_model_max_length = 2048
+input_model_dir = 
+output_tokenizer_and_model_dir = /groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_poly_000000_1234_True/
+
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+args = Namespace(input_tokenizer_file='/groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model', input_model_max_length=2048, output_tokenizer_dir='/groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_poly_000000_1234_True/')
+Converting the sentencepiece tokenizer to the huggingface tokenizer...
+Comparing the sentencepiece tokenizer and the huggingface tokenizer...
+==================================================================
+
+input text: "### Test for Japanese: 大嘗祭は、皇室行事。"
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁Japanese", ":", "▁", "大", "<0xE5>", "<0x98>", "<0x97>", "<0xE7>", "<0xA5>", "<0xAD>", "<0xE3>", "<0x81>", "<0xAF>", "、", "<0xE7>", "<0x9A>", "<0x87>", "<0xE5>", "<0xAE>", "<0xA4>", "<0xE8>", "<0xA1>", "<0x8C>", "<0xE4>", "<0xBA>", "<0x8B>", "<0xE3>", "<0x80>", "<0x82>"]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁Japanese", ":", "▁", "大", "<0xE5>", "<0x98>", "<0x97>", "<0xE7>", "<0xA5>", "<0xAD>", "<0xE3>", "<0x81>", "<0xAF>", "、", "<0xE7>", "<0x9A>", "<0x87>", "<0xE5>", "<0xAE>", "<0xA4>", "<0xE8>", "<0xA1>", "<0x8C>", "<0xE4>", "<0xBA>", "<0x8B>", "<0xE3>", "<0x80>", "<0x82>"]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 5520, 291, 267, 9906, 238, 161, 160, 240, 174, 182, 236, 138, 184, 11477, 240, 163, 144, 238, 183, 173, 241, 170, 149, 237, 195, 148, 236, 137, 139]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 5520, 291, 267, 9906, 238, 161, 160, 240, 174, 182, 236, 138, 184, 11477, 240, 163, 144, 238, 183, 173, 241, 170, 149, 237, 195, 148, 236, 137, 139]
+
+decoded text
+-> Pass sp: "### Test for Japanese: 大嘗祭は、皇室行事。"
+-> Pass hf: "### Test for Japanese: 大嘗祭は、皇室行事。"
+
+==================================================================
+
+input text: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁special", "▁to", "ken", ":", "▁", "<s>", "▁", "</s>", "▁", "<pad>", "▁", "<CLS>", "▁", "<SEP>", "▁", "<EOD>", "▁", "<MASK>"]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁special", "▁to", "ken", ":", "▁", "<s>", "▁", "</s>", "▁", "<pad>", "▁", "<CLS>", "▁", "<SEP>", "▁", "<EOD>", "▁", "<MASK>"]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 9852, 810, 6513, 291, 267, 1, 267, 2, 267, 3, 267, 4, 267, 5, 267, 6, 267, 7]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 9852, 810, 6513, 291, 267, 1, 267, 2, 267, 3, 267, 4, 267, 5, 267, 6, 267, 7]
+
+decoded text
+-> Pass sp: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+-> Pass hf: "### Test for special token: <s> </s> <pad> <CLS> <SEP> <EOD> <MASK>"
+
+==================================================================
+
+input text: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁new", "line", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "\n", "▁", "1", "▁new", "line", ".", "▁", "\n", "\n", "▁", "2", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "▁", "3", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "\n", "▁", "4", "▁new", "line", "s", "."]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁new", "line", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "\n", "▁", "1", "▁new", "line", ".", "▁", "\n", "\n", "▁", "2", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "▁", "3", "▁new", "line", "s", ".", "▁", "\n", "\n", "\n", "\n", "▁", "4", "▁new", "line", "s", "."]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 1710, 1363, 841, 744, 14767, 770, 12709, 1407, 291, 267, 8, 267, 268, 1710, 1363, 277, 267, 8, 8, 267, 269, 1710, 1363, 275, 277, 267, 8, 8, 8, 267, 270, 1710, 1363, 275, 277, 267, 8, 8, 8, 8, 267, 271, 1710, 1363, 275, 277]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 1710, 1363, 841, 744, 14767, 770, 12709, 1407, 291, 267, 8, 267, 268, 1710, 1363, 277, 267, 8, 8, 267, 269, 1710, 1363, 275, 277, 267, 8, 8, 8, 267, 270, 1710, 1363, 275, 277, 267, 8, 8, 8, 8, 267, 271, 1710, 1363, 275, 277]
+
+decoded text
+-> Pass sp: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+-> Pass hf: "### Test for newline at the middle of sentence: \n 1 newline. \n\n 2 newlines. \n\n\n 3 newlines. \n\n\n\n 4 newlines."
+
+==================================================================
+
+input text: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+
+encoded pieces
+        sp: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁white", "space", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "1", "▁space", ".", "▁", "▁", "2", "▁space", "s", ".", "▁▁▁", "3", "▁space", "s", ".", "▁▁▁▁", "4", "▁space", "s", "."]
+-> Pass hf: ["▁", "#", "#", "#", "▁T", "est", "▁for", "▁white", "space", "▁at", "▁the", "▁middle", "▁of", "▁sent", "ence", ":", "▁", "1", "▁space", ".", "▁", "▁", "2", "▁space", "s", ".", "▁▁▁", "3", "▁space", "s", ".", "▁▁▁▁", "4", "▁space", "s", "."]
+
+encoded ids
+        sp: [267, 312, 312, 312, 1141, 1092, 824, 10095, 10807, 841, 744, 14767, 770, 12709, 1407, 291, 267, 268, 9362, 277, 267, 267, 269, 9362, 275, 277, 909, 270, 9362, 275, 277, 908, 271, 9362, 275, 277]
+-> Pass hf: [267, 312, 312, 312, 1141, 1092, 824, 10095, 10807, 841, 744, 14767, 770, 12709, 1407, 291, 267, 268, 9362, 277, 267, 267, 269, 9362, 275, 277, 909, 270, 9362, 275, 277, 908, 271, 9362, 275, 277]
+
+decoded text
+-> Pass sp: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+-> Pass hf: "### Test for whitespace at the middle of sentence: 1 space.  2 spaces.   3 spaces.    4 spaces."
+
+
+Finished converting the tokenizer and the pretrained model to HuggingFace Transformers format.
+

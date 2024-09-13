@@ -1,0 +1,13 @@
+
+args = Namespace(input_folder='/groups/gcf51099/crypto_llm/models/1.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1500', output_folder='/groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_no_encryption_000000_1234_True', target_tp=1, target_pp=1, activation_function='silu', input_tokenizer_file='/groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model', for_release=False)
+Converting the sentencepiece tokenizer to the huggingface tokenizer...
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/Megatron-DeepSpeed/tools/convert_checkpoint/deepspeed_llama2_to_transformers.py", line 85, in <module>
+    main()
+  File "/home/acf16449gb/crypto_llm/train/Megatron-DeepSpeed/tools/convert_checkpoint/deepspeed_llama2_to_transformers.py", line 22, in main
+    output_tokenizer = convert_tokenizer(args.input_tokenizer_file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/models/megatron_gpt2/convert_megatron_llama2_checkpoint.py", line 65, in convert_tokenizer
+    output_tokenizer = T5Tokenizer(
+                       ^^^^^^^^^^^
+NameError: name 'T5Tokenizer' is not defined. Did you mean: 'AutoTokenizer'?

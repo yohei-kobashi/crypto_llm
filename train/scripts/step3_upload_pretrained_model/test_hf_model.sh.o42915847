@@ -1,0 +1,81 @@
+/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/scripts/step3_upload_pretrained_model/test_hf_model.py", line 25, in <module>
+    output_text(model_dir)
+  File "/home/acf16449gb/crypto_llm/train/scripts/step3_upload_pretrained_model/test_hf_model.py", line 8, in output_text
+    model = LlamaForCausalLM.from_pretrained(model_dir).to(device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3916, in from_pretrained
+    ) = cls._load_pretrained_model(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4448, in _load_pretrained_model
+    raise RuntimeError(f"Error(s) in loading state_dict for {model.__class__.__name__}:\n\t{error_msg}")
+RuntimeError: Error(s) in loading state_dict for LlamaForCausalLM:
+	size mismatch for model.layers.0.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.0.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.0.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.1.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.1.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.1.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.2.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.2.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.2.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.3.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.3.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.3.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.4.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.4.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.4.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.5.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.5.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.5.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.6.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.6.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.6.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.7.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.7.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.7.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.8.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.8.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.8.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.9.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.9.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.9.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.10.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.10.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.10.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.11.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.11.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.11.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.12.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.12.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.12.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.13.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.13.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.13.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.14.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.14.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.14.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.15.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.15.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.15.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.16.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.16.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.16.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.17.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.17.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.17.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.18.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.18.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.18.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.19.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.19.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.19.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.20.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.20.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.20.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.21.self_attn.q_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([2048, 2048]).
+	size mismatch for model.layers.21.self_attn.k_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	size mismatch for model.layers.21.self_attn.v_proj.weight: copying a param with shape torch.Size([2048, 1024]) from checkpoint, the shape in current model is torch.Size([512, 2048]).
+	You may consider adding `ignore_mismatched_sizes=True` in the model `from_pretrained` method.

@@ -1,0 +1,8 @@
+
+usage: deepspeed_llama2_to_transformers.py [-h] [--input_folder INPUT_FOLDER]
+                                           [--output_folder OUTPUT_FOLDER]
+                                           [--target_tp TARGET_TP]
+                                           [--target_pp TARGET_PP]
+                                           [--activation_function ACTIVATION_FUNCTION]
+                                           [--for_release]
+deepspeed_llama2_to_transformers.py: error: unrecognized arguments: --input_tokenizer_file /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_poly_000000_1234_True.model

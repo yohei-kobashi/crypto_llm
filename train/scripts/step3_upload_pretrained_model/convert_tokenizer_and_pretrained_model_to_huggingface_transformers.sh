@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#$ -l rt_F=1
-#$ -l h_rt=24:00:00
+#$ -l rt_G.small=1
+#$ -l h_rt=2:00:00
 #$ -j y
 #$ -cwd
 
@@ -43,7 +43,7 @@ while [[ ${#} -gt 0 ]]; do
 done
 
 # Checks the required arguments.
-if [[ -z ${input_tokenizer_file} ]] || [[ -z ${input_model_max_length} ]] || [[ -z ${input_model_dir} ]] || [[ -z ${output_tokenizer_and_model_dir} ]]; then
+if [[ -z ${input_tokenizer_file} ]] || [[ -z ${input_model_max_length} ]] || [[ -z ${output_tokenizer_and_model_dir} ]]; then
     echo "Error: Missing required arguments."
     echo "Usage: ${0} --input_tokenizer_file <input_tokenizer_file> --input_model_max_length <input_model_max_length> --input_model_dir <input_model_dir> --output_tokenizer_and_model_dir <output_tokenizer_and_model_dir>"
     exit 1
@@ -65,10 +65,10 @@ python ${crypto_llm_train_dir}/scripts/step3_upload_pretrained_model/convert_tok
     --output_tokenizer_dir ${output_tokenizer_and_model_dir}
 
 # Converts the pretrained model from Megatron-DeepSpeed format to HuggingFace Transformers format.
-python ${megatron_deepspeed_dir}/tools/convert_checkpoint/deepspeed_to_transformers.py \
-    --input_folder ${input_model_dir} \
-    --output_folder ${output_tokenizer_and_model_dir} \
-    --activation_function ${activation_function}
+# python ${megatron_deepspeed_dir}/tools/convert_checkpoint/deepspeed_to_transformers.py \
+#     --input_folder ${input_model_dir} \
+#     --output_folder ${output_tokenizer_and_model_dir} \
+#     --activation_function ${activation_function}
 
 echo ""
 echo "Finished converting the tokenizer and the pretrained model to HuggingFace Transformers format."
