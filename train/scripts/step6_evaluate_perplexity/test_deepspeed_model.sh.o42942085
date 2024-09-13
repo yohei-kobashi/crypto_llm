@@ -1,0 +1,433 @@
+[2024-09-13 17:06:58,341] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+using world size: 1, data-parallel-size: 1, sequence-parallel size: 1, tensor-model-parallel size: 1, pipeline-model-parallel size: 1 
+WARNING: overriding default arguments for tokenizer_type:SentencePieceTokenizer                        with tokenizer_type:SentencePieceTokenizer
+setting global batch size to 1
+using torch.float32 for parameters ...
+------------------------ arguments ------------------------
+  accumulate_allreduce_grads_in_fp32 .............. False
+  adam_beta1 ...................................... 0.9
+  adam_beta2 ...................................... 0.999
+  adam_eps ........................................ 1e-08
+  add_bias_linear ................................. False
+  add_position_embedding .......................... False
+  adlr_autoresume ................................. False
+  adlr_autoresume_interval ........................ 1000
+  aml_data_download_path .......................... None
+  apply_layernorm_1p .............................. False
+  apply_query_key_layer_scaling ................... False
+  apply_residual_connection_post_layernorm ........ False
+  async_tensor_model_parallel_allreduce ........... True
+  attention_dropout ............................... 0.0
+  attention_softmax_in_fp32 ....................... False
+  barrier_with_L1_time ............................ True
+  bert_binary_head ................................ True
+  bert_embedder_type .............................. megatron
+  bert_load ....................................... None
+  bf16 ............................................ False
+  bias_dropout_fusion ............................. True
+  bias_gelu_fusion ................................ False
+  biencoder_projection_dim ........................ 0
+  biencoder_shared_query_context_model ............ False
+  block_data_path ................................. None
+  checkpoint_activations .......................... False
+  checkpoint_in_cpu ............................... False
+  checkpoint_num_layers ........................... 1
+  classes_fraction ................................ 1.0
+  clip_grad ....................................... 1.0
+  compression_training ............................ False
+  consumed_train_samples .......................... 0
+  consumed_train_tokens ........................... 0
+  consumed_valid_samples .......................... 0
+  context_tokens .................................. DeepSpeed is the greatest
+  contigious_checkpointing ........................ False
+  cpu_optimizer ................................... False
+  cpu_torch_adam .................................. False
+  create_moe_param_group .......................... False
+  curriculum_learning_legacy ...................... False
+  data_cache_path ................................. None
+  data_efficiency_curriculum_learning ............. False
+  data_impl ....................................... infer
+  data_parallel_random_init ....................... False
+  data_parallel_size .............................. 1
+  data_path ....................................... None
+  data_per_class_fraction ......................... 1.0
+  data_sharding ................................... True
+  dataloader_type ................................. single
+  DDP_impl ........................................ local
+  decoder_num_layers .............................. None
+  decoder_seq_length .............................. None
+  deepscale ....................................... False
+  deepscale_config ................................ None
+  deepspeed ....................................... False
+  deepspeed_activation_checkpointing .............. False
+  deepspeed_config ................................ None
+  deepspeed_mpi ................................... False
+  dino_bottleneck_size ............................ 256
+  dino_freeze_last_layer .......................... 1
+  dino_head_hidden_size ........................... 2048
+  dino_local_crops_number ......................... 10
+  dino_local_img_size ............................. 96
+  dino_norm_last_layer ............................ False
+  dino_teacher_temp ............................... 0.07
+  dino_warmup_teacher_temp ........................ 0.04
+  dino_warmup_teacher_temp_epochs ................. 30
+  distribute_checkpointed_activations ............. False
+  distribute_saved_activations .................... False
+  distributed_backend ............................. nccl
+  distributed_timeout_minutes ..................... 10
+  ds_fused_adam ................................... False
+  ds_inference .................................... False
+  ds_pipeline_enabled ............................. True
+  ds_sequence_parallel_size ....................... 1
+  embedding_path .................................. None
+  embedding_weights_in_fp32 ....................... False
+  empty_unused_memory_level ....................... 0
+  enable_expert_tensor_parallelism ................ False
+  encoder_num_layers .............................. 22
+  encoder_seq_length .............................. 2048
+  end_weight_decay ................................ 0.01
+  eod_mask_loss ................................... False
+  eval_interval ................................... 1000
+  eval_iters ...................................... 100
+  evidence_data_path .............................. None
+  exit_duration_in_mins ........................... None
+  exit_interval ................................... None
+  exit_on_missing_checkpoint ...................... False
+  exit_signal_handler ............................. False
+  expert_interval ................................. 2
+  ffn_hidden_size ................................. 5632
+  finetune ........................................ False
+  force_ds_sequence_parallel ...................... False
+  fp16 ............................................ False
+  fp16_lm_cross_entropy ........................... False
+  fp32_residual_connection ........................ False
+  fp8_amax_compute_algo ........................... most_recent
+  fp8_amax_history_len ............................ 1
+  fp8_e4m3 ........................................ False
+  fp8_hybrid ...................................... False
+  fp8_interval .................................... 1
+  fp8_margin ...................................... 0
+  fp8_wgrad ....................................... True
+  genfile ......................................... None
+  global_batch_size ............................... 1
+  gradient_accumulation_fusion .................... True
+  greedy .......................................... False
+  head_lr_mult .................................... 1.0
+  hidden_dropout .................................. 0.0
+  hidden_size ..................................... 2048
+  hidden_size_teacher ............................. None
+  hysteresis ...................................... 2
+  ict_head_size ................................... None
+  ict_load ........................................ None
+  img_h ........................................... 224
+  img_w ........................................... 224
+  indexer_batch_size .............................. 128
+  indexer_log_interval ............................ 1000
+  inference ....................................... True
+  inference_batch_times_seqlen_threshold .......... 512
+  init_method_std ................................. 0.02
+  init_method_xavier_uniform ...................... False
+  initial_loss_scale .............................. 4294967296
+  iter_per_epoch .................................. 1250
+  kd .............................................. False
+  kd_alpha_ce ..................................... 1
+  kd_beta_ce ...................................... 1
+  kd_temp ......................................... 1.0
+  kv_channels ..................................... 128
+  layernorm_epsilon ............................... 1e-05
+  lazy_mpu_init ................................... None
+  load ............................................ /groups/gcf51099/crypto_llm/models/1.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1000
+  load_teacher .................................... None
+  local_rank ...................................... None
+  log_batch_size_to_tensorboard ................... False
+  log_interval .................................... 100
+  log_learning_rate_to_tensorboard ................ True
+  log_loss_scale_to_tensorboard ................... True
+  log_memory_to_tensorboard ....................... False
+  log_num_zeros_in_grad ........................... False
+  log_optimizer_states_to_tensorboard ............. False
+  log_params_norm ................................. False
+  log_timers_to_tensorboard ....................... False
+  log_validation_ppl_to_tensorboard ............... False
+  log_world_size_to_tensorboard ................... False
+  loss_scale ...................................... None
+  loss_scale_window ............................... 1000
+  lr .............................................. None
+  lr_decay_iters .................................. None
+  lr_decay_samples ................................ None
+  lr_decay_style .................................. linear
+  lr_decay_tokens ................................. None
+  lr_warmup_fraction .............................. None
+  lr_warmup_iters ................................. 0
+  lr_warmup_samples ............................... 0
+  lr_warmup_tokens ................................ None
+  make_vocab_size_divisible_by .................... 128
+  mask_factor ..................................... 1.0
+  mask_prob ....................................... 0.15
+  mask_type ....................................... random
+  masked_softmax_fusion ........................... True
+  max_position_embeddings ......................... 2048
+  max_tokens ...................................... 50
+  max_tokens_to_oom ............................... 12000
+  mem_efficient_ln ................................ True
+  memory_centric_tiled_linear ..................... False
+  merge_file ...................................... None
+  micro_batch_size ................................ 1
+  min_loss_scale .................................. 1.0
+  min_lr .......................................... 0.0
+  mlp_type ........................................ standard
+  mmap_warmup ..................................... False
+  moe_eval_capacity_factor ........................ 1.0
+  moe_expert_parallel_size ........................ 1
+  moe_loss_coeff .................................. 0.1
+  moe_min_capacity ................................ 4
+  moe_token_dropping .............................. True
+  moe_train_capacity_factor ....................... 1.0
+  mos ............................................. False
+  no_load_lr_state ................................ False
+  no_load_optim ................................... True
+  no_load_rng ..................................... True
+  no_persist_layer_norm ........................... False
+  no_pipeline_parallel ............................ False
+  no_save_optim ................................... None
+  no_save_rng ..................................... None
+  normalization ................................... rmsnorm
+  num_attention_heads ............................. 16
+  num_attention_heads_teacher ..................... None
+  num_channels .................................... 3
+  num_classes ..................................... 1000
+  num_experts ..................................... [1]
+  num_experts_switch .............................. None
+  num_experts_teacher ............................. [1]
+  num_key_value_heads ............................. 4
+  num_layers ...................................... 22
+  num_layers_per_virtual_pipeline_stage ........... None
+  num_layers_teacher .............................. None
+  num_samples ..................................... 0
+  num_workers ..................................... 2
+  onnx_safe ....................................... None
+  openai_gelu ..................................... False
+  optimizer ....................................... adam
+  out_seq_length .................................. 50
+  output_bert_embeddings .......................... False
+  overlap_p2p_comm ................................ False
+  override_opt_param_scheduler .................... False
+  params_dtype .................................... torch.float32
+  partition_activations ........................... False
+  patch_dim ....................................... 16
+  perform_initialization .......................... True
+  pipeline_model_parallel_size .................... 1
+  pipeline_model_parallel_split_rank .............. None
+  profile_backward ................................ False
+  query_in_block_prob ............................. 0.1
+  rampup_batch_size ............................... None
+  random_ltd ...................................... False
+  rank ............................................ 0
+  recompute ....................................... False
+  recompute_granularity ........................... None
+  recompute_method ................................ None
+  recompute_num_layers ............................ 1
+  remote_device ................................... none
+  repeated_dataloader ............................. False
+  reset_attention_mask ............................ False
+  reset_iteration ................................. False
+  reset_position_ids .............................. False
+  retriever_report_topk_accuracies ................ []
+  retriever_score_scaling ......................... False
+  retriever_seq_length ............................ 256
+  retro_add_retriever ............................. False
+  retro_cyclic_train_iters ........................ None
+  retro_encoder_attention_dropout ................. 0.1
+  retro_encoder_hidden_dropout .................... 0.1
+  retro_encoder_layers ............................ 2
+  retro_num_neighbors ............................. 2
+  retro_num_retrieved_chunks ...................... 2
+  retro_return_doc_ids ............................ False
+  retro_workdir ................................... None
+  return_data_index ............................... False
+  rotary_percent .................................. 1.0
+  sample_input_file ............................... None
+  sample_output_file .............................. None
+  sample_rate ..................................... 1.0
+  save ............................................ None
+  save_interval ................................... None
+  scatter_gather_tensors_in_pipeline .............. True
+  scattered_embeddings ............................ False
+  seed ............................................ 1234
+  seq_length ...................................... 2048
+  sequence_parallel ............................... False
+  sgd_momentum .................................... 0.9
+  short_seq_prob .................................. 0.1
+  skip_train ...................................... False
+  split ........................................... 969, 30, 1
+  split_transformers .............................. False
+  squared_relu .................................... False
+  standalone_embedding_stage ...................... False
+  start_weight_decay .............................. 0.01
+  swiglu .......................................... True
+  swin_backbone_type .............................. tiny
+  synchronize_each_layer .......................... False
+  temperature ..................................... 1.0
+  tensor_model_parallel_size ...................... 1
+  tensorboard_dir ................................. None
+  tensorboard_log_interval ........................ 1
+  tensorboard_queue_size .......................... 1000
+  test_data_path .................................. None
+  tf32 ............................................ False
+  tile_factor ..................................... 1
+  timing_log_level ................................ 0
+  timing_log_option ............................... minmax
+  titles_data_path ................................ None
+  tokenize_model .................................. None
+  tokenizer_model ................................. /groups/gcf51099/crypto_llm/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model
+  tokenizer_type .................................. SentencePieceTokenizer
+  top_k ........................................... 0
+  top_p ........................................... 0.0
+  topk ............................................ 1
+  train_data_exact_num_epochs ..................... None
+  train_data_path ................................. None
+  train_desc_path ................................. None
+  train_doc_idx_path .............................. None
+  train_idx_path .................................. None
+  train_iters ..................................... None
+  train_sample_idx_path ........................... None
+  train_samples ................................... None
+  train_shuffle_idx_path .......................... None
+  train_tokens .................................... None
+  transformer_impl ................................ local
+  transformer_pipeline_model_parallel_size ........ 1
+  universal_checkpoint ............................ False
+  untie_embeddings_and_output_weights ............. True
+  use_checkpoint_args ............................. False
+  use_checkpoint_opt_param_scheduler .............. False
+  use_contiguous_buffers_in_local_ddp ............. True
+  use_cpu_initialization .......................... None
+  use_dataset_only ................................ False
+  use_distributed_optimizer ....................... False
+  use_flash_attn .................................. True
+  use_flash_attn_triton ........................... False
+  use_flash_attn_v1 ............................... False
+  use_flash_attn_v2 ............................... True
+  use_one_sent_docs ............................... False
+  use_pin_memory .................................. False
+  use_ring_exchange_p2p ........................... False
+  use_rotary_position_embeddings .................. True
+  use_tutel ....................................... False
+  use_wandb ....................................... False
+  valid_data_path ................................. None
+  variable_seq_lengths ............................ False
+  virtual_pipeline_model_parallel_size ............ None
+  vision_backbone_type ............................ vit
+  vision_pretraining .............................. False
+  vision_pretraining_type ......................... classify
+  vocab_extra_ids ................................. 0
+  vocab_file ...................................... None
+  vocab_size ...................................... None
+  wandb_entity .................................... None
+  wandb_group ..................................... None
+  wandb_project ................................... None
+  wandb_tag ....................................... None
+  weight_decay .................................... 0.01
+  weight_decay_incr_style ......................... constant
+  world_size ...................................... 1
+  zero_allgather_bucket_size ...................... 0.0
+  zero_contigious_gradients ....................... False
+  zero_reduce_bucket_size ......................... 0.0
+  zero_reduce_scatter ............................. False
+  zero_stage ...................................... 1.0
+-------------------- end of arguments ---------------------
+setting number of micro-batches to constant 1
+> building SentencePieceTokenizer tokenizer ...
+ > padded vocab (size: 32003) with 125 dummy tokens (new size: 32128)
+> initializing torch distributed ...
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:6006 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:6006 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:6006 (errno: 97 - Address family not supported by protocol).
+> initialized tensor model parallel with size 1
+> initialized pipeline model parallel with size 1
+> setting random seeds to 1234 ...
+> initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 3952 and data parallel seed: 1234
+make: Entering directory '/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/data'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/data'
+> compiling dataset index builder ...
+>>> done with dataset index builder. Compilation time: 0.105 seconds
+WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
+> compiling and loading fused kernels ...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_upper_triang_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_upper_triang_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/fused_kernels/build/build.ninja...
+Building extension module scaled_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_softmax_cuda...
+>>> done with compiling and loading fused kernels. Compilation time: 4.292 seconds
+building GPT model ...
+[2024-09-13 17:07:42,345] [INFO] [utils.py:795:see_memory_usage] Before Building Model
+[2024-09-13 17:07:42,346] [INFO] [utils.py:796:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[2024-09-13 17:07:42,346] [INFO] [utils.py:803:see_memory_usage] CPU Virtual Memory:  used = 65.28 GB, percent = 17.3%
+[2024-09-13 17:07:42,347] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-09-13 17:07:42,566] [INFO] [utils.py:795:see_memory_usage] After Building Model
+[2024-09-13 17:07:42,567] [INFO] [utils.py:796:see_memory_usage] MA 4.19 GB         Max_MA 4.19 GB         CA 4.19 GB         Max_CA 4 GB 
+[2024-09-13 17:07:42,567] [INFO] [utils.py:803:see_memory_usage] CPU Virtual Memory:  used = 65.29 GB, percent = 17.4%
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 1123641344
+Namespace(num_layers=22, encoder_num_layers=22, decoder_num_layers=None, num_experts=[1], mlp_type='standard', topk=1, expert_interval=2, hidden_size=2048, ffn_hidden_size=5632, num_attention_heads=16, num_key_value_heads=4, kv_channels=128, max_position_embeddings=2048, use_rotary_position_embeddings=True, rotary_percent=1.0, add_position_embedding=False, make_vocab_size_divisible_by=128, normalization='rmsnorm', layernorm_epsilon=1e-05, apply_layernorm_1p=False, mem_efficient_ln=True, apply_residual_connection_post_layernorm=False, openai_gelu=False, squared_relu=False, swiglu=True, onnx_safe=None, bert_binary_head=True, num_experts_switch=None, untie_embeddings_and_output_weights=True, embedding_weights_in_fp32=False, attention_dropout=0.0, hidden_dropout=0.0, weight_decay=0.1, start_weight_decay=0.1, end_weight_decay=0.1, weight_decay_incr_style='constant', clip_grad=1.0, adam_beta1=0.9, adam_beta2=0.95, adam_eps=1e-08, sgd_momentum=0.9, micro_batch_size=1, global_batch_size=1, rampup_batch_size=None, recompute_granularity=None, distribute_saved_activations=False, recompute_method=None, recompute_num_layers=1, checkpoint_activations=False, distribute_checkpointed_activations=False, checkpoint_num_layers=1, train_iters=1000, train_samples=4096000, train_tokens=8388608000, random_ltd=False, log_interval=10, exit_interval=None, exit_duration_in_mins=30000000, exit_signal_handler=False, tensorboard_dir=None, masked_softmax_fusion=True, bias_gelu_fusion=False, bias_dropout_fusion=True, moe_token_dropping=True, moe_train_capacity_factor=1.0, moe_eval_capacity_factor=1.0, moe_min_capacity=4, moe_loss_coeff=0.1, create_moe_param_group=False, use_flash_attn_v1=False, use_flash_attn_v2=True, use_flash_attn_triton=False, add_bias_linear=False, optimizer='adam', dataloader_type='single', ds_inference=False, cpu_optimizer=False, cpu_torch_adam=False, ds_fused_adam=False, no_pipeline_parallel=False, use_tutel=False, inference=True, async_tensor_model_parallel_allreduce=False, no_persist_layer_norm=False, sequence_parallel=False, ds_sequence_parallel_size=1, force_ds_sequence_parallel=False, gradient_accumulation_fusion=True, use_dataset_only=False, seed=1234, data_parallel_random_init=False, init_method_std=0.013, init_method_xavier_uniform=False, lr=0.0002, lr_decay_style='cosine', lr_decay_iters=None, lr_decay_samples=4096000, lr_decay_tokens=300000000000, lr_warmup_fraction=None, lr_warmup_iters=0, lr_warmup_samples=0, lr_warmup_tokens=3000000000, min_lr=1e-06, override_opt_param_scheduler=True, use_checkpoint_opt_param_scheduler=False, save='/home/ubuntu/models/1.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B', save_interval=100, no_save_optim=None, no_save_rng=None, load='/groups/gcf51099/crypto_llm/models/1.latin_wikipedia_no_encryption_000000_1234_True/checkpoint/tinyllama-1.1B/global_step1000', no_load_optim=None, no_load_rng=None, no_load_lr_state=False, finetune=False, perform_initialization=True, use_checkpoint_args=False, exit_on_missing_checkpoint=False, universal_checkpoint=False, tf32=False, fp16=False, bf16=False, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, fp32_residual_connection=False, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=False, accumulate_allreduce_grads_in_fp32=False, fp16_lm_cross_entropy=False, tensor_model_parallel_size=1, enable_expert_tensor_parallelism=False, pipeline_model_parallel_size=1, pipeline_model_parallel_split_rank=None, moe_expert_parallel_size=1, num_layers_per_virtual_pipeline_stage=None, overlap_p2p_comm=False, distributed_backend='nccl', distributed_timeout_minutes=10, DDP_impl='local', use_contiguous_buffers_in_local_ddp=True, scatter_gather_tensors_in_pipeline=True, use_ring_exchange_p2p=False, local_rank=0, lazy_mpu_init=None, use_cpu_initialization=None, empty_unused_memory_level=0, standalone_embedding_stage=False, use_distributed_optimizer=False, eval_iters=10, eval_interval=1000, skip_train=False, aml_data_download_path=None, data_path=['/home/ubuntu/data/wikipedia_latin_no_encryption_000000_1234_True_text_document'], split='949,50,1', train_data_path=None, valid_data_path=None, test_data_path=None, data_cache_path=None, vocab_size=None, vocab_file=None, merge_file=None, vocab_extra_ids=0, seq_length=2048, encoder_seq_length=2048, decoder_seq_length=None, retriever_seq_length=256, sample_rate=1.0, mask_prob=0.15, short_seq_prob=0.1, mmap_warmup=False, num_workers=0, tokenizer_type='SentencePieceTokenizer', tokenizer_model='/home/ubuntu/tokenizers/tokenizer_wikipedia_latin_no_encryption_000000_1234_True.model', data_impl='mmap', reset_position_ids=False, reset_attention_mask=False, eod_mask_loss=False, train_data_exact_num_epochs=2, return_data_index=False, data_efficiency_curriculum_learning=False, train_idx_path=None, train_desc_path=None, train_doc_idx_path=None, train_sample_idx_path=None, train_shuffle_idx_path=None, repeated_dataloader=False, adlr_autoresume=False, adlr_autoresume_interval=1000, ict_head_size=None, biencoder_projection_dim=0, biencoder_shared_query_context_model=False, ict_load=None, bert_load=None, titles_data_path=None, query_in_block_prob=0.1, use_one_sent_docs=False, evidence_data_path=None, retriever_report_topk_accuracies=[], retriever_score_scaling=False, block_data_path=None, embedding_path=None, indexer_batch_size=128, indexer_log_interval=1000, num_classes=1000, img_h=224, img_w=224, num_channels=3, patch_dim=16, classes_fraction=1.0, data_per_class_fraction=1.0, data_sharding=True, head_lr_mult=1.0, vision_pretraining=False, vision_pretraining_type='classify', vision_backbone_type='vit', swin_backbone_type='tiny', mask_type='random', mask_factor=1.0, iter_per_epoch=1250, dino_local_img_size=96, dino_local_crops_number=10, dino_head_hidden_size=2048, dino_bottleneck_size=256, dino_freeze_last_layer=1, dino_norm_last_layer=False, dino_warmup_teacher_temp=0.04, dino_teacher_temp=0.07, dino_warmup_teacher_temp_epochs=30, log_params_norm=False, log_num_zeros_in_grad=False, timing_log_level=0, barrier_with_L1_time=True, timing_log_option='minmax', tensorboard_log_interval=1, tensorboard_queue_size=1, log_timers_to_tensorboard=True, log_batch_size_to_tensorboard=True, log_learning_rate_to_tensorboard=True, log_loss_scale_to_tensorboard=True, log_validation_ppl_to_tensorboard=True, log_optimizer_states_to_tensorboard=True, log_memory_to_tensorboard=False, log_world_size_to_tensorboard=False, use_wandb=True, wandb_entity='yohei-kobashi', wandb_project='encrypted_data_LLM', wandb_group='pretrain_gpt_1.1B_1.latin_wikipedia_no_encryption_000000_1234_True', wandb_tag='other_gpu', zero_stage=0, zero_reduce_scatter=False, zero_contigious_gradients=False, zero_reduce_bucket_size=0.0, zero_allgather_bucket_size=0.0, remote_device='none', use_pin_memory=False, scattered_embeddings=False, split_transformers=False, memory_centric_tiled_linear=False, tile_factor=1, deepspeed_activation_checkpointing=False, partition_activations=False, contigious_checkpointing=False, checkpoint_in_cpu=False, synchronize_each_layer=False, profile_backward=False, num_layers_teacher=None, num_experts_teacher=[1], hidden_size_teacher=None, num_attention_heads_teacher=None, mos=False, kd=False, kd_alpha_ce=1, kd_beta_ce=1, kd_temp=1.0, reset_iteration=False, load_teacher=None, inference_batch_times_seqlen_threshold=512, max_tokens_to_oom=12000, output_bert_embeddings=False, bert_embedder_type='megatron', fp8_e4m3=False, fp8_hybrid=False, fp8_wgrad=True, fp8_margin=0, fp8_interval=1, transformer_impl='local', fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', retro_workdir=None, retro_add_retriever=False, retro_cyclic_train_iters=None, retro_encoder_layers=2, retro_encoder_hidden_dropout=0.1, retro_encoder_attention_dropout=0.1, retro_num_neighbors=2, retro_num_retrieved_chunks=2, retro_return_doc_ids=False, temperature=1.0, greedy=False, top_p=0.0, top_k=0, out_seq_length=50, sample_input_file=None, sample_output_file=None, num_samples=0, genfile=None, recompute=False, context_tokens='DeepSpeed is the greatest', tokenize_model=None, max_tokens=50, deepspeed=False, deepspeed_config=None, deepscale=False, deepscale_config=None, deepspeed_mpi=False, ds_pipeline_enabled=True, rank=0, world_size=1, transformer_pipeline_model_parallel_size=1, data_parallel_size=1, virtual_pipeline_model_parallel_size=None, params_dtype=torch.float32, consumed_train_samples=4096000, consumed_valid_samples=40960, consumed_train_tokens=8388608000, variable_seq_lengths=False, curriculum_learning_legacy=False, compression_training=False, use_flash_attn=True, padded_vocab_size=32128, deepspeed_config_dict={'train_batch_size': 4096, 'train_micro_batch_size_per_gpu': 8, 'steps_per_print': 10, 'zero_optimization': {'stage': 0}, 'gradient_clipping': 1.0, 'prescale_gradients': True, 'fp16': {'enabled': True, 'loss_scale': 0, 'loss_scale_window': 500, 'hysteresis': 2, 'min_loss_scale': 1, 'initial_scale_power': 11}, 'wall_clock_breakdown': False}, model_type=<ModelType.encoder_or_decoder: 1>, attn_mask=tensor([[[[False,  True,  True,  ...,  True,  True,  True],
+          [False, False,  True,  ...,  True,  True,  True],
+          [False, False, False,  ...,  True,  True,  True],
+          ...,
+          [False, False, False,  ..., False,  True,  True],
+          [False, False, False,  ..., False, False,  True],
+          [False, False, False,  ..., False, False, False]]]]), rotary_pos_emb=tensor([[[[0.0000e+00, 0.0000e+00, 0.0000e+00,  ..., 0.0000e+00,
+           0.0000e+00, 0.0000e+00]]],
+
+
+        [[[1.0000e+00, 8.6596e-01, 7.4989e-01,  ..., 1.5399e-04,
+           1.3335e-04, 1.1548e-04]]],
+
+
+        [[[2.0000e+00, 1.7319e+00, 1.4998e+00,  ..., 3.0799e-04,
+           2.6670e-04, 2.3096e-04]]],
+
+
+        ...,
+
+
+        [[[2.0450e+03, 1.7709e+03, 1.5335e+03,  ..., 3.1491e-01,
+           2.7271e-01, 2.3615e-01]]],
+
+
+        [[[2.0460e+03, 1.7718e+03, 1.5343e+03,  ..., 3.1507e-01,
+           2.7284e-01, 2.3627e-01]]],
+
+
+        [[[2.0470e+03, 1.7726e+03, 1.5350e+03,  ..., 3.1522e-01,
+           2.7297e-01, 2.3638e-01]]]]), allow_transformer_engine=True, do_train=1, do_valid=1, do_test=1, teacher_model=None, curr_iteration=999, actual_seq_length=2048)
+-----------------
+Traceback (most recent call last):
+  File "/home/acf16449gb/crypto_llm/train/scripts/step6_evaluate_perplexity/test_deepspeed_model.py", line 126, in <module>
+    main()
+  File "/home/acf16449gb/crypto_llm/train/scripts/step6_evaluate_perplexity/test_deepspeed_model.py", line 118, in main
+    model.load_state_dict(input_state_dict['model'], strict=True)    
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/distributed.py", line 71, in load_state_dict
+    self.module.load_state_dict(state_dict, strict=strict)
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/gpt_model.py", line 178, in load_state_dict
+    self.language_model.load_state_dict(state_dict, strict=strict)
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/megatron_core-0.2.0-py3.11.egg/megatron/model/language_model.py", line 701, in load_state_dict
+    self.encoder.load_state_dict(state_dict_, strict=strict)
+  File "/home/acf16449gb/crypto_llm/train/.venv_train/lib/python3.11/site-packages/torch/nn/modules/module.py", line 2041, in load_state_dict
+    raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+RuntimeError: Error(s) in loading state_dict for ParallelTransformer:
+	Missing key(s) in state_dict: "final_layernorm.weight". 
+	Unexpected key(s) in state_dict: "layers.22.weight", "final_layernorm.lm_head.weight". 

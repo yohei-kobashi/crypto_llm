@@ -16,6 +16,7 @@ export MASTER_PORT=6006
 lang="latin"
 corpus="wikipedia"
 encryption="poly_000000_1234_True"
+global_step="global_step10000"
 
 python test_model.py \
     --override-opt_param-scheduler \
@@ -59,8 +60,8 @@ python test_model.py \
     --hysteresis 2 \
     --num-workers 0 \
     --seed 1234 \
-    --load /groups/gcf51099/crypto_llm/models/megatron/1.${lang}_${corpus}_${encryption} \
-    --save /groups/gcf51099/crypto_llm/models/megatron/1.${lang}_${corpus}_${encryption} \
+    --load /groups/gcf51099/crypto_llm/models/1.${lang}_${corpus}_${encryption}/checkpoint/tinyllama-1.1B/${global_step} \
+    --save /groups/gcf51099/crypto_llm/models/1.${lang}_${corpus}_${encryption}/checkpoint/tinyllama-1.1B/${global_step} \
     --no-async-tensor-model-parallel-allreduce \
     --tensorboard-queue-size 1 \
     --log-timers-to-tensorboard \
@@ -69,5 +70,5 @@ python test_model.py \
     --tokenizer-type SentencePieceTokenizer \
     --tokenizer-model /groups/gcf51099/crypto_llm/tokenizers/tokenizer_${corpus}_${lang}_${encryption}.model \
     --sample-input-file /groups/gcf51099/crypto_llm/data/test/test_input.txt \
-    --sample-output-file /groups/gcf51099/crypto_llm/data/test/test_output.txt
-
+    --sample-output-file /groups/gcf51099/crypto_llm/data/test/test_output.txt \
+    --deepspeed
