@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#$ -l rt_C.large=1
+#$ -l rt_C.small=1
 #$ -l h_rt=48:00:00
 #$ -j y
 #$ -cwd

@@ -1,16 +1,12 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaTokenizer, LlamaForCausalLM
+from transformers import AutoTokenizer, LlamaForCausalLM
 import sys
 
-def output_text(model_dir, model_type):
+def output_text(model_dir):
     device = "cpu"
 
-    if model_type == "llama":
-        model = LlamaForCausalLM.from_pretrained(model_dir).to(device)
-        tokenizer = AutoTokenizer.from_pretrained(model_dir)
-    else:
-        model = AutoModelForCausalLM.from_pretrained(model_dir).to(device)
-        tokenizer = AutoTokenizer.from_pretrained(model_dir)
+    model = LlamaForCausalLM.from_pretrained(model_dir).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
     input_text = "My father is my sister's"
     input_ids = tokenizer.encode(input_text, return_tensors="pt", padding=True, add_special_tokens=False).to(device)
@@ -22,11 +18,10 @@ def output_text(model_dir, model_type):
     print(generated_text)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python script.py <model_dir>")
-        sys.exit(1)
-    
-    model_dir = sys.argv[1]
-    model_type = sys.argv[2] if len(sys.argv) > 2 else "llama"
-
-    output_text(model_dir, model_type)
+    model_dirs = [
+        "/groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_poly_000100_1234_True_step1500/",
+        "/groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_poly_010000_1234_True_step1500/",
+        "/groups/gcf51099/crypto_llm/models/hf/1.latin_wikipedia_poly_000000_1234_True_step1500/",
+    ]
+    for model_dir in model_dirs:
+        output_text(model_dir)

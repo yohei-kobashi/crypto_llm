@@ -10,7 +10,7 @@ nlp = spacy.load("en_core_web_md")
 
 # jsonlファイル一覧
 data_labels = [
-    "wikipedia_latin_no_encryption_000000_1234_True",
+    "wikipedia_latin_no_encryption_000000_1234_True_no_encryption",
 ]
 
 def process_sentence(paragraph):
