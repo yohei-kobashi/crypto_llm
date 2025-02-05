@@ -136,9 +136,10 @@ class Encryptor():
         return encrypted_text
 
 class EncryptPipeline(PipelineStep):
-    def __init__(self, seed=0, type: Literal["poly", "chacha20"] = "poly", key_len: int = 1):
+    def __init__(self, seed=0, type: Literal["poly", "chacha20"] = "poly", key_len: int = 1, add_key: bool = False):
         super().__init__()
         self.encryptor = Encryptor(seed)
+        self.add_key = add_key
         if type == "poly":
             self.encryptor.poly(key_len, reuse_key=True)
         elif type == "chacha20":
@@ -150,5 +151,8 @@ class EncryptPipeline(PipelineStep):
         # name_freq = {}
         for doc in data:
             with self.track_time():
-                doc.text = self.encryptor.key + self.encryptor.encrypt(doc.text)
+                if self.add_key:
+                    doc.text = self.encryptor.key + self.encryptor.encrypt(doc.text)
+                else:
+                    doc.text = self.encryptor.encrypt(doc.text)
             yield doc
