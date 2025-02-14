@@ -58,6 +58,7 @@ def main(
         k_validation, # Number of lines to take from each chunk for validation
         sample_ratio, # Ratio of the dataset to sample
         key_len,
+        nchunks=2,
         ):
     # Configuration
     src_dir = f"{data_dir}/{dataset}"
@@ -67,7 +68,6 @@ def main(
     prefix = f"{dataset}.chunk."
 
     suffix = ".jsonl"
-    nchunks = 2
 
     encrypt(dataset, work_dir, src_dir, out_dir, sample_ratio=sample_ratio)
 
@@ -102,7 +102,8 @@ if __name__ == "__main__":
     parser.add_argument("--k_validation", type=int, default=10000)
     parser.add_argument("--sample_ratio", type=float, default=1.0)
     parser.add_argument("--key_len", type=int, default=1)
+    parser.add_argument("--nchunks", type=int, default=2)
 
     args = parser.parse_args()
 
-    main(args.dataset, args.data_dir, args.k_validation, args.sample_ratio, args.key_len)
+    main(args.dataset, args.data_dir, args.k_validation, args.sample_ratio, args.key_len, args.nchunks)

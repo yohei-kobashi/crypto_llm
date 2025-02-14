@@ -45,6 +45,7 @@ def main(
         dataset, 
         data_dir, 
         key_len,
+        nchunks=2,
         ):
     # Configuration
     src_dir = f"{data_dir}/{dataset}"
@@ -53,7 +54,6 @@ def main(
     work_dir = src_dir  # Directory of this Python file
 
     suffix = ".jsonl"
-    nchunks = 2
 
     encrypt(dataset, work_dir, src_dir, out_dir, key_len)
 
@@ -69,7 +69,8 @@ if __name__ == "__main__":
     parser.add_argument("dataset", type=str)
     parser.add_argument("--data_dir", type=str, default="data")
     parser.add_argument("--key_len", type=int, default=1)
+    parser.add_argument("--nchunks", type=int, default=2)
 
     args = parser.parse_args()
 
-    main(args.dataset, args.data_dir, args.key_len)
+    main(args.dataset, args.data_dir, args.key_len, args.nchunks)
