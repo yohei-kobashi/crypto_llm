@@ -15,7 +15,7 @@ python3 script/preprocess/preprocess_dropped.py data_dropped --data_dir /home/uc
 
 python3 script/preprocess/preprocess_final.py data_final --data_dir /home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove/extract_names_from_fwe10b_n1 --sample_ratio 0.5 --nchunks 1
 ```
-So far, we obtain following subsets
+So far, we obtain following subsets on `./working_dir`
 | Name | Train type | Text Type | Presudo-PII? |
 |----|----|----|----|
 | data_dropped_chunk | Pre-training | Plain | Yes |
