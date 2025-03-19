@@ -1,0 +1,79 @@
+dump_dir: dump/exp5_cryptolm_llama_a_100_ft
+name: exp5_cryptolm_llama_a_100_ft
+steps: 2453
+probe_freq: null
+seed: 0
+
+optim:
+  lr: 3e-4
+  weight_decay: 0.033
+  warmup: 5000
+  lr_min_ratio: 0.000001
+  clip: 1.0
+
+distributed:
+  fsdp_type: full_shard
+  compile: false
+  model_dtype: bf16
+  matmul_allow_tf32: false
+  selective_activation_checkpointing: false
+  dp_shard: 16
+  tp_size: 1
+
+model:
+  dim: 1536
+  n_layers: 16
+  n_heads: 12
+
+data:
+  root_dir: data/cryptollm_exp5
+  sources:
+      data_final_0.25_continual2_chunk_00: 2398009.0
+  batch_size: 32
+  prefetch_size: 96
+  seq_len: 2048
+  n_views: 2
+  load_async: true
+  add_bos: true
+  add_eos: true
+  tokenizer:
+    name: sp
+    path: data/cryptollm_exp5/plain.model
+
+profiling:
+  run: true
+  mem_warmup: 0
+  mem_steps: 4
+  profile_warmup: 100
+  profile_steps: 4
+
+checkpoint:
+  dump:
+    every: 1000
+    keep: 3
+  eval:
+    every: 2000
+    keep: 1
+  init_ckpt_path: .dump/exp5_a_100_pt_123030.pbs1/checkpoints/0000007564
+
+logging:
+    freq: 10
+    wandb:
+        project: "cryptollm-lingua"
+
+eval:
+  harness:
+    tasks:
+      - hellaswag
+      - piqa
+      - openbookqa
+      - winogrande
+  generator:
+    max_tokens: 4096
+    dtype: bf16
+  validation:
+    max_steps: 1000
+    use_val_from_train_src: false
+    root_dir: data/cryptollm_exp5
+    sources:
+      - data_final_0.25_continual2_chunk_00

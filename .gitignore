@@ -3,3 +3,8 @@ fineweb_edu_100bt
 working_dir
 logs
 *.json
+*.model
+*.vocab
+__pycache__
+note
+eval

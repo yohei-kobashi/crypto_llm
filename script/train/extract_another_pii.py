@@ -10,7 +10,7 @@ from datatrove.pipeline.writers import JsonlWriter
 parser = argparse.ArgumentParser("Filter an HF dataset and push the result to the hub")
 
 parser.add_argument("input_dataset", type=str, help="HF dataset to filter")
-parser.add_argument("job_name", type=str, help="job name", default="extract_names_from_fwe10b")
+parser.add_argument("--job_name", type=str, help="job name", default="extract_names_from_fwe10b")
 parser.add_argument("--n_tasks", type=int, help="number of tasks", default=10)
 parser.add_argument("--text_key", type=str, help="text column", default="text")
 parser.add_argument("--seed", type=int, help="random seed", default=1)
@@ -20,8 +20,8 @@ parser.add_argument("--limit", type=int, help="limit the number of documents", d
 # seed is different from the original script to filter another PII
 
 ORG_NAME = "fumiyau"
-LOCAL_PATH = "/home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove"
-LOCAL_LOGS_PATH = "/home/uchiyama.fumiya/ucllm/cryptollm/logs/datatrove"
+LOCAL_PATH = "/groups/gcf51099/fumiyau/repos/cryptollm/working_dir/datatrove"
+LOCAL_LOGS_PATH = "/groups/gcf51099/fumiyau/repos/cryptollm/logs/datatrove"
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -32,7 +32,7 @@ if __name__ == "__main__":
                 args.input_dataset,
                 file_progress=True,
                 doc_progress=True,
-                glob_pattern="**/data_final.chunk.*.jsonl",
+                glob_pattern="**/*.chunk.*.jsonl",
                 skip=args.skip,
                 limit=args.limit,
             ),
@@ -42,7 +42,7 @@ if __name__ == "__main__":
                 seed=args.seed,
                 exclusion_writer=JsonlWriter(
                     f"{LOCAL_PATH}/{JOB_NAME}_b{str(args.skip)}_e{str(args.limit)}_seed{str(args.seed)}",
-                    output_filename="data_dropped/${rank}.jsonl",
+                    output_filename="data_dropped_${rank}.jsonl",
                     compression=None,
                 ),
                 drop_ratio=args.drop_ratio,
