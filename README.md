@@ -17,6 +17,7 @@ python3 script/preprocess/preprocess_final.py data_final --data_dir /home/uchiya
 ```
 ## Train sentencepiece tokenizers
 ### Concat into raw txt
+#### Tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
 ```
 python script/tokenizer/make_raw_text.py \
     --input_dir working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked working_dir/datatrove/extract_names_from_fwe10b/data_final_0.5_pretrain_chunked \
@@ -24,6 +25,7 @@ python script/tokenizer/make_raw_text.py \
     --output working_dir/tokenizer/raw_plain_text.txt
 ```
 ### Train spm
+#### Crypto-LLM 1
 ```
 python script/tokenizer/train_spm.py \
     working_dir/tokenizer/raw_poly1_text.txt \
@@ -33,6 +35,27 @@ python script/tokenizer/train_spm.py \
     --split_digits \
     --allow_whitespace_only_pieces
 ```
+#### Crypto-LLM 2
+```
+python script/tokenizer/train_spm.py \
+    working_dir/tokenizer/raw_poly10_text.txt \
+    --model_prefix sp_model_pt_poly10_v2 \
+    --model_type unigram \
+    --byte_fallback \
+    --split_digits \
+    --allow_whitespace_only_pieces
+```
+#### Crypto-LLM 3
+```
+python script/tokenizer/train_spm.py \
+    working_dir/tokenizer/raw_poly100_text.txt \
+    --model_prefix sp_model_pt_poly100_v2 \
+    --model_type unigram \
+    --byte_fallback \
+    --split_digits \
+    --allow_whitespace_only_pieces
+```
+#### Tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
 ```
 python script/tokenizer/train_spm.py \
     working_dir/tokenizer/raw_plain_text.txt \
