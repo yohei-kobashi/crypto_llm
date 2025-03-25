@@ -13,9 +13,8 @@ parser.add_argument("--n_tasks", type=int, help="number of tasks", default=10)
 parser.add_argument("--text_key", type=str, help="text column", default="text")
 parser.add_argument("--seed", type=int, help="random seed", default=0)
 
-ORG_NAME = "fumiyau"
-LOCAL_PATH = "/home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove"
-LOCAL_LOGS_PATH = "/home/uchiyama.fumiya/ucllm/cryptollm/logs/datatrove"
+LOCAL_PATH = "working_dir/datatrove"
+LOCAL_LOGS_PATH = "logs/datatrove"
 
 if __name__ == "__main__":
     args = parser.parse_args()
