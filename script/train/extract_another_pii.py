@@ -19,9 +19,8 @@ parser.add_argument("--skip", type=int, help="skip the first n documents", defau
 parser.add_argument("--limit", type=int, help="limit the number of documents", default=-1)
 # seed is different from the original script to filter another PII
 
-ORG_NAME = "fumiyau"
-LOCAL_PATH = "/groups/gcf51099/fumiyau/repos/cryptollm/working_dir/datatrove"
-LOCAL_LOGS_PATH = "/groups/gcf51099/fumiyau/repos/cryptollm/logs/datatrove"
+LOCAL_PATH = "working_dir/datatrove"
+LOCAL_LOGS_PATH = "logs/datatrove"
 
 if __name__ == "__main__":
     args = parser.parse_args()

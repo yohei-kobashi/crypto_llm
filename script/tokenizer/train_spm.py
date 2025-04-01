@@ -34,6 +34,7 @@ def main(args):
         remove_extra_whitespaces=args.remove_extra_whitespaces,
         input_sentence_size=args.input_sentence_size,
         shuffle_input_sentence=args.shuffle_input_sentence,
+        train_extremely_large_corpus=args.train_extremely_large_corpus,
         user_defined_symbols=user_defined_symbols,
         )
     
@@ -43,7 +44,8 @@ if __name__ == '__main__':
     parser.add_argument('--model_prefix', type=str, default='sp_model')
     parser.add_argument('--vocab_size', type=int, default=50000)
     parser.add_argument('--input_sentence_size', type=int, default=1000000)
-    parser.add_argument('--shuffle_input_sentence', type=bool, default=True)
+    parser.add_argument('--shuffle_input_sentence', action='store_true')
+    parser.add_argument('--train_extremely_large_corpus', action='store_true')
     parser.add_argument('--model_type', type=str, default='bpe')
     parser.add_argument('--byte_fallback', action='store_true')
     parser.add_argument('--split_digits', action='store_true')

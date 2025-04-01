@@ -1,73 +1,155 @@
 # Crypto LLM: Two-Stage Language Model Pre-training with Ciphered and Natural Language Data
 
-This repository has scripts to prepare training subset for each condition, train tokenizer used in encoding plain or encrypted text and extract presudo-pii data from existing training subset. We also included configuration files of [Meta Lingua](https://github.com/facebookresearch/lingua)
+This repository consists of scripts to prepare training subset for each condition, train tokenizers used for encoding plain or encrypted text, and configuration files for training models. We also included configuration files for [Meta Lingua](https://github.com/facebookresearch/lingua).
 
 ## Preliminaries
+ - Install libraries
+    ```bash
+    cd {repository_dir}
+    pip install -r requirements.txt
+    ```
  - Training data:  sample 10BT of [fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu)
-   - downloaded parquet files under `./fineweb_edu_10bt`
- - Computational Resource: 2 node with 8 H200 GPUs each
+   - Download parquet files under `./fineweb_edu_10bt`
+   - You can download it using `download_dataset.py`. This takes a few minutes.
+   ```bash
+   python3 download_dataset.py .
+   ```
+ - Computational Resource (for model training): 2 nodes with 8 H200 GPUs each
 
 ## Prepare training subset
-### Collect person name from the entire data
-```
+### Collect person names from the entire dataset
+From fineweb-edu, detect person entities using spaCy, and save all detected names in the dataset into `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json` 
+```bash
 python script/preprocess/extract_name.py fineweb_edu_10bt/ extract_names_from_fwe10b
 ```
-### Extract presudo-pii samples
-```
+### Extract pseudo-PII samples
+from `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json` , sample names as pseudo-PII data and split the dataset into two subsets:
+ - pseudo-PII (contains specific set of names): `working_dir/datatrove/extract_names_from_fwe10b/data_dropped`
+ - remaining dataset: `working_dir/datatrove/extract_names_from_fwe10b/data_final`
+
+
+```bash
 python script/preprocess/filter_name.py fineweb_edu_10bt/ extract_names_from_fwe10b
 ```
-### Split into pre-training and continual pre-training data & Encryption
-We recommend nchunks=1 because meta lingua ignores jsonl files if the number of jsonl files is bigger than world size at training.
-```
-python3 script/preprocess/preprocess_dropped.py data_dropped --data_dir working_dir/datatrove/extract_names_from_fwe10b_n1 --nchunks 1
 
-python3 script/preprocess/preprocess_final.py data_final --data_dir working_dir/datatrove/extract_names_from_fwe10b_n1 --sample_ratio 0.5 --nchunks 1
+The set of pseudo-PII names are saved into `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json_drop_0.json`
+### Split into pre-training and continual pre-training data & Chunking
+We recommend `nchunks=1` because Meta Lingua ignores jsonl files if the number of jsonl files is bigger than world size at training.
+```bash
+python3 script/preprocess/preprocess_dropped.py data_dropped --data_dir working_dir/datatrove/extract_names_from_fwe10b --nchunks 1
+
+python3 script/preprocess/preprocess_final.py data_final --data_dir working_dir/datatrove/extract_names_from_fwe10b --sample_ratio 0.75 --nchunks 1
 ```
-So far, we obtain following subsets on `./working_dir`
-| Name | Train type | Text Type | Presudo-PII? | Target |
+For `preprocess_final.py`, `--sample_ratio` specifies how much data to use for pre-training. The above example utilizes 75% of data under `data_final` for pre-training and the remaining 25% for continual pre-training.
+
+We can obtain the following subsets:
+```bash
+# pseudo-PII data
+working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked
+
+# normal pre-training and continual pre-training dataset
+working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked
+working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_continual_chunked
+```
+This script generates encrypted data. However, this generated encrypted data by this script are deprecated.
+### Encrypt training data
+Run the following commands to encrypt training data:
+
+```bash
+# for key_length=1
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked/data_dropped.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_dropped_chunk_00_alpha_poly_000001_1234_True \
+    --key_length 1 --seed 1234
+
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked/data_final.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_0.75_pretrain_chunk_00_alpha_poly_000001_1234_True \
+    --key_length 1 --seed 1234
+
+# for key_length=10
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked/data_dropped.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_dropped_chunk_00_alpha_poly_000010_1234_True \
+    --key_length 10 --seed 1234
+
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked/data_final.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_0.75_pretrain_chunk_00_alpha_poly_000010_1234_True \
+    --key_length 10 --seed 1234
+
+# for key_length=100
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked/data_dropped.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_dropped_chunk_00_alpha_poly_000100_1234_True \
+    --key_length 100 --seed 1234
+
+python3 script/preprocess/encrypt_jsonl.py \
+    --lang alpha \
+    --input_file working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked/data_final.chunk.00.jsonl \
+    --output_dir working_dir/datatrove/extract_names_from_fwe10b/encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True \
+    --key_length 100 --seed 1234
+
+```
+**[IMPORTANT]** Meta Lingua recognize files matching `*.chunk.*.jsonl` as a training data. After this process, please rename the jsonl file satisfying this.
+
+So far, we have obtained following subsets on `./working_dir/datatrove/extract_names_from_fwe10b`
+| Name | Train type | Text Type | Pseudo-PII? | Target |
 |----|----|----|----|----|
-| `data_dropped_chunk` | Pre-training | Plain | Yes | Plain-LLM 1 |
-| `data_final_0.5_pretrain_chunk` | Pre-training | Plain | No | Plain-LLM 1 |
-| `data_final_0.25_pretrain_chunk_01` | Pre-training` | Plain | No | Plain-LLM 1 |
-| `data_final_0.25_continual2_chunk_00` | Continual pre-training | Plain | No | All |
-| `encrypted_0.5_pretrain_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | No | Crypto-LLM 1 |
-| `encrypted_0.5_pretrain_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | No | Crypto-LLM 2 |
-| `encrypted_0.5_pretrain_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM 3 |
-| `encrypted_0.25_pretrain_chunk_01_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | No | Crypto-LLM 1 |
-| `encrypted_0.25_pretrain_chunk_01_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | No | Crypto-LLM 2 |
-| `encrypted_0.25_pretrain_chunk_01_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM 3 |
-| `encrypted_dropped_chunk.00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | Yes | Crypto-LLM 1 |
-| `encrypted_dropped_chunk.00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | Yes | Crypto-LLM 2 |
-| `encrypted_droppeds_chunk.00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | Yes | Crypto-LLM 3 |
+| `data_dropped_chunked` | Pre-training | Plain | Yes | Plain-LLM 1 |
+| `encrypted_dropped_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | Yes | Crypto-LLM 1 |
+| `encrypted_dropped_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | Yes | Crypto-LLM 2 |
+| `encrypted_dropped_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | Yes | Crypto-LLM 3 |
+| `data_final_0.75_pretrain_chunked` | Pre-training | Plain | No | Plain-LLM 1 |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | No | Crypto-LLM 1 |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | No | Crypto-LLM 2 |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM 3 |
+| `data_final_0.75_continual_chunked` | Continual pre-training | Plain | No | All 
+
 ## Train sentencepiece tokenizers
-Here, we show how to train tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
-Tokenizers for cipher text (key_length=1,10,100) can be trained by same method.
-### Concat into raw txt
+Here, we show how to train a tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
+Tokenizers for encrypted text (key_length=1,10,100) can be trained using the same method.
+### Concatenate data into a raw text file
+SentencePiece tokenizer can be trained by multiple sources. However, we need to concat jsonl files into a single text file so we can avoid the command-line argument length constraints.
 ```
 python script/tokenizer/make_raw_text.py \
-    --input_dir working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked working_dir/datatrove/extract_names_from_fwe10b/data_final_0.5_pretrain_chunked \
+    --input_dir working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked \
     --probabilities 1.0 1.0 \
     --output working_dir/tokenizer/raw_plain_text.txt
 ```
 ### Train spm
 ```
 python script/tokenizer/train_spm.py \
-    working_dir/tokenizer/raw_plain_text.txt \
-    --model_prefix sp_model_pt_plain \
-    --model_type unigram \
-    --byte_fallback \
-    --split_digits \
-    --allow_whitespace_only_pieces
+	working_dir/tokenizer/raw_plain_text.txt \
+	--model_prefix plain \
+	--vocab_size 32000 \
+	--input_sentence_size 3000000 \
+	--shuffle_input_sentence \
+	--train_extremely_large_corpus \
+	--model_type unigram \
+	--byte_fallback \
+	--split_digits \
+	--allow_whitespace_only_pieces \
+	--remove_extra_whitespaces
 ```
-### Eval tokenizer
+### Evaluate tokenizer
+This script evaluates tokenizers by counting tokens and characters.
 ```
 python script/tokenizer/eval_tokenization.py \
-    --input_dir working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunk working_dir/datatrove/extract_names_from_fwe10b/data_final_0.5_pretrain_chunk \
+    --input_dir working_dir/datatrove/extract_names_from_fwe10b/data_dropped_chunked working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked \
     --probabilities 1.0 1.0 \
-    --model script/tokenizer/poly1/sp_model_pt_plain.model
+    --model plain.model
 ```
 ## Training configuration of Meta Lingua
-| Model Name | Configuration Name | Key Length |
+Move all training subset and tokenizer under `./data/cryptollm_exp5`.
+
+Following the official Meta Lingua repository, locate configuration files from `lingua_config` to `{lingua-repo-dir}/apps/main/config`. The letters appearing in the configuration filenames under `lingua_config` correspond to the following model types:
+| Model Name | Configuration Label | Key Length |
 |----|----|----|
 | Plain-LLM 1 | b | - |
 | Plain-LLM 2 | c | - |
@@ -75,12 +157,20 @@ python script/tokenizer/eval_tokenization.py \
 | Crypto-LLM 2 | a | 10 |
 | Crypto-LLM 3 | a | 100 |
 
+`pt` means pre-training and `ft` means continual pre-training. 
 
-## Extract presudo-pii samples from continual pre-training data
+For continual pre-training, please edit `checkpoint.init_ckpt_path` in the configuration file to the correct path. Specifying `cryptollm_llama_*.yaml` configuration file when running Meta Lingua's `python -m apps.main.train` trains Crypto-LLM and Plain-LLM.
+
+## Extract pseudo-PII samples from continual pre-training data
+To compare the difficulty of restoring encrypted versus plain data, we extract additional pseudo-PII samples from the continual pre-training dataset. Since extracting names from the entire dataset is time-consuming, we extract samples from the first 20,000 entries only.
 ```
 python script/train/extract_another_pii.py \
-    /home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove/extract_names_from_fwe10b_n1/data_final_0.5_continual_chunked \
+    /home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_continual_chunked \
     extract_names_from_fwe10b \
-    --skip 1426808 --limit 1436808 \
+    --skip 0 --limit 20000 \
     --drop_ratio 0.8 --seed 1
 ```
+After this, move `working_dir/datatrove/extract_names_from_fwe10b/extract_names_from_fwe10b_b0_e20000_seed1` under `./data/cryptollm_exp5`.
+
+# Evaluate trained models
+Set the `ckpt_dir` variable to point to the correct checkpoint directory. To evaluate Crypto-LLM and Plain-LLM, specify the appropriate `eval_*.yaml `configuration file when running Meta Lingua's `python -m apps.main.eval`.

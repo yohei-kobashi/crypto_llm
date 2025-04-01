@@ -28,9 +28,8 @@ model:
 data:
   root_dir: data/cryptollm_exp5
   sources:
-      data_dropped_chunk: 180510.0
-      data_final_0.5_pretrain_chunk: 4806260.0
-      data_final_0.25_pretrain_chunk_01: 2409781.0
+      data_dropped_chunked: 180510.0
+      data_final_0.75_pretrain_chunked: 7216041.0
   batch_size: 32
   prefetch_size: 96
   seq_len: 2048
@@ -77,4 +76,4 @@ eval:
     use_val_from_train_src: false
     root_dir: data/cryptollm_exp5
     sources:
-      - data_final_0.5_pretrain_chunk
+      - data_final_0.75_pretrain_chunked

@@ -19,9 +19,9 @@ validation:
   root_dir: data/cryptollm_exp5
   val_file_pattern: "*.jsonl"
   sources:
-    - data_dropped_chunk
-    - data_final_0.25_continual2_chunk_00
-    - encrypted_dropped_chunk.00_alpha_poly_000001_1234_True
-    - encrypted_dropped_chunk.00_alpha_poly_000010_1234_True
-    - encrypted_dropped_chunk.00_alpha_poly_000100_1234_True
+    - data_dropped_chunked
+    - data_final_0.75_continual_chunked
+    - encrypted_dropped_chunk_00_alpha_poly_000001_1234_True
+    - encrypted_dropped_chunk_00_alpha_poly_000010_1234_True
+    - encrypted_dropped_chunk_00_alpha_poly_000100_1234_True
     - extract_names_from_fwe10b_b0_e20000_seed1

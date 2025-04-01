@@ -1,1 +1,10 @@
 pycryptodome>=3.21.0
+spacy
+transformers
+datasets
+pycryptodome
+nltk
+datatrove
+sentencepiece
+torch
+numpy<2.0

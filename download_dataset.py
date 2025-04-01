@@ -32,8 +32,8 @@ def download_dataset(repo_id, local_dir, allow_patterns):
 def main(data_dir):
     # Configuration
     repo_id = "HuggingFaceFW/fineweb-edu"
-    src_dir = f"{data_dir}/fineweb_edu_100bt"
-    allow_patterns = "sample/100BT/*"
+    src_dir = f"{data_dir}/fineweb_edu_10bt"
+    allow_patterns = "sample/10BT/*"
 
     # Download dataset
     download_dataset(repo_id, src_dir, allow_patterns)

@@ -28,7 +28,7 @@ model:
 data:
   root_dir: data/cryptollm_exp5
   sources:
-      data_final_0.25_continual2_chunk_00: 2398009.0
+      data_final_0.75_continual_chunked: 2398009.0
   batch_size: 32
   prefetch_size: 96
   seq_len: 2048
@@ -75,4 +75,4 @@ eval:
     use_val_from_train_src: false
     root_dir: data/cryptollm_exp5
     sources:
-      - data_final_0.25_continual2_chunk_00
+      - data_final_0.75_continual_chunked

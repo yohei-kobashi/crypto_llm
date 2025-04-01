@@ -28,9 +28,8 @@ model:
 data:
   root_dir: data/cryptollm_exp5
   sources:
-      encrypted_dropped_chunk.00_alpha_poly_000100_1234_True: 180510.0
-      encrypted_0.5_pretrain_chunk_00_alpha_poly_000100_1234_True: 4806260.0
-      encrypted_0.25_pretrain_chunk_01_alpha_poly_000100_1234_True: 2409781.0
+      encrypted_dropped_chunk_00_alpha_poly_000100_1234_True: 180510.0
+      encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True: 7216041.0
   batch_size: 32
   prefetch_size: 96
   seq_len: 2048
@@ -77,4 +76,4 @@ eval:
     use_val_from_train_src: false
     root_dir: data/cryptollm_exp5
     sources:
-      - encrypted_0.5_pretrain_chunk_00_alpha_poly_000100_1234_True
+      - encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True
