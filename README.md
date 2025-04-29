@@ -130,12 +130,8 @@ python script/tokenizer/train_spm.py \
 	--vocab_size 32000 \
 	--input_sentence_size 3000000 \
 	--shuffle_input_sentence \
-	--train_extremely_large_corpus \
-	--model_type unigram \
-	--byte_fallback \
-	--split_digits \
-	--allow_whitespace_only_pieces \
-	--remove_extra_whitespaces
+	--model_type bpe \
+	--num_threads 16
 ```
 ### Evaluate tokenizer
 This script evaluates tokenizers by counting tokens and characters.
