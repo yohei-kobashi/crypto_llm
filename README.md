@@ -170,11 +170,11 @@ After this, move `working_dir/datatrove/extract_names_from_fwe10b/extract_names_
 
 # Evaluate trained models
 ## PII Perplexity
-To evaluate Crypto-LLM and Plain-LLM, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run Meta Lingua's `python -m apps.main.eval` to evaluate perplexity.
+To evaluate Crypto-LLM and Plain-LLM, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run `python -m apps.main.eval` on Meta Lingua to evaluate perplexity.
 
 ## Reconstruction Attack
 ### Place scripts into lingua's repository
-Copy `lingua_apps/crypto_llm` into lingua's `apps`. `lingua_apps/crypto_llm` contains scripts to conduct reconstruction attack.
+Copy `lingua_apps/crypto_llm` into Meta Lingua's `apps`. `lingua_apps/crypto_llm` contains scripts to conduct reconstruction attack.
 ### Convert PII jsonl
 This script splits each sentence in pii_jsonl_path into prefix, PII entiry and suffix. The splited sentences are dumped into a new jsonl file.
 ```bash
