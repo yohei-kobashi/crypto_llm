@@ -84,42 +84,6 @@ def fill_mask_helper(
     return output
 
 
-# def fill_mask(
-#     pipeline,
-#     text: str,
-#     pii_idx_list: List[Tuple[int, int]],
-# ) -> List[Tuple[str, str, str]]:
-#     """Output list of (mask_filled_prefix, name, mask_filled_suffix)"""
-#     name_list = []
-#     prefix_suffix_text_list: List[Tuple[str, str]] = []
-#     prefix_suffix_pii_idx_list: List[Tuple[List[Tuple[int, int]], List[Tuple[int, int]]]] = []
-#     for i, pii_idx in enumerate(pii_idx_list):
-#         start, end = pii_idx
-#         prefix = text[:start]
-#         name = text[start:end]
-#         suffix = text[end:]
-#         prefix_suffix_text_list.append((prefix, suffix))
-#         name_list.append(name)
-#         prefix_pii_idx = pii_idx_list[:i]
-#         suffix_pii_idx = pii_idx_list[i + 1:]
-#         for j in range(len(suffix_pii_idx)):
-#             suffix_pii_idx[j] = (suffix_pii_idx[j][0] - end, suffix_pii_idx[j][1] - end)
-
-#         prefix_suffix_pii_idx_list.append((prefix_pii_idx, suffix_pii_idx))
-
-#     print(prefix_suffix_pii_idx_list)
-#     # fill the mask
-#     masked_prefix_suffix = []
-#     for i, (prefix, suffix) in enumerate(prefix_suffix_text_list):
-#         prefix_pii_idx, suffix_pii_idx = prefix_suffix_pii_idx_list[i]
-#         name = name_list[i]
-#         masked_prefix = fill_mask_helper(pipeline, prefix, prefix_pii_idx)
-#         masked_suffix = fill_mask_helper(pipeline, suffix, suffix_pii_idx)
-#         masked_prefix_suffix.append((masked_prefix, name, masked_suffix))
-        
-#     return masked_prefix_suffix
-
-
 def main():
     init_logger()
     # Load CLI arguments (overrides) and combine with a YAML config
