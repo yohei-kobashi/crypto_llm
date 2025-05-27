@@ -161,7 +161,7 @@ For continual pre-training, please edit `checkpoint.init_ckpt_path` in the confi
 To compare the difficulty of restoring encrypted versus plain data, we extract additional pseudo-PII samples from the continual pre-training dataset. Since extracting names from the entire dataset is time-consuming, we extract samples from the first 20,000 entries only.
 ```
 python script/train/extract_another_pii.py \
-    /home/uchiyama.fumiya/ucllm/cryptollm/working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_continual_chunked \
+    {cryptollm_path}/working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_continual_chunked \
     extract_names_from_fwe10b \
     --skip 0 --limit 20000 \
     --drop_ratio 0.8 --seed 1
@@ -169,4 +169,25 @@ python script/train/extract_another_pii.py \
 After this, move `working_dir/datatrove/extract_names_from_fwe10b/extract_names_from_fwe10b_b0_e20000_seed1` under `./data/cryptollm_exp5`.
 
 # Evaluate trained models
-Set the `ckpt_dir` variable to point to the correct checkpoint directory. To evaluate Crypto-LLM and Plain-LLM, specify the appropriate `eval_*.yaml `configuration file when running Meta Lingua's `python -m apps.main.eval`.
+## PII Perplexity
+To evaluate Crypto-LLM and Plain-LLM, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run `python -m apps.main.eval` on Meta Lingua to evaluate perplexity.
+
+## Reconstruction Attack
+### Place scripts into lingua's repository
+Copy `lingua_apps/crypto_llm` into Meta Lingua's `apps`. `lingua_apps/crypto_llm` contains scripts to conduct reconstruction attack.
+### Convert PII jsonl
+This script splits each sentence in pii_jsonl_path into prefix, PII entiry and suffix. The splited sentences are dumped into a new jsonl file.
+```bash
+python -m apps.crypto_llm.separate_pii \
+    --input_path {pii_jsonl_path} \
+    --output_path {converted_pii_jsonl_path} \
+    --sp_model_path data/cryptollm_exp5/plain.model
+```
+### Execute reconstruction attack
+Once you convert PII data, you can evaluate pretrained model by reconstruction attack. To reproduce the results of the paper, run the following command:
+```bash
+python -m apps.crypto_llm.eval_reconstruction \
+    ckpt={ckpt_path}/consolidated \
+    pii_jsonl_path={converted_pii_jsonl_path} \
+    pii_num=1000
+```
