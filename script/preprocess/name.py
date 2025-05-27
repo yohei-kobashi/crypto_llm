@@ -1,11 +1,3 @@
-# https://github.com/huggingface/datatrove/blob/main/examples/filter_hf_dataset.py
-"""
-This file contains code to:
-1 - Load a parquet-format Hugging Face dataset from the hub.
-2 - Filter the dataset (to include only entries that contain the word 'hugging' in the text column).
-3 - Push the filtered dataset back to the hub.
-"""
-
 import argparse
 import spacy
 import json
@@ -23,75 +15,129 @@ from datatrove.utils.batching import batched
 from datatrove.utils.typeshelper import StatHints
 from datatrove.pipeline.filters.base_filter import BaseFilter
 
+# Constant key for person entities
 person_entity = "person_entity"
 
+
 def normalize_name(raw_name: str) -> str:
-    # 小文字に変換
+    """
+    Normalize a name string.
+
+    Args:
+        raw_name (str): Original name string (e.g., "John   Smith").
+
+    Returns:
+        str: Lowercased and whitespace-normalized version (e.g., "john smith").
+    """
     name = raw_name.lower()
-    # 余分な空白を正規化
     name = re.sub(r'\s+', ' ', name.strip())
     return name
 
+
 def canonicalize_name(raw_name: str) -> str:
     """
-    姓名の並び順が変わっても同一とみなせるように標準化する。
-    ここでは「名 姓」「姓 名」の順番を考慮し、ソートした状態で統一的なキーを返す。
+    Canonicalize a name to avoid differences due to order (e.g., first last vs last first).
+
+    Args:
+        raw_name (str): Normalized full name (e.g., "john smith").
+
+    Returns:
+        str: Canonical name string in sorted order with underscore delimiter (e.g., "john_smith" or "smith_john" -> "john_smith"),
+             or empty string if not applicable (e.g., single word).
     """
     name = normalize_name(raw_name)
     parts = name.split(' ')
-    
-    # partsが1つの場合はそのまま返す（ただし人名としては単一ワードは異例）
-    # partsが2つの場合、並び順をnormalize（sort）する
+
     if len(parts) == 2:
-        # 名前のリストをソートして、"名_姓"のような形で結合（順番固定）
         sorted_parts = sorted(parts)
         return "_".join(sorted_parts)
     else:
-        # それ以外の場合は単純に正規化済みの文字列を返す
         return ""
-    
+
+
 def get_filter_result(res):
+    """
+    Helper function to unpack filter result.
+
+    Args:
+        res (bool | Tuple[bool, str]): Result of filtering step.
+
+    Returns:
+        Tuple[bool, str | None]: Tuple containing boolean filter result and optional reason string.
+    """
     result, reason = res, None
     if isinstance(result, tuple):
         result, reason = res
     return result, reason
 
+
 class ExtractName(PipelineStep):
+    """
+    A pipeline step that extracts PERSON entities from document text using spaCy
+    and records normalized canonical names to statistics.
+
+    Args:
+        some_folder (DataFolderLike): Target folder for pipeline metadata or IO setup.
+
+    Returns:
+        DocumentsPipeline: Unchanged documents with internal stats updated.
+    """
     def __init__(self, some_folder: DataFolderLike):
         super().__init__()
         self.some_folder = get_datafolder(some_folder)
         self.nlp = spacy.load("en_core_web_sm")
 
     def run(self, data: DocumentsPipeline, rank: int = 0, world_size: int = 1) -> DocumentsPipeline:
-        # name_freq = {}
         for doc in data:
             with self.track_time():
                 name_set = set()
                 result = self.nlp(doc.text)
+
+                # Extract PERSON named entities
                 for ent in result.ents:
                     if ent.label_ == "PERSON":
                         name_set.add(ent.text)
-                
+
+                # Normalize and canonicalize entity names
                 canonical_name_set = set()
                 for name in name_set:
                     name_canonical = canonicalize_name(name)
-                    if name_canonical!="":
+                    if name_canonical != "":
                         canonical_name_set.add(name_canonical)
 
+                # Record each canonicalized name to stats
                 for name_canonical in canonical_name_set:
                     self.stat_update(f"{person_entity}/{canonicalize_name(name)}")
             yield doc
 
+
 class FilterName(BaseFilter):
+    """
+    A document filter that excludes documents based on extracted PERSON entity names.
+
+    This filter loads a name frequency stats file, selects a portion of the most common names,
+    and filters out documents that include those names.
+
+    Args:
+        stat_path (str): Path to a statistics file containing person name frequencies.
+        drop_ratio (float): Proportion of names to drop from the dataset.
+        max_freq_to_drop (int | None): Maximum allowed frequency to consider a name for dropping.
+        seed (int): Random seed for reproducibility.
+        exclusion_writer (DiskWriter | None): Optional writer to save filtered documents.
+        batch_size (int): Batch size for document processing.
+
+    Returns:
+        DocumentsPipeline: Stream of documents with filtered items removed.
+    """
     def __init__(
-            self, 
-            stat_path: str,
-            drop_ratio: float = 0.01,
-            max_freq_to_drop: int = None,
-            seed: int = 0,
-            exclusion_writer: DiskWriter = None, 
-            batch_size: int = 1,
-            ):
+        self, 
+        stat_path: str,
+        drop_ratio: float = 0.01,
+        max_freq_to_drop: int = None,
+        seed: int = 0,
+        exclusion_writer: DiskWriter = None, 
+        batch_size: int = 1,
+    ):
         super().__init__(exclusion_writer=exclusion_writer, batch_size=batch_size)
         self.stat_path = stat_path
         self.drop_ratio = drop_ratio
@@ -101,16 +147,25 @@ class FilterName(BaseFilter):
         self.nlp = spacy.load("en_core_web_sm")
 
     def filter(self, doc: Document) -> bool | Tuple[bool, str]:
+        """
+        Apply filtering logic for a single document.
+
+        Args:
+            doc (Document): A document containing text to scan for person names.
+
+        Returns:
+            bool | Tuple[bool, str]: True to keep, False to drop (with optional reason).
+        """
         name_set = set()
         result = self.nlp(doc.text)
         for ent in result.ents:
             if ent.label_ == "PERSON":
                 name_set.add(ent.text)
-        
+
         canonical_name_set = set()
         for name in name_set:
             name_canonical = canonicalize_name(name)
-            if name_canonical!="":
+            if name_canonical != "":
                 canonical_name_set.add(name_canonical)
 
         for name_canonical in canonical_name_set:
@@ -119,26 +174,34 @@ class FilterName(BaseFilter):
         return True
 
     def run(self, data: DocumentsPipeline, rank: int = 0, world_size: int = 1) -> DocumentsPipeline:
-        # define self.drop_names_dict
-        ## load stat file
+        """
+        Load name frequency statistics, select names to drop, and filter incoming documents.
+
+        Returns:
+            DocumentsPipeline: Stream of filtered documents.
+        """
+        # Load stats from file
         with open(self.stat_path, "r") as f:
             full_names_dict = json.load(f)[-1]['stats']
             assert "person_entity" in list(full_names_dict.keys())[0]
-        ## sort by frequency
+
+        # Sort by frequency
         sorted_full_names = sorted(full_names_dict.items(), key=lambda x: x[1], reverse=True)
-        ## exclude names with frequency over max_freq_to_drop
+
+        # Optionally exclude very frequent names
         if self.max_freq_to_drop:
-            sorted_full_names = [x for x in sorted_full_names if x[1]<=self.max_freq_to_drop]
-        ## choice which to drop
+            sorted_full_names = [x for x in sorted_full_names if x[1] <= self.max_freq_to_drop]
+
+        # Randomly choose names to drop
         random.seed(self.seed)
-        drop_names = random.choices(sorted_full_names, k=int(len(sorted_full_names)*self.drop_ratio))
+        drop_names = random.choices(sorted_full_names, k=int(len(sorted_full_names) * self.drop_ratio))
         self.drop_names_dict = dict(drop_names)
-        
-        # save drop_names_dict
+
+        # Save selected drop names
         with open(f"{self.stat_path}_drop_{str(self.seed)}.json", "w") as f:
             json.dump(self.drop_names_dict, f)
-        
-        # filter
+
+        # Perform filtering in batches
         with self.exclusion_writer if self.exclusion_writer else contextlib.nullcontext() as writer:
             for batch in batched(data, self.batch_size):
                 if self.batch_size > 1:
