@@ -170,7 +170,7 @@ After this, move `working_dir/datatrove/extract_names_from_fwe10b/extract_names_
 
 # Evaluate trained models
 ## PII Perplexity
-Set the `ckpt_dir` variable to point to the correct checkpoint directory. To evaluate Crypto-LLM and Plain-LLM, specify the appropriate `eval_*.yaml `configuration file when running Meta Lingua's `python -m apps.main.eval`.
+To evaluate Crypto-LLM and Plain-LLM, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run Meta Lingua's `python -m apps.main.eval` to evaluate perplexity.
 
 ## Reconstruction Attack
 ### Place scripts into lingua's repository
