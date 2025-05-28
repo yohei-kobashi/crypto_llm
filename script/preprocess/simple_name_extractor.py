@@ -8,24 +8,25 @@ from datasets import load_dataset
 max_count = 10000
 
 def normalize_name(raw_name: str) -> str:
-    # 小文字に変換
+    # Convert to lowercase
     name = raw_name.lower()
-    # 余分な空白を正規化
+    # Normalize extra whitespace
     name = re.sub(r'\s+', ' ', name.strip())
     return name
 
 def canonicalize_name(raw_name: str) -> str:
     """
-    姓名の並び順が変わっても同一とみなせるように標準化する。
-    ここでは「名 姓」「姓 名」の順番を考慮し、ソートした状態で統一的なキーを返す。
+    Standardize so that the same person is recognized regardless of name order.
+    Here, considering both "first last" and "last first" orders, return a unified key
+    in sorted order.
     """
     name = normalize_name(raw_name)
     parts = name.split(' ')
     
-    # partsが1つの場合はそのまま返す（ただし人名としては単一ワードは異例）
-    # partsが2つの場合、並び順をnormalize（sort）する
+    # If there's only one part, return it as is (though single-word names are unusual)
+    # If there are two parts, normalize (sort) their order
     if len(parts) == 2:
-        # 名前のリストをソートして、"名_姓"のような形で結合（順番固定）
+        # Sort the name parts and join them with an underscore (fixed order)
         sorted_parts = sorted(parts)
         return "_".join(sorted_parts)
     else:
