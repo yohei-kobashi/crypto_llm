@@ -16,13 +16,13 @@ This repository consists of scripts to prepare training subset for each conditio
    ```
  - Computational Resource (for model training): 2 nodes with 8 H200 GPUs each
 
-## Prepare training subset
-### Collect person names from the entire dataset
+## Preparing training subset
+### Collecting person names from the entire dataset
 From fineweb-edu, detect person entities using spaCy, and save all detected names in the dataset into `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json` 
 ```bash
 python script/preprocess/extract_name.py fineweb_edu_10bt/ extract_names_from_fwe10b
 ```
-### Extract pseudo-PII samples
+### Extracting pseudo-PII samples
 from `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json` , sample names as pseudo-PII data and split the dataset into two subsets:
  - pseudo-PII (contains specific set of names): `working_dir/datatrove/extract_names_from_fwe10b/data_dropped`
  - remaining dataset: `working_dir/datatrove/extract_names_from_fwe10b/data_final`
@@ -33,7 +33,7 @@ python script/preprocess/filter_name.py fineweb_edu_10bt/ extract_names_from_fwe
 ```
 
 The set of pseudo-PII names are saved into `./logs/datatrove/extract_names_from_fwe10b_extract/stats.json_drop_0.json`
-### Split into pre-training and continual pre-training data & Chunking
+### Spliting into pre-training and continual pre-training data & Chunking
 We recommend `nchunks=1` because Meta Lingua ignores jsonl files if the number of jsonl files is bigger than world size at training.
 ```bash
 python3 script/preprocess/preprocess_dropped.py data_dropped --data_dir working_dir/datatrove/extract_names_from_fwe10b --nchunks 1
@@ -52,7 +52,7 @@ working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_pretrain_chunked
 working_dir/datatrove/extract_names_from_fwe10b/data_final_0.75_continual_chunked
 ```
 This script generates encrypted data. However, this generated encrypted data by this script are deprecated.
-### Encrypt training data
+### Encrypting training data
 Run the following commands to encrypt training data:
 
 ```bash
@@ -111,10 +111,10 @@ So far, we have obtained following subsets on `./working_dir/datatrove/extract_n
 | `encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM 3 |
 | `data_final_0.75_continual_chunked` | Continual pre-training | Plain | No | All 
 
-## Train sentencepiece tokenizers
+## Training sentencepiece tokenizers
 Here, we show how to train a tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
 Tokenizers for encrypted text (key_length=1,10,100) can be trained using the same method.
-### Concatenate data into a raw text file
+### Concatenating data into a raw text file
 SentencePiece tokenizer can be trained by multiple sources. However, we need to concat jsonl files into a single text file so we can avoid the command-line argument length constraints.
 ```
 python script/tokenizer/make_raw_text.py \
@@ -122,7 +122,7 @@ python script/tokenizer/make_raw_text.py \
     --probabilities 1.0 1.0 \
     --output working_dir/tokenizer/raw_plain_text.txt
 ```
-### Train spm
+### Training spm
 ```
 python script/tokenizer/train_spm.py \
 	working_dir/tokenizer/raw_plain_text.txt \
@@ -133,7 +133,7 @@ python script/tokenizer/train_spm.py \
 	--model_type bpe \
 	--num_threads 16
 ```
-### Evaluate tokenizer
+### Evaluating tokenizer
 This script evaluates tokenizers by counting tokens and characters.
 ```
 python script/tokenizer/eval_tokenization.py \
@@ -183,7 +183,7 @@ python -m apps.crypto_llm.separate_pii \
     --output_path {converted_pii_jsonl_path} \
     --sp_model_path data/cryptollm_exp5/plain.model
 ```
-### Execute reconstruction attack
+### Running the reconstruction attack
 Once you convert PII data, you can evaluate pretrained model by reconstruction attack. To reproduce the results of the paper, run the following command:
 ```bash
 python -m apps.crypto_llm.eval_reconstruction \
@@ -191,3 +191,30 @@ python -m apps.crypto_llm.eval_reconstruction \
     pii_jsonl_path={converted_pii_jsonl_path} \
     pii_num=1000
 ```
+
+## True-Prefix Attack
+### Running the true-prefix attack
+You can evaluate pretrained model by true-prefix attack with the same convert PII data. To reproduce the results of the paper, run the following command:
+```bash
+python -m apps.crypto_llm.eval_true_prefix_attack \
+    --input_path {converted_pii_jsonl_path} \
+    --output_path {results_of_true-prefix_attack_jsonl} \
+    --model {model_id} \
+    --pii_num=1000 \
+    --N_sampling 64
+```
+The "model_id" must be chosen from ["a_1", "a_10", "a_100", "b", "c"].
+
+### Preparing Not trained PII data
+First, download the 100BT sample dataset from [fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu).
+Next, run the following script to extract texts that were not included in the 10BT subset:
+```bash
+cd {repository_dir} 
+python script/preprocess/get_not_learned_texts_from_fwe_100B.py \
+    --dir100bt {dir_containing_100BT_parquet_files} \
+    --dir10bt {dir_containing_10BT_parquet_files} \
+    --num-procs 20 \
+    --sampling-rate 0.01 \
+    --seed 42
+```
+Finally, you can extract and convert pseudo-PII data from these texts using the same procedure as applied to the 10BT data.

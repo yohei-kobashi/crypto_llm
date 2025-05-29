@@ -524,7 +524,7 @@ def main():
     parser.add_argument("--input_path", type=str, required=True, help="Path to input JSONL file")
     parser.add_argument("--output_path", type=str, required=True, help="Path to output JSONL file")
     parser.add_argument("--model", type=str, required=True, choices=["a_1", "a_10", "a_100", "b", "c"])
-    parser.add_argument("--N_sentences", type=int, default=2, help="N of target sentences")
+    parser.add_argument("--pii_num", type=int, default=2, help="N of target sentences")
     parser.add_argument("--N_sampling", type=int, default=10, help="N of target sentences")
     args = parser.parse_args()
     
@@ -572,29 +572,10 @@ def main():
                     output_N += 1
                     break
                 
-            if output_N >= args.N_sentences:
+            if output_N >= args.pii_num:
                 break
 
-    # # Allow multiple prompts
-    # prompts = []
-    # while True:
-    #     prompt = input("Enter a prompt (or press enter to finish): ")
-    #     if not prompt:
-    #         break
-    #     prompts.append(prompt)
-
-    # Start generation
-    
     end_time = time.time()
-
-    # Calculate tokens per second
-    # total_tokens = sum(len(tokenizer.encode(gen, False, False)) for gen in generation)
-    # tokens_per_second = total_tokens / (end_time - start_time)
-
-    # # Display the results
-    # for i, gen in enumerate(generation):
-    #     print(f"\nPrompt {i+1}: {prompts[i]}")
-    #     print(f"Generated Text: {gen}")
     
     print(f"\nTotal time: {end_time - start_time:.2f}")
 

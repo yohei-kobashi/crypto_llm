@@ -8,3 +8,4 @@ datatrove
 sentencepiece
 torch
 numpy<2.0
+pyarrow
