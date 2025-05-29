@@ -101,18 +101,18 @@ python3 script/preprocess/encrypt_jsonl.py \
 So far, we have obtained following subsets on `./working_dir/datatrove/extract_names_from_fwe10b`
 | Name | Train type | Text Type | Pseudo-PII? | Target |
 |----|----|----|----|----|
-| `data_dropped_chunked` | Pre-training | Plain | Yes | Plain-LLM 1 |
-| `encrypted_dropped_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | Yes | Crypto-LLM 1 |
-| `encrypted_dropped_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | Yes | Crypto-LLM 2 |
-| `encrypted_dropped_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | Yes | Crypto-LLM 3 |
-| `data_final_0.75_pretrain_chunked` | Pre-training | Plain | No | Plain-LLM 1 |
-| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | No | Crypto-LLM 1 |
-| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | No | Crypto-LLM 2 |
-| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM 3 |
+| `data_dropped_chunked` | Pre-training | Plain | Yes | Plain-LLM PT+CPT |
+| `encrypted_dropped_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | Yes | Crypto-LLM Key1 |
+| `encrypted_dropped_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | Yes | Crypto-LLM key10 |
+| `encrypted_dropped_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | Yes | Crypto-LLM key100 |
+| `data_final_0.75_pretrain_chunked` | Pre-training | Plain | No | Plain-LLM PT+CPT |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000001_1234_True` | Pre-training | Cipher(key_length=1) | No | Crypto-LLM Key1 |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000010_1234_True` | Pre-training | Cipher(key_length=10) | No | Crypto-LLM Key10 |
+| `encrypted_0.75_pretrain_chunk_00_alpha_poly_000100_1234_True` | Pre-training | Cipher(key_length=100) | No | Crypto-LLM Key100 |
 | `data_final_0.75_continual_chunked` | Continual pre-training | Plain | No | All 
 
 ## Training sentencepiece tokenizers
-Here, we show how to train a tokenizer for plain text (Plain-LLM 1&2, Continual pre-training of Crypto-LLM)
+Here, we show how to train a tokenizer for plain text (Plain-LLM PT+CPT&CPT, Continual pre-training of Crypto-LLMs)
 Tokenizers for encrypted text (key_length=1,10,100) can be trained using the same method.
 ### Concatenating data into a raw text file
 SentencePiece tokenizer can be trained by multiple sources. However, we need to concat jsonl files into a single text file so we can avoid the command-line argument length constraints.
@@ -147,15 +147,15 @@ Move all training subset and tokenizer under `./data/cryptollm_exp5`.
 Following the official Meta Lingua repository, locate configuration files from `lingua_config` to `{lingua-repo-dir}/apps/main/config`. The letters appearing in the configuration filenames under `lingua_config` correspond to the following model types:
 | Model Name | Configuration Label | Key Length |
 |----|----|----|
-| Plain-LLM 1 | b | - |
-| Plain-LLM 2 | c | - |
-| Crypto-LLM 1 | a | 1 |
-| Crypto-LLM 2 | a | 10 |
-| Crypto-LLM 3 | a | 100 |
+| Plain-LLM PT+CPT  | b | - |
+| Plain-LLM CPT | c | - |
+| Crypto-LLM Key1 | a | 1 |
+| Crypto-LLM Key10 | a | 10 |
+| Crypto-LLM Key100 | a | 100 |
 
 `pt` means pre-training and `ft` means continual pre-training. 
 
-For continual pre-training, please edit `checkpoint.init_ckpt_path` in the configuration file to the correct path. Specifying `cryptollm_llama_*.yaml` configuration file when running Meta Lingua's `python -m apps.main.train` trains Crypto-LLM and Plain-LLM.
+For continual pre-training, please edit `checkpoint.init_ckpt_path` in the configuration file to the correct path. Specifying `cryptollm_llama_*.yaml` configuration file when running Meta Lingua's `python -m apps.main.train` trains Crypto-LLMs and Plain-LLMs.
 
 ## Extract pseudo-PII samples from continual pre-training data
 To compare the difficulty of restoring encrypted versus plain data, we extract additional pseudo-PII samples from the continual pre-training dataset. Since extracting names from the entire dataset is time-consuming, we extract samples from the first 20,000 entries only.
@@ -170,7 +170,7 @@ After this, move `working_dir/datatrove/extract_names_from_fwe10b/extract_names_
 
 # Evaluate trained models
 ## PII Perplexity
-To evaluate Crypto-LLM and Plain-LLM, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run `python -m apps.main.eval` on Meta Lingua to evaluate perplexity.
+To evaluate Crypto-LLMs and Plain-LLMs, modify the `eval_*.yaml` configuration file. Especially, set the `ckpt_dir` variable to the correct checkpoint directory. Then, run `python -m apps.main.eval` on Meta Lingua to evaluate perplexity.
 
 ## Reconstruction Attack
 ### Place scripts into lingua's repository
