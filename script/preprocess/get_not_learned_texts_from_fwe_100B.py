@@ -1,25 +1,44 @@
 import argparse
 import glob
-import json
 import os
 import random
 import multiprocessing
 
+import pyarrow as pa
 import pyarrow.parquet as pq
 import pyarrow.compute as pc
+import pyarrow.json as pj
+
+def read_table_generic(path):
+    """
+    Read a Parquet or JSONL file into a PyArrow Table.
+    """
+    if path.endswith('.parquet'):
+        return pq.read_table(path)
+    elif path.endswith('.jsonl'):
+        # Read JSON Lines into a table
+        return pj.read_json(path)
+    else:
+        raise ValueError(f"Unsupported file format: {path}")
+
 
 def load_ids_from_10bt(dir_10bt):
     """
-    Load unique IDs from all Parquet files in the 10BT directory.
+    Load unique IDs from all Parquet or JSONL files in the 10BT directory recursively.
     """
     ids = []
-    for data_file in glob.glob(os.path.join(dir_10bt, "*")):
-        table = pq.read_table(data_file)
-        unique_ids = table["id"].unique()
-        ids.extend([unique_id.as_py() for unique_id in unique_ids])
+    patterns = [
+        os.path.join(dir_10bt, '**', '*.parquet'),
+        os.path.join(dir_10bt, '**', '*.jsonl')
+    ]
+    for pattern in patterns:
+        for data_file in glob.glob(pattern, recursive=True):
+            table = read_table_generic(data_file)
+            unique_ids = table['id'].unique()
+            ids.extend([uid.as_py() for uid in unique_ids])
     return set(ids)
 
-# Global semaphore variable for controlling concurrent disk access
+# Semaphore for controlling concurrent disk access
 file_reading_semaphore = None
 
 def init_worker(sema):
@@ -29,70 +48,103 @@ def init_worker(sema):
     global file_reading_semaphore
     file_reading_semaphore = sema
 
-def process_file(data_file, ids_in_10bt, sampling_rate, seed):
+
+def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, include_flag):
     """
-    Process a single 100BT file:
-      - Read the Parquet file (controlled by semaphore to limit disk I/O).
-      - Extract unique IDs not present in the 10BT set.
-      - Sample the IDs based on the sampling_rate and write the filtered results as JSONL.
+    Process a single file (Parquet or JSONL):
+      - Read the file (controlled by semaphore to limit disk I/O).
+      - Identify IDs in or not in the 10BT set based on include_flag.
+      - Sample IDs based on sampling_rate and write filtered rows as a Parquet file.
     """
     print(f"Processing: {data_file}")
-    # Limit file reading concurrency using the semaphore (e.g., 4 concurrent accesses)
     with file_reading_semaphore:
-        table = pq.read_table(data_file)
-    
-    unique_ids = set([unique_id.as_py() for unique_id in table["id"].unique()])
-    ids_not_in_10bt = list(unique_ids - ids_in_10bt)
-    print(f"Total IDs: {len(unique_ids)}")
-    print(f"IDs not in 10BT: {len(ids_not_in_10bt)}")
-    
-    # Set a reproducible seed per file using the provided seed and file-specific hash
+        table = read_table_generic(data_file)
+
+    unique_ids = set(uid.as_py() for uid in table['id'].unique())
+    if include_flag:
+        target_ids = list(unique_ids & ids_in_10bt)
+        print(f"IDs in 10BT: {len(target_ids)}")
+    else:
+        target_ids = list(unique_ids - ids_in_10bt)
+        print(f"IDs not in 10BT: {len(target_ids)}")
+
+    # Determine number of samples
+    num_samples = int(len(target_ids) * sampling_rate)
+    if num_samples <= 0:
+        print("No samples to write.")
+        return
+
+    # Reproducible sampling per file
     file_seed = seed + (hash(data_file) % (10**8))
     random.seed(file_seed)
-    
-    output_file = os.path.join("sample", "references", os.path.basename(data_file).replace(".parquet", ".jsonl"))
-    with open(output_file, "w") as f:
-        num_samples = int(len(ids_not_in_10bt) * sampling_rate)
-        if num_samples > 0:
-            for unique_id in random.sample(ids_not_in_10bt, num_samples):
-                mask = pc.equal(table.column("id"), unique_id)
-                filtered_table = table.filter(mask)
-                f.write(json.dumps(filtered_table.to_pydict()) + "\n")
+    sampled_ids = random.sample(target_ids, num_samples)
+
+    # Build boolean mask for sampled IDs
+    mask = pc.is_in(table.column('id'), value_set=pa.array(sampled_ids))
+    filtered_table = table.filter(mask)
+
+    # Prepare output Parquet path
+    base = os.path.basename(data_file)
+    suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
+    base = base.replace('.parquet', suffix).replace('.jsonl', suffix)
+    output_file = os.path.join(output_dir, base)
+    pq.write_table(filtered_table, output_file)
+    print(f"Written sampled data to: {output_file}")
+
 
 def process_file_wrapper(params):
-    """
-    Wrapper for process_file to allow passing multiple arguments via pool.map.
-    """
-    data_file, ids_in_10bt, sampling_rate, seed = params
-    process_file(data_file, ids_in_10bt, sampling_rate, seed)
+    process_file(*params)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description="Extract texts not in 10BT from 100BT Parquet files with sampling."
+        description="Sample and extract rows from Parquet or JSONL files based on 10BT membership."
     )
-    parser.add_argument("--dir100bt", required=True, help="Directory containing 100BT Parquet files")
-    parser.add_argument("--dir10bt", required=True, help="Directory containing 10BT Parquet files")
+    parser.add_argument("--dir100bt", required=True, help="Directory containing 100BT Parquet/JSONL files")
+    parser.add_argument("--dir10bt", required=True, help="Directory containing 10BT Parquet/JSONL files")
+    parser.add_argument("--output-dir", required=True, help="Directory to save sampled Parquet files")
     parser.add_argument("--num-procs", type=int, default=20, help="Number of parallel processes")
-    parser.add_argument("--sampling-rate", type=float, default=0.01, help="Sampling rate for IDs not in 10BT")
+    parser.add_argument("--sampling-rate", type=float, default=0.01, help="Sampling rate for target IDs")
     parser.add_argument("--seed", type=int, default=42, help="Seed for random sampling")
+    parser.add_argument("--include", action='store_true',
+                        help="Extract IDs included in the 10BT set instead of excluded ones")
     args = parser.parse_args()
 
-    # Load unique IDs from 10BT directory once in the main process
+    # Load unique IDs from 10BT directory
     ids_in_10bt = load_ids_from_10bt(args.dir10bt)
 
     # Create the output directory if it doesn't exist
-    output_dir = os.path.join("sample", "references")
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(args.output_dir, exist_ok=True)
 
-    # Create a semaphore to limit concurrent file reading (e.g., 4 concurrent accesses)
+    # Semaphore to limit concurrent reads
     semaphore = multiprocessing.Semaphore(4)
 
-    # List all files from the 100BT directory
-    data_files = glob.glob(os.path.join(args.dir100bt, "*"))
+    # Find all files in 100BT directory recursively
+    patterns = [
+        os.path.join(args.dir100bt, '**', '*.parquet'),
+        os.path.join(args.dir100bt, '**', '*.jsonl')
+    ]
+    data_files = []
+    for pattern in patterns:
+        data_files.extend(glob.glob(pattern, recursive=True))
 
-    # Prepare parameters for each file processing task
-    params_list = [(data_file, ids_in_10bt, args.sampling_rate, args.seed) for data_file in data_files]
+    # Prepare arguments for worker pool
+    params_list = [
+        (
+            data_file,
+            ids_in_10bt,
+            args.sampling_rate,
+            args.seed,
+            args.output_dir,
+            args.include
+        )
+        for data_file in data_files
+    ]
 
-    # Create a pool of workers with the specified number of processes
-    with multiprocessing.Pool(processes=args.num_procs, initializer=init_worker, initargs=(semaphore,)) as pool:
+    # Process in parallel
+    with multiprocessing.Pool(
+        processes=args.num_procs,
+        initializer=init_worker,
+        initargs=(semaphore,)
+    ) as pool:
         pool.map(process_file_wrapper, params_list)
