@@ -60,7 +60,18 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
       - Read the file (controlled by semaphore to limit disk I/O).
       - Identify IDs in or not in the 10BT set based on include_flag.
       - Sample IDs based on sampling_rate and write filtered rows as a Parquet file.
+      - Skip processing if output file already exists.
     """
+    base = os.path.basename(data_file)
+    suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
+    base = base.replace('.parquet', suffix).replace('.jsonl', suffix)
+    output_file = os.path.join(output_dir, base)
+
+    # Resume logic: skip if already processed
+    if os.path.exists(output_file):
+        print(f"Skipping {data_file}, output already exists: {output_file}")
+        return
+
     print(f"Processing: {data_file}")
     with file_reading_semaphore:
         table = read_table_generic(data_file)
@@ -85,10 +96,6 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
     mask = pc.is_in(table.column('id'), value_set=pa.array(sampled_ids))
     filtered_table = table.filter(mask)
 
-    base = os.path.basename(data_file)
-    suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
-    base = base.replace('.parquet', suffix).replace('.jsonl', suffix)
-    output_file = os.path.join(output_dir, base)
     pq.write_table(filtered_table, output_file)
     print(f"Written sampled data to: {output_file}")
 
