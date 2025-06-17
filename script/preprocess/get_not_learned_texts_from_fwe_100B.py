@@ -16,7 +16,6 @@ def read_table_generic(path):
     if path.endswith('.parquet'):
         return pq.read_table(path)
     elif path.endswith('.jsonl'):
-        # Read JSON Lines into a table
         return pj.read_json(path)
     else:
         raise ValueError(f"Unsupported file format: {path}")
@@ -29,8 +28,7 @@ def load_ids_from_10bt(path):
     ids = []
     if os.path.isfile(path):
         table = read_table_generic(path)
-        unique_ids = table['id'].unique()
-        ids.extend([uid.as_py() for uid in unique_ids])
+        ids.extend([uid.as_py() for uid in table['id'].unique()])
     else:
         patterns = [
             os.path.join(path, '**', '*.parquet'),
@@ -39,8 +37,7 @@ def load_ids_from_10bt(path):
         for pattern in patterns:
             for data_file in glob.glob(pattern, recursive=True):
                 table = read_table_generic(data_file)
-                unique_ids = table['id'].unique()
-                ids.extend([uid.as_py() for uid in unique_ids])
+                ids.extend([uid.as_py() for uid in table['id'].unique()])
     return set(ids)
 
 # Semaphore for controlling concurrent disk access
@@ -60,17 +57,22 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
       - Read the file (controlled by semaphore to limit disk I/O).
       - Identify IDs in or not in the 10BT set based on include_flag.
       - Sample IDs based on sampling_rate and write filtered rows as a Parquet file.
-      - Skip processing if output file already exists.
+      - Skip if a valid output already exists, otherwise reprocess.
     """
     base = os.path.basename(data_file)
     suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
-    base = base.replace('.parquet', suffix).replace('.jsonl', suffix)
-    output_file = os.path.join(output_dir, base)
+    result_name = base.replace('.parquet', suffix).replace('.jsonl', suffix)
+    output_file = os.path.join(output_dir, result_name)
 
-    # Resume logic: skip if already processed
+    # Resume logic: skip if valid output exists, else remove corrupted
     if os.path.exists(output_file):
-        print(f"Skipping {data_file}, output already exists: {output_file}")
-        return
+        try:
+            pq.ParquetFile(output_file)
+            print(f"Skipping {data_file}, valid output already exists: {output_file}")
+            return
+        except Exception:
+            print(f"Found corrupted output, reprocessing: {output_file}")
+            os.remove(output_file)
 
     print(f"Processing: {data_file}")
     with file_reading_semaphore:
@@ -87,6 +89,10 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
     num_samples = int(len(target_ids) * sampling_rate)
     if num_samples <= 0:
         print("No samples to write.")
+        # still write empty table to mark as processed
+        empty = table.slice(0, 0)
+        pq.write_table(empty, output_file)
+        print(f"Written empty Parquet to: {output_file}")
         return
 
     file_seed = seed + (hash(data_file) % (10**8))
