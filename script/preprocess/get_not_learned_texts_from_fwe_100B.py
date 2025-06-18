@@ -9,6 +9,7 @@ import pyarrow.parquet as pq
 import pyarrow.compute as pc
 import pyarrow.json as pj
 
+
 def read_table_generic(path):
     """
     Read a Parquet or JSONL file into a PyArrow Table.
@@ -40,8 +41,10 @@ def load_ids_from_10bt(path):
                 ids.extend([uid.as_py() for uid in table['id'].unique()])
     return set(ids)
 
+
 # Semaphore for controlling concurrent disk access
 file_reading_semaphore = None
+
 
 def init_worker(sema):
     """
@@ -95,8 +98,20 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
     print(f"Written sampled data to: {output_file}")
 
 
-def process_file_wrapper(params):
-    process_file(*params)
+def process_files_wrapper(params_list):
+    for params in params_list:
+        try:
+            process_file(*params)
+        except Exception as e:
+            print(f"Error processing {params[0]}: {e}")
+
+
+def chunk_list(lst, n):
+    """
+    Split list lst into n nearly equal-sized chunks.
+    """
+    k, m = divmod(len(lst), n)
+    return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
 
 
 if __name__ == '__main__':
@@ -151,9 +166,11 @@ if __name__ == '__main__':
                 os.remove(output_file)
         to_process.append((data_file, ids_in_10bt, args.sampling_rate, args.seed, args.output_dir, args.include))
 
+    chunks = chunk_list(to_process, args.num_procs)
+
     with multiprocessing.Pool(
         processes=args.num_procs,
         initializer=init_worker,
         initargs=(semaphore,)
     ) as pool:
-        pool.map(process_file_wrapper, to_process)
+        pool.map(process_files_wrapper, chunks)
