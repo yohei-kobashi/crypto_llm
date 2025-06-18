@@ -57,23 +57,7 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
       - Read the file (controlled by semaphore to limit disk I/O).
       - Identify IDs in or not in the 10BT set based on include_flag.
       - Sample IDs based on sampling_rate and write filtered rows as a Parquet file.
-      - Skip if a valid output already exists, otherwise reprocess.
     """
-    base = os.path.basename(data_file)
-    suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
-    result_name = base.replace('.parquet', suffix).replace('.jsonl', suffix)
-    output_file = os.path.join(output_dir, result_name)
-
-    # Resume logic: skip if valid output exists, else remove corrupted
-    if os.path.exists(output_file):
-        try:
-            pq.ParquetFile(output_file)
-            print(f"Skipping {data_file}, valid output already exists: {output_file}")
-            return
-        except Exception:
-            print(f"Found corrupted output, reprocessing: {output_file}")
-            os.remove(output_file)
-
     print(f"Processing: {data_file}")
     with file_reading_semaphore:
         table = read_table_generic(data_file)
@@ -88,13 +72,14 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
 
     num_samples = int(len(target_ids) * sampling_rate)
     if num_samples <= 0:
-        print("No samples to write.")
-        # still write empty table to mark as processed
+        print("No samples to write. Writing empty table to mark processed.")
         empty = table.slice(0, 0)
-        pq.write_table(empty, output_file)
-        print(f"Written empty Parquet to: {output_file}")
+        pq.write_table(empty, os.path.join(output_dir, os.path.basename(data_file)
+                         .replace('.parquet', '.included.sampled.parquet' if include_flag else '.sampled.parquet')
+                         .replace('.jsonl', '.included.sampled.parquet' if include_flag else '.sampled.parquet')))
         return
 
+    # Reproducible sampling per file
     file_seed = seed + (hash(data_file) % (10**8))
     random.seed(file_seed)
     sampled_ids = random.sample(target_ids, num_samples)
@@ -102,6 +87,10 @@ def process_file(data_file, ids_in_10bt, sampling_rate, seed, output_dir, includ
     mask = pc.is_in(table.column('id'), value_set=pa.array(sampled_ids))
     filtered_table = table.filter(mask)
 
+    # Write output
+    result_suffix = '.included.sampled.parquet' if include_flag else '.sampled.parquet'
+    result_name = os.path.basename(data_file).replace('.parquet', result_suffix).replace('.jsonl', result_suffix)
+    output_file = os.path.join(output_dir, result_name)
     pq.write_table(filtered_table, output_file)
     print(f"Written sampled data to: {output_file}")
 
@@ -134,33 +123,37 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir, exist_ok=True)
     semaphore = multiprocessing.Semaphore(4)
 
-    # Determine list of files to process for 100BT
+    # Gather all candidate files
     if os.path.isfile(args.dir100bt):
-        data_files = [args.dir100bt]
+        all_files = [args.dir100bt]
     else:
         patterns = [
             os.path.join(args.dir100bt, '**', '*.parquet'),
             os.path.join(args.dir100bt, '**', '*.jsonl')
         ]
-        data_files = []
+        all_files = []
         for pattern in patterns:
-            data_files.extend(glob.glob(pattern, recursive=True))
+            all_files.extend(glob.glob(pattern, recursive=True))
 
-    params_list = [
-        (
-            data_file,
-            ids_in_10bt,
-            args.sampling_rate,
-            args.seed,
-            args.output_dir,
-            args.include
-        )
-        for data_file in data_files
-    ]
+    # Filter out already processed or corrupted outputs before launching workers
+    to_process = []
+    for data_file in all_files:
+        suffix = '.included.sampled.parquet' if args.include else '.sampled.parquet'
+        result_name = os.path.basename(data_file).replace('.parquet', suffix).replace('.jsonl', suffix)
+        output_file = os.path.join(args.output_dir, result_name)
+        if os.path.exists(output_file):
+            try:
+                pq.ParquetFile(output_file)
+                print(f"Skipping {data_file}, valid output exists.")
+                continue
+            except Exception:
+                print(f"Corrupted output for {data_file}, will reprocess.")
+                os.remove(output_file)
+        to_process.append((data_file, ids_in_10bt, args.sampling_rate, args.seed, args.output_dir, args.include))
 
     with multiprocessing.Pool(
         processes=args.num_procs,
         initializer=init_worker,
         initargs=(semaphore,)
     ) as pool:
-        pool.map(process_file_wrapper, params_list)
+        pool.map(process_file_wrapper, to_process)
