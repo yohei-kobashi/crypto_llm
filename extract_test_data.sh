@@ -1,9 +1,9 @@
 #!/bin/bash -l
 
 #------ qsub option --------#
-#PBS -q small-c
+#PBS -q short-c
 #PBS -l select=1
-#PBS -l walltime=24:00:00
+#PBS -l walltime=08:00:00
 #PBS -W group_list=go25
 #PBS -j oe
 
