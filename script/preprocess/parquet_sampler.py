@@ -1,6 +1,7 @@
 """
 Sample rows from multiple Parquet (or JSONL) files in a directory at a specified rate,
 show real-time progress, and save the sampled subsets to an output directory.
+Handles large string columns by casting to `large_string` to avoid offset overflow errors.
 """
 import argparse
 import glob
@@ -13,6 +14,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 import pyarrow.compute as pc
 import pyarrow.json as pj
+import pyarrow.types as patypes
 
 
 def read_table_generic(path):
@@ -48,11 +50,22 @@ def process_and_mark(args):
 
 def process_file(data_file, sampling_rate, seed, output_dir):
     """
-    Read a Parquet/JSONL file, sample rows at the given rate, and write a new Parquet file.
+    Read a Parquet/JSONL file, cast large string columns, sample rows, and write a new Parquet file.
     """
     # control concurrent reads
     with _file_semaphore:
         table = read_table_generic(data_file)
+
+    # cast string columns to large_string to avoid offset overflow
+    schema = table.schema
+    new_fields = []
+    for field in schema:
+        if patypes.is_string(field.type):
+            new_fields.append(pa.field(field.name, pa.large_string()))
+        else:
+            new_fields.append(field)
+    new_schema = pa.schema(new_fields)
+    table = table.cast(new_schema)
 
     num_rows = table.num_rows
     num_samples = int(num_rows * sampling_rate)
