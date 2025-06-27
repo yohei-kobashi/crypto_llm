@@ -10,4 +10,4 @@ def scrabbing(text):
 
 def scrab_data(data):
     for row in data:
-        _ = scrabbing(row["text"])
+        _ = scrabbing(row["text"][0])
