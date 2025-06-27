@@ -4,7 +4,7 @@
 #PBS -q regular-c
 #PBS -l select=1
 #PBS -l walltime=24:00:00
-#PBS -W group_list=go25
+#PBS -W group_list=gj26
 #PBS -j oe
 
 #------- Program execution -------#
