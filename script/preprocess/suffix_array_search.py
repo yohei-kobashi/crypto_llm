@@ -21,6 +21,7 @@ Requires:
 """
 import argparse, pickle, sys, multiprocessing as mp, json
 from pathlib import Path
+from functools import partial
 import numpy as np
 import tqdm
 import pyarrow.parquet as pq
@@ -63,7 +64,6 @@ def iter_bytes(corpus_root: Path):
                 for cell in col:
                     raw = cell.as_py().encode('utf-8')
                     yield from raw
-        # separator byte
         yield from SEP_BYTE
 
 # Write shard of raw bytes
@@ -105,9 +105,10 @@ def build_index(args):
         total += n
     print(f"Sharded into {len(shards)} files, total {total} bytes")
     print("Building SA for shards...")
+    worker = partial(_build_sa_for_shard, idx_dir=outdir)
     with mp.Pool(args.workers) as pool:
         list(tqdm.tqdm(
-            pool.imap_unordered(lambda nm: _build_sa_for_shard(nm, outdir), shards),
+            pool.imap_unordered(worker, shards),
             total=len(shards), desc="SA build", unit="shard"))
     with open(outdir / 'shards.lst', 'wb') as fh:
         pickle.dump(shards, fh)
