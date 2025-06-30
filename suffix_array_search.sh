@@ -14,4 +14,4 @@ module load gcc
 
 cd crypto_llm
 source env_crypto_llm/bin/activate
-python script/preprocess/suffix_array_search.py build --corpus fineweb-edu/sample/100BT-10BT --spm_model tokenizers/plain.model --outdir fineweb-edu/index_100BT-10BT --shard_size 64000000 --workers 32
+python script/preprocess/suffix_array_search.py build --corpus fineweb-edu/sample/100BT-10BT --outdir fineweb-edu/index_100BT-10BT --shard_size 64000000 --workers 32
