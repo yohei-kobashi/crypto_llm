@@ -6,7 +6,7 @@ Designed for **fineweb‑edu sample‑10BT** or similar corpora.
 - **Build**: construct suffix-array (SA) on raw UTF-8 bytes of text (no SentencePiece).
 - **Query**: load SA, then for each query line:
     1. Tokenize via SentencePiece to check if >=50 tokens.
-    2. Byte-level search -> token-level verification.
+    2. Byte-level SA search -> token-level verification.
 
 Requires:
   pip install pydivsufsort sentencepiece pyarrow tqdm
@@ -31,14 +31,21 @@ import sentencepiece as spm
 # Constants
 DEFAULT_SHARD_SIZE = 64_000_000
 SEP_BYTE = b"\n"
+MIN_TOKENS = 50
 
+# Global SP for workers
+global_sp = None
 
+def init_sp(spm_model):
+    global global_sp
+    global_sp = spm.SentencePieceProcessor()
+    global_sp.Load(str(spm_model))
+
+# Build phase
 def build_index(args):
     corpus = Path(args.corpus)
     idx_dir = Path(args.outdir)
     idx_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Shard raw bytes
     buf = bytearray()
     shard_files = []
     total_bytes = 0
@@ -55,7 +62,6 @@ def build_index(args):
                 for line in f:
                     raw = line.strip().encode('utf-8')
                     buf.extend(raw); buf.extend(SEP_BYTE)
-        # Flush shards
         while len(buf) >= args.shard_size:
             chunk = buf[:args.shard_size]
             buf = buf[args.shard_size:]
@@ -63,20 +69,15 @@ def build_index(args):
             np.save(idx_dir/name, np.frombuffer(chunk, dtype=np.uint8), allow_pickle=False)
             shard_files.append(name)
             total_bytes += len(chunk)
-    # Last shard
     if buf:
         name = f"shard-{len(shard_files):05d}.bytes.npy"
         np.save(idx_dir/name, np.frombuffer(buf, dtype=np.uint8), allow_pickle=False)
         shard_files.append(name)
         total_bytes += len(buf)
     print(f"Sharded into {len(shard_files)} files, total {total_bytes:,} bytes")
-
-    # Save shard list
     with open(idx_dir/"shards.lst", 'w') as f:
         for name in shard_files:
             f.write(name + "\n")
-
-    # Build SA in parallel
     print("Building SA for shards...")
     with mp.Pool(args.workers) as pool:
         for _ in tqdm.tqdm(pool.imap(_build_sa_for_shard, shard_files),
@@ -84,46 +85,43 @@ def build_index(args):
             pass
     print("SA build complete")
 
-
+# Worker function for SA build
 def _build_sa_for_shard(shard_name):
     idx_dir = Path(args.outdir)
     byte_path = idx_dir/shard_name
-    # Load memmap and copy to writeable array
-    mmap_arr = np.load(byte_path, mmap_mode='r')
-    data = np.array(mmap_arr, dtype=np.uint8)  # make writeable copy
-    # Build suffix array
+    mmap = np.load(byte_path, mmap_mode='r')
+    data = np.array(mmap, dtype=np.uint8)
     sa = np.array(pydivsufsort.divsufsort(data), dtype=np.uint64)
     sa_path = idx_dir/(shard_name[:-4] + ".sa.npy")
     np.save(sa_path, sa)
     return True
 
-
+# Load shard data and SA
 def _load_shard(shard_name, idx_dir):
     idx_path = Path(idx_dir)
     data_path = idx_path/shard_name
-    sa_path = idx_path/(shard_name[:-4] + ".sa.npy")
+    base = shard_name[:-4]
+    sa_path = idx_path/(base + ".sa.npy")
     data = np.memmap(data_path, dtype=np.uint8, mode='r')
     sa = np.memmap(sa_path, dtype=np.uint64, mode='r')
     return data, sa
 
-
+# Query phase
 def query_index(args):
     idx_dir = Path(args.index)
-    sp = spm.SentencePieceProcessor()
-    sp.Load(str(args.spm_model))
-    shards = [line.strip() for line in open(idx_dir/"shards.lst")]
+    shards = [line.strip() for line in open(idx_dir/"shards.lst")]  
     queries = [q.strip() for q in open(args.input, encoding='utf-8')]
     tasks = [(q, shards, str(idx_dir)) for q in queries]
-    with mp.Pool(args.workers) as pool:
+    with mp.Pool(args.workers, initializer=init_sp, initargs=(args.spm_model,)) as pool:
         for res in tqdm.tqdm(pool.imap(_query_task, tasks),
-                           total=len(tasks), desc="Searching"):
+                               total=len(tasks), desc="Searching"):
             print(res)
 
-
+# Worker task for query
 def _query_task(args_tuple):
     q, shards, idx_dir = args_tuple
-    ids = sp.EncodeAsIds(q)
-    if len(ids) < 50:
+    ids = global_sp.EncodeAsIds(q)
+    if len(ids) < MIN_TOKENS:
         return f"NO MATCH (too short): {q}"
     b = q.encode('utf-8')
     for shard in shards:
@@ -132,21 +130,35 @@ def _query_task(args_tuple):
         if positions:
             for pos in positions:
                 snippet = data[pos:pos+len(b)].tobytes().decode('utf-8', 'ignore')
-                if sp.EncodeAsIds(snippet)[:len(ids)] == ids:
+                if global_sp.EncodeAsIds(snippet)[:len(ids)] == ids:
                     return f"MATCH: {q}"
     return f"NO MATCH: {q}"
 
-
+# Binary search on SA
 def _sa_search(data, sa, pattern):
-    # Implement binary search on SA for byte pattern
     l, r = 0, len(sa)
     for byte in pattern:
-        # refine [l, r) based on `data[sa[i]] == byte`
-        # omitted detailed implementation for brevity
-        pass
-    # return list of positions (empty if no match)
-    return []
-
+        # refine [l,r) on data[sa[i]] == byte
+        low = l; high = r
+        while low < high:
+            mid = (low + high) // 2
+            if data[sa[mid]] < byte:
+                low = mid + 1
+            else:
+                high = mid
+        nl = low
+        low = l; high = r
+        while low < high:
+            mid = (low + high) // 2
+            if data[sa[mid]] <= byte:
+                low = mid + 1
+            else:
+                high = mid
+        nh = low
+        l, r = nl, nh
+        if l >= r:
+            return []
+    return [int(sa[i]) for i in range(l, r)]
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
