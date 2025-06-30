@@ -2,8 +2,10 @@ fineweb_edu
 fineweb_edu_10bt
 fineweb_edu_100bt
 working_dir
+output
 logs
 *.json
+*.jsonl
 *.model
 *.vocab
 __pycache__
