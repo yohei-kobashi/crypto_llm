@@ -21,7 +21,6 @@ Requires:
 """
 import argparse, pickle, sys, multiprocessing as mp
 from pathlib import Path
-from typing import Iterator, List, Tuple
 import numpy as np
 import tqdm
 import pyarrow.parquet as pq
@@ -37,15 +36,15 @@ except ImportError:
 
 # Constants
 SHARD_SIZE = 64_000_000       # bytes per shard
-MIN_MATCH   = 50              # tokens for query
-SEP_BYTE    = b"\x00"       # unused byte delimiter
-K_PREFIX    = 8               # prefix length in bytes for filtering
+MIN_MATCH  = 50               # tokens for query
+SEP_BYTE   = b"\x00"        # unused byte delimiter
+K_PREFIX   = 8                # prefix length in bytes for filtering
 
 # GLOBAL SentencePiece processor for worker reuse
 SP: 'spm.SentencePieceProcessor' = None
 
 # Build: iterate raw bytes from corpus files
-def iter_bytes(corpus_root: Path) -> Iterator[int]:
+def iter_bytes(corpus_root: Path):
     files = sorted(corpus_root.rglob("*.jsonl")) + sorted(corpus_root.rglob("*.parquet"))
     for file in tqdm.tqdm(files, desc="Shard - reading files", unit="file"):
         if file.suffix == ".jsonl":
@@ -58,86 +57,91 @@ def iter_bytes(corpus_root: Path) -> Iterator[int]:
                     continue
                 for b in text.encode('utf-8'):
                     yield b
-        elif file.suffix == ".parquet":
+        else:  # .parquet
             tbl = pq.read_table(str(file))
             col = tbl['text'] if 'text' in tbl.schema.names else tbl.column(0)
             for txt in col.to_pylist():
                 raw = str(txt).encode('utf-8')
                 for b in raw:
                     yield b
-        # insert separator
+        # separator byte
         yield from SEP_BYTE
 
 # Write shard of raw bytes
-def _write_shard(shard_id: int, buf: List[int], outdir: Path) -> Tuple[Path,int]:
+def _write_shard(shard_id: int, buf, outdir: Path):
     arr = np.array(buf, dtype=np.uint8)
     fname = outdir / f"shard-{shard_id:05d}.bytes.npy"
     np.save(fname, arr, allow_pickle=False)
     return fname, len(arr)
 
 # Build SA for a shard
-def _build_sa_for_shard(byte_file: Path) -> None:
+def _build_sa_for_shard(byte_file: Path):
     data = np.load(byte_file, mmap_mode=None)
     sa_file = byte_file.with_suffix('.sa.npy')
     if HAVE_DIVSUF:
         sa = np.array(pydivsufsort.divsufsort(data.tolist()), dtype=np.uint64)
     else:
         sa = np.argsort([bytes(data[i:]) for i in range(len(data))]).astype(np.uint64)
-    np.memmap(sa_file, dtype=np.uint64, mode='w+', shape=sa.shape)[:] = sa
+    mm = np.memmap(sa_file, dtype=np.uint64, mode='w+', shape=sa.shape)
+    mm[:] = sa
+    del mm
 
 # Build index: shards + SA
 def build_index(args):
     corpus, outdir = Path(args.corpus), Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    # Shard raw bytes
-    buf, sid, files, total = [], 0, [], 0
+    buf, sid, shards, total = [], 0, [], 0
     for b in iter_bytes(corpus):
         buf.append(b)
         if len(buf) >= args.shard_size:
-            f,n = _write_shard(sid, buf, outdir)
-            files.append(f); total+=n; sid+=1; buf=[]
+            f, n = _write_shard(sid, buf, outdir)
+            shards.append(f.name)
+            total += n
+            sid += 1
+            buf = []
     if buf:
-        f,n = _write_shard(sid, buf, outdir); files.append(f); total+=n
-    print(f"Sharded into {len(files)} files, total {total} bytes")
-    # Parallel SA build
+        f, n = _write_shard(sid, buf, outdir)
+        shards.append(f.name)
+        total += n
+    print(f"Sharded into {len(shards)} files, total {total} bytes")
     print("Building SA for shards...")
     with mp.Pool(args.workers) as pool:
-        for _ in tqdm.tqdm(pool.imap_unordered(_build_sa_for_shard, files), total=len(files), desc="SA build", unit="shard"): pass
-    # Save shards list
-    with open(outdir/'shards.lst','wb') as fh:
-        pickle.dump(files, fh)
+        for _ in tqdm.tqdm(pool.imap_unordered(lambda nm: _build_sa_for_shard(outdir / nm), shards),
+                           total=len(shards), desc="SA build", unit="shard"): pass
+    # Save shards list (filenames)
+    with open(outdir / 'shards.lst', 'wb') as fh:
+        pickle.dump(shards, fh)
     print("Index build complete.")
 
 # Load shard bytes and SA
-def _load_shard(shard_file: Path):
-    data = np.load(shard_file, mmap_mode='r').tobytes()
-    sa   = np.memmap(shard_file.with_suffix('.sa.npy'), dtype=np.uint64, mode='r')
+def _load_shard(shard_name: str, idx_dir: Path):
+    byte_file = idx_dir / shard_name
+    data = np.load(byte_file, mmap_mode='r').tobytes()
+    sa = np.memmap(idx_dir / byte_file.with_suffix('.sa.npy').name,
+                   dtype=np.uint64, mode='r')
     return data, sa
 
-# SA-based substring search: return list of match positions
-def _sa_search_positions(data: bytes, sa: np.ndarray, pattern: bytes) -> List[int]:
-    # find left bound
+# SA-based substring search: return match positions
+def _sa_search_positions(data: bytes, sa: np.ndarray, pattern: bytes):
     lo, hi = 0, len(sa)
     while lo < hi:
-        mid = (lo+hi)//2
+        mid = (lo + hi) // 2
         if data[sa[mid]:sa[mid]+len(pattern)] < pattern:
-            lo = mid+1
+            lo = mid + 1
         else:
             hi = mid
     positions = []
-    # collect matches
     idx = lo
     while idx < len(sa) and data[sa[idx]:sa[idx]+len(pattern)] == pattern:
         positions.append(int(sa[idx])); idx += 1
     return positions
 
-# Per-task query: includes post-filtering by token re-check
+# Query worker: post-filter by token IDs
 def _query_task(payload):
     idx, raw, qids, shards, idx_dir = payload
-    for shard_file in shards:
-        data, sa = _load_shard(idx_dir / shard_file)
+    for name in shards:
+        data, sa = _load_shard(name, idx_dir)
         for pos in _sa_search_positions(data, sa, raw):
-            # post-filter: re-tokenize matched substring
             substr = data[pos:pos+len(raw)].decode('utf-8', 'ignore')
             if SP.EncodeAsIds(substr) == qids:
                 return idx, True
@@ -149,25 +153,23 @@ def query_index(args):
     if spm is None:
         raise RuntimeError("SentencePiece not installed")
     SP = spm.SentencePieceProcessor(); SP.Load(str(args.spm_model))
-    with open(Path(args.index)/'shards.lst','rb') as fh:
-        shards = pickle.load(fh)
-    # prepare tasks
+    idx_dir = Path(args.index)
+    shards = pickle.load(open(idx_dir / 'shards.lst', 'rb'))
     lines = Path(args.input).read_text(encoding='utf-8').splitlines()
     tasks, valid = [], []
     for i, line in enumerate(tqdm.tqdm(lines, desc="Tokenizing queries", unit="query")):
         q = line.strip()
         qids = SP.EncodeAsIds(q)
         if len(qids) >= MIN_MATCH:
-            tasks.append((i, q.encode('utf-8'), qids, shards, Path(args.index)))
+            tasks.append((i, q.encode('utf-8'), qids, shards, idx_dir))
             valid.append(i)
     if not tasks:
         print(f"No queries >= {MIN_MATCH} tokens")
         return
     print(f"Dispatching {len(tasks)} tasks across {args.workers} workers")
-    # parallel search
     with mp.Pool(args.workers) as pool:
-        results = list(tqdm.tqdm(pool.imap_unordered(_query_task, tasks), total=len(tasks), desc="Searching", unit="match"))
-    # report
+        results = list(tqdm.tqdm(pool.imap_unordered(_query_task, tasks),
+                                 total=len(tasks), desc="Searching", unit="match"))
     found = {i: False for i in valid}
     for idx, ok in results:
         found[idx] = ok
@@ -179,7 +181,7 @@ def query_index(args):
             print(f"{prefix} SKIPPED (<{MIN_MATCH} tokens)")
 
 # CLI
-def main():
+if __name__ == '__main__':
     p = argparse.ArgumentParser()
     sp = p.add_subparsers(dest='cmd', required=True)
     b = sp.add_parser('build')
@@ -195,5 +197,3 @@ def main():
     args = p.parse_args()
     if args.cmd == 'build': build_index(args)
     else: query_index(args)
-
-if __name__ == '__main__': main()
