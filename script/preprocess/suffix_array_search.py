@@ -9,6 +9,11 @@ This script can:
 1. **Build** a sharded suffix‑array (SA) index of the tokenised corpus.
 2. **Query** the index to answer *Does the corpus contain this exact 50‑token sequence?*
 
+Now with **progress bars** using `tqdm` to track:
+- Sharding progress
+- SA/LCP build progress
+- Query processing progress
+
 Usage:
     python suffix_array_search.py build --corpus CORPUS_ROOT --spm_model MODEL_PATH \
         [--outdir OUTDIR] [--shard_size SHARD_SIZE] [--workers N]
@@ -16,7 +21,7 @@ Usage:
         [--input QUERY_FILE] [--workers N]
 
 Requires:
-    pip install numpy sentencepiece pydivsufsort
+    pip install numpy sentencepiece pydivsufsort tqdm
 """
 from __future__ import annotations
 import argparse, os, pickle, sys, multiprocessing as mp
@@ -24,6 +29,7 @@ from pathlib import Path
 from typing import Iterator, List, Sequence, Tuple
 
 import numpy as np
+import tqdm
 # Optional high-performance C SA builder
 try:
     import pydivsufsort
@@ -53,7 +59,8 @@ def load_spm(model_path: str | Path) -> spm.SentencePieceProcessor:
 
 # Iterate token IDs from corpus, inserting sep_id between files
 def iter_token_ids(corpus_root: Path, sp: spm.SentencePieceProcessor, sep_id: int) -> Iterator[int]:
-    for file in sorted(corpus_root.rglob("*.txt")):
+    files = sorted(list(corpus_root.rglob("*.txt")))
+    for file in tqdm.tqdm(files, desc="Shard - reading files", unit="file"):
         with file.open("r", encoding="utf-8", errors="ignore") as fh:
             for line in fh:
                 for tid in sp.EncodeAsIds(line.strip()):
@@ -106,6 +113,7 @@ def build_index(args):
     sep_id = sp.get_piece_size()
     print(f"Auto-selected sep_id = {sep_id} (vocab size)")
     buf, shard_id, shard_files, total = [], 0, [], 0
+    # Shard splitting with progress
     for tid in iter_token_ids(corpus, sp, sep_id):
         buf.append(tid)
         if len(buf) >= args.shard_size:
@@ -119,13 +127,16 @@ def build_index(args):
         shard_files.append(f)
         total += n
     print(f"Sharded into {len(shard_files)} files, total {total:,} tokens")
-    # Parallel SA/LCP build
+    # Parallel SA/LCP build with progress
+    print("Building SA/LCP for each shard...")
     with mp.Pool(args.workers) as pool:
-        pool.map(_build_sa_for_shard, shard_files)
+        for _ in tqdm.tqdm(pool.imap_unordered(_build_sa_for_shard, shard_files),
+                            total=len(shard_files), desc="Building SA", unit="shard"):
+            pass
     # Prefix table: map first K_PREFIX tokens hash to shard & index
     buckets = 1 << (K_PREFIX * 8)
     tbl: list[list[tuple[int,int]]] = [[] for _ in range(buckets)]
-    for f in shard_files:
+    for f in tqdm.tqdm(shard_files, desc="Building prefix table", unit="shard"):
         sid = int(f.stem.split("-")[-1])
         tok = np.load(f, mmap_mode="r")
         for i in range(len(tok) - K_PREFIX + 1):
@@ -172,7 +183,7 @@ def query_index(args):
     buckets = len(tbl)
     lines = Path(args.input).read_text(encoding="utf-8").splitlines()
     queries: list[list[int]] = []
-    for line in lines:
+    for line in tqdm.tqdm(lines, desc="Tokenizing queries", unit="line"):
         ids = sp.EncodeAsIds(line.strip())
         if len(ids) >= MIN_MATCH:
             queries.append(ids[:MIN_MATCH])
@@ -184,8 +195,10 @@ def query_index(args):
         key = 0
         for j in range(K_PREFIX): key = (key * 31 + q[j]) & (buckets - 1)
         for sid, _ in tbl[key]: tasks.append((i, sid, q, outdir))
+    print(f"Dispatching {len(tasks)} query tasks across {args.workers} workers...")
     with mp.Pool(args.workers) as pool:
-        results = pool.map(_query_task, tasks)
+        results = list(tqdm.tqdm(pool.imap_unordered(_query_task, tasks),
+                                  total=len(tasks), desc="Querying shards", unit="task"))
     found = [False] * len(queries)
     for idx, ok in results:
         if ok: found[idx] = True
