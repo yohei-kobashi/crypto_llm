@@ -3,11 +3,11 @@ from presidio_anonymizer import AnonymizerEngine
 
 analyzer = AnalyzerEngine()
 anonymizer = AnonymizerEngine()
-def scrabbing(text):
+def scrubbing(text):
     results = analyzer.analyze(text=text, language="en")
     anonymized_text = anonymizer.anonymize(text=text, analyzer_results=results)
     return anonymized_text
 
-def scrab_data(data):
+def scrub_data(data):
     for row in data:
-        _ = scrabbing(row["text"][0])
+        _ = scrubbing(row["text"][0])
