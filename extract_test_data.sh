@@ -14,4 +14,6 @@ module load gcc
 
 cd crypto_llm
 source env_crypto_llm/bin/activate
+python script/preprocess/parquet_sampler.py --input-dir fineweb-edu/sample/100BT-10BT --output-dir fineweb-edu/sample/100BT-10BT-sampled2 --sampling-rate 1/9 --n_tasks 20
 python script/preprocess/extract_name.py fineweb-edu/sample/100BT-10BT-sampled extract_names_from_fwe100b-10b --n_tasks 20
+python script/preprocess/filter_name.py fineweb-edu/sample/100BT-10BT-sampled extract_names_from_fwe100b-10b --n_tasks 20

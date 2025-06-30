@@ -106,7 +106,7 @@ if __name__ == '__main__':
                         help="Directory containing Parquet or JSONL files to sample.")
     parser.add_argument("--output-dir", required=True,
                         help="Directory to save sampled Parquet files.")
-    parser.add_argument("--sampling-rate", type=float, default=0.01,
+    parser.add_argument("--sampling-rate", type=eval, default="0.01",
                         help="Fraction of rows to sample from each file (0-1).")
     parser.add_argument("--num-procs", type=int, default=4,
                         help="Number of parallel processes.")
