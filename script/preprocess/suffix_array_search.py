@@ -21,10 +21,11 @@ Requires:
 """
 import argparse, pickle, sys, multiprocessing as mp, json
 from pathlib import Path
-from functools import partial
 import numpy as np
 import tqdm
 import pyarrow.parquet as pq
+from functools import partial
+
 try:
     import pydivsufsort
     HAVE_DIVSUF = True
@@ -45,6 +46,7 @@ K_PREFIX   = 8                # prefix length in bytes for filtering
 SP: 'spm.SentencePieceProcessor' = None
 
 # Build: iterate raw bytes from corpus files with batch-byte concatenation
+# JSONL + Parquet supported
 def iter_bytes(corpus_root: Path):
     files = sorted(corpus_root.rglob("*.jsonl")) + sorted(corpus_root.rglob("*.parquet"))
     for file in tqdm.tqdm(files, desc="Shard - reading files", unit="file"):
@@ -60,8 +62,7 @@ def iter_bytes(corpus_root: Path):
         else:  # .parquet
             table = pq.read_table(str(file), columns=['text'], use_threads=True)
             for batch in table.to_batches():
-                col = batch.column(0)
-                for cell in col:
+                for cell in batch.column(0):
                     raw = cell.as_py().encode('utf-8')
                     yield from raw
         yield from SEP_BYTE
@@ -73,13 +74,14 @@ def _write_shard(shard_id: int, buf, outdir: Path):
     np.save(fname, arr, allow_pickle=False)
     return fname.name, len(arr)
 
-# Build SA for a shard
+# Build SA for a shard with pydivsufsort expecting bytes-like
 def _build_sa_for_shard(shard_name: str, idx_dir: Path):
     byte_file = idx_dir / shard_name
     data = np.load(byte_file, mmap_mode=None)
     sa_file = byte_file.with_suffix('.sa.npy')
     if HAVE_DIVSUF:
-        sa = np.array(pydivsufsort.divsufsort(data.tolist()), dtype=np.uint64)
+        # Pass the raw numpy buffer directly, no .tolist()
+        sa = np.array(pydivsufsort.divsufsort(data), dtype=np.uint64)
     else:
         sa = np.argsort([bytes(data[i:]) for i in range(len(data))]).astype(np.uint64)
     mm = np.memmap(sa_file, dtype=np.uint64, mode='w+', shape=sa.shape)
@@ -118,7 +120,7 @@ def build_index(args):
 def _load_shard(shard_name: str, idx_dir: Path):
     byte_file = idx_dir / shard_name
     data = np.load(byte_file, mmap_mode='r').tobytes()
-    sa = np.memmap(idx_dir / byte_file.with_suffix('.sa.npy').name,
+    sa = np.memmap(idx_dir / shard_name.replace('.bytes.npy', '.sa.npy'),
                    dtype=np.uint64, mode='r')
     return data, sa
 
@@ -131,11 +133,11 @@ def _sa_search_positions(data: bytes, sa: np.ndarray, pattern: bytes):
             lo = mid + 1
         else:
             hi = mid
-    positions = []
+    pos_list = []
     idx = lo
     while idx < len(sa) and data[sa[idx]:sa[idx]+len(pattern)] == pattern:
-        positions.append(int(sa[idx])); idx += 1
-    return positions
+        pos_list.append(int(sa[idx])); idx += 1
+    return pos_list
 
 # Query worker: post-filter by token IDs
 def _query_task(payload):
@@ -185,13 +187,13 @@ def query_index(args):
 # CLI
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    sp = p.add_subparsers(dest='cmd', required=True)
-    b = sp.add_parser('build')
+    sub = p.add_subparsers(dest='cmd', required=True)
+    b = sub.add_parser('build')
     b.add_argument('--corpus', required=True)
     b.add_argument('--outdir', default='index')
     b.add_argument('--shard_size', type=int, default=SHARD_SIZE)
     b.add_argument('--workers', type=int, default=mp.cpu_count())
-    q = sp.add_parser('query')
+    q = sub.add_parser('query')
     q.add_argument('--index', required=True)
     q.add_argument('--spm_model', required=True)
     q.add_argument('--input', required=True)
