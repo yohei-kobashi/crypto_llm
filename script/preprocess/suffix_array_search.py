@@ -9,13 +9,13 @@
 Usage
 -----
 # Build index (outputs ./index/*.npy)
-python suffix_array_pipeline.py build \
+python suffix_array_search.py build \
        --parquet-dir /path/to/fineweb-edu/sample-10BT \
        --out-dir ./index \
        --workers auto
 
 # Query index for a text file containing model outputs (one per line)
-python suffix_array_pipeline.py query \
+python suffix_array_search.py query \
        --index-dir ./index \
        --input outputs.txt \
        --workers auto
