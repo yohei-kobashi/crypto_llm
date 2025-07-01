@@ -214,35 +214,45 @@ def split_parquet_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
 # CLI
 
 def main():
-    parser=argparse.ArgumentParser()
-    sub=parser.add_subparsers(dest="cmd", required=True)
+    parser = argparse.ArgumentParser()
+    sub = parser.add_subparsers(dest="cmd", required=True)
     # build
-    p= sub.add_parser("build")
-    p.add_argument("--parquet-dir",required=True)
-    p.add_argument("--out-dir",required=True)
-    p.add_argument("--workers",default="auto")
+    p = sub.add_parser("build")
+    p.add_argument("--parquet-dir", required=True)
+    p.add_argument("--out-dir", required=True)
+    p.add_argument("--workers", default="auto")
     # query
-    q= sub.add_parser("query")
-    q.add_argument("--index-dir",required=True)
-    q.add_argument("--input",required=True)
-    q.add_argument("--workers",default="auto")
+    q = sub.add_parser("query")
+    q.add_argument("--index-dir", required=True)
+    q.add_argument("--input", required=True)
+    q.add_argument("--workers", default="auto")
     # gen_test
-    g= sub.add_parser("gen_test")
-    g.add_argument("--parquet-dir",required=True)
-    g.add_argument("--output",required=True)
-    g.add_argument("--pairs",type=int,default=20)
+    g = sub.add_parser("gen_test")
+    g.add_argument("--parquet-dir", required=True)
+    g.add_argument("--output", required=True)
+    g.add_argument("--pairs", type=int, default=20)
     # split
-    s= sub.add_parser("split")
-    s.add_argument("--parquet-dir",required=True)
-    s.add_argument("--out-dir",required=True)
-    s.add_argument("--parts",type=int,required=True)
-    s.add_argument("--workers",default="auto")
-    args=parser.parse_args()
-    w=get_n_workers(args.workers)
-    if args.cmd=="build": build_index(args.parquet_dir,args.out_dir,w)
-    elif args.cmd=="query": query_index(args.index_dir,args.input,w)
-    elif args.cmd=="gen_test": generate_test_queries(args.parquet_dir,args.output,args.pairs)
-    elif args.cmd=="split": split_parquet_dir(args.parquet_dir,args.out_dir,args.parts,w)
-    else: parser.print_help()
+    s = sub.add_parser("split")
+    s.add_argument("--parquet-dir", required=True)
+    s.add_argument("--out-dir", required=True)
+    s.add_argument("--parts", type=int, required=True)
+    s.add_argument("--workers", default="auto")
+    
+    args = parser.parse_args()
 
-if __name__=="__main__": main()
+    if args.cmd == "build":
+        w = get_n_workers(args.workers)
+        build_index(args.parquet_dir, args.out_dir, w)
+    elif args.cmd == "query":
+        w = get_n_workers(args.workers)
+        query_index(args.index_dir, args.input, w)
+    elif args.cmd == "gen_test":
+        generate_test_queries(args.parquet_dir, args.output, args.pairs)
+    elif args.cmd == "split":
+        w = get_n_workers(args.workers)
+        split_parquet_dir(args.parquet_dir, args.out_dir, args.parts, w)
+    else:
+        parser.print_help()
+
+if __name__ == "__main__":
+    main()
