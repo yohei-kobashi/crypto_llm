@@ -1,12 +1,16 @@
-# suffix_array_search (stable build/query + test‑data generator)
+# suffix_array_search (build/query + test‑data + parquet splitter)
 # -------------------------------------------------------------
-# 2025‑07‑01: Added `gen_test` sub‑command to create a small file of
-# HIT/MISS lines for quick functional testing of the suffix‑array search.
+# 2025‑07‑01: Added `gen_test` sub‑command.
+# 2025‑07‑01: Added `split` sub‑command (row‑count based).
+# 2025‑07‑01: *Update* ― `split` now supports **fixed‑parts mode**: you
+#             specify how many chunks each Parquet file should be divided
+#             into (e.g. 8).  This reads the full file into memory, so it
+#             favours speed over RAM usage (OK on 128 GB machine).
 # -------------------------------------------------------------
 """
-Usage
------
-# Build index
+Usage (main commands)
+--------------------
+# Build suffix‑array index
 python suffix_array_search.py build \
        --parquet-dir fineweb-edu/sample-10BT \
        --out-dir ./index \
@@ -15,14 +19,20 @@ python suffix_array_search.py build \
 # Query index
 python suffix_array_search.py query \
        --index-dir ./index \
-       --input test.txt \
+       --input queries.txt \
        --workers auto
 
-# Generate test queries (20 HIT+MISS pairs = 40 lines)
+# Generate tiny HIT/MISS test set (40 lines)
 python suffix_array_search.py gen_test \
        --parquet-dir fineweb-edu/sample-10BT \
-       --output test.txt \
+       --output queries.txt \
        --pairs 20
+
+# Split each Parquet file into exactly 8 equal parts (by row count)
+python suffix_array_search.py split \
+       --parquet-dir fineweb-edu/sample-10BT \
+       --out-dir fineweb-edu/sample-10BT-split8 \
+       --parts 8
 """
 from __future__ import annotations
 
@@ -31,6 +41,7 @@ from functools import partial
 from typing import List, Tuple, Dict
 
 import numpy as np
+import pyarrow as pa
 import pyarrow.parquet as pq
 from tqdm import tqdm
 
@@ -112,7 +123,7 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
     except ValueError:
         ctx = mp.get_context("spawn")
 
-    # Pass‑1: vocab
+    # Pass‑1: vocab collection -------------------------------------------------
     vocab, next_id = {}, 1
     with ctx.Pool(workers) as pool:
         for wordlist in tqdm(pool.imap_unordered(scan_vocab_worker, shards),
@@ -120,18 +131,18 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
             for w in wordlist:
                 if w not in vocab:
                     vocab[w] = next_id; next_id += 1
-    # 固定順で再付番して再現性確保
+    # 再現性のため語彙をソートして再付番
     vocab = {w: i+1 for i, w in enumerate(sorted(vocab))}
     np.save(os.path.join(out_dir, "vocab.npy"), np.array(list(vocab), dtype=object))
 
-    # Pass‑2: encode shards
+    # Pass‑2: encode shards ----------------------------------------------------
     vb = pickle.dumps(vocab, pickle.HIGHEST_PROTOCOL)
     enc_args = [(str(p), out_dir) for p in shards]
     with ctx.Pool(workers, initializer=enc_init, initargs=(vb,)) as pool:
         id_files = list(tqdm(pool.imap_unordered(encode_shard_worker, enc_args),
                              total=len(enc_args), desc="Encoding shards"))
 
-    # Concatenate → open_memmap writes .npy with header
+    # Concatenate id shards ----------------------------------------------------
     total_len = sum(np.load(f, mmap_mode="r").shape[0] for f in id_files)
     all_ids_path = os.path.join(out_dir, "all_ids.npy")
     all_ids = np.lib.format.open_memmap(all_ids_path, mode="w+", dtype=np.int32,
@@ -141,9 +152,9 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
         arr = np.load(f, mmap_mode="r")
         n = arr.shape[0]
         all_ids[off:off+n] = arr; off += n
-    del all_ids  # flush
+    del all_ids  # flush to disk
 
-    # SA build
+    # SA build ---------------------------------------------------------------
     print(f"Building SA for {total_len:,} ids…")
     sa = pydivsufsort.divsufsort(np.load(all_ids_path, mmap_mode="r"))
     np.save(os.path.join(out_dir, "suffix_array.npy"), sa)
@@ -152,7 +163,6 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
 ###############################################################################
 # Query helpers
 ###############################################################################
-
 
 def binary_search(ids: np.ndarray, sa: np.ndarray, pattern: List[int]) -> bool:
     lo, hi = 0, sa.size; m = len(pattern); pat = tuple(pattern)
@@ -231,24 +241,18 @@ def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int = 35)
     print(f"Wrote {len(hits)*2} lines (HIT/MISS pairs) to {out_path}")
 
 ###############################################################################
-# CLI
+# Parquet splitter (fixed parts mode) ----------------------------------------
 ###############################################################################
 
-def main():
-    ap = argparse.ArgumentParser()
-    sub = ap.add_subparsers(dest="cmd", required=True)
-
-    b = sub.add_parser("build"); b.add_argument("--parquet-dir"); b.add_argument("--out-dir"); b.add_argument("--workers", default="auto")
-    q = sub.add_parser("query"); q.add_argument("--index-dir"); q.add_argument("--input"); q.add_argument("--workers", default="auto")
-    g = sub.add_parser("gen_test"); g.add_argument("--parquet-dir"); g.add_argument("--output"); g.add_argument("--pairs", type=int, default=20)
-
-    a = ap.parse_args(); w = get_n_workers(getattr(a, "workers", "auto"))
-    if a.cmd == "build":
-        build_index(a.parquet_dir, a.out_dir, w)
-    elif a.cmd == "query":
-        query_index(a.index_dir, a.input, w)
-    else:  # gen_test
-        generate_test_queries(a.parquet_dir, a.output, a.pairs)
-
-if __name__ == "__main__":
-    mp.freeze_support(); main()
+def split_parquet_file_parts(pq_path: str, out_dir: str, parts: int):
+    """Load entire Parquet file, then slice row‑wise into `parts` equal chunks."""
+    tbl = pq.read_table(pq_path)  # loads whole file → needs RAM 🐘
+    rows = tbl.num_rows
+    chunk = rows // parts
+    remainder = rows % parts
+    base = pathlib.Path(pq_path).stem
+    for i in range(parts):
+        start = i * chunk + min(i, remainder)
+        end = start + chunk + (1 if i < remainder else 0)
+        slice_tbl = tbl.slice(start, end-start)
+        out_path = pathlib.Path(out_dir) / f"{base}_part{i}.parquet"
