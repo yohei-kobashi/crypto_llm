@@ -1,26 +1,32 @@
-# suffix_array_pipeline (stable build/query)
+# suffix_array_search (stable build/query + test‑data generator)
 # -------------------------------------------------------------
-# Fix: `all_ids.npy` now written with NumPy header via `np.lib.format.open_memmap`,
-# so it can be memory‑mapped later with `np.load(..., mmap_mode='r')`.
+# 2025‑07‑01: Added `gen_test` sub‑command to create a small file of
+# HIT/MISS lines for quick functional testing of the suffix‑array search.
 # -------------------------------------------------------------
 """
 Usage
 -----
 # Build index
-python suffix_array_pipeline.py build \
-       --parquet-dir /path/to/fineweb-edu/sample-10BT \
+python suffix_array_search.py build \
+       --parquet-dir fineweb-edu/sample-10BT \
        --out-dir ./index \
        --workers auto
 
 # Query index
-python suffix_array_pipeline.py query \
+python suffix_array_search.py query \
        --index-dir ./index \
-       --input outputs.txt \
+       --input test.txt \
        --workers auto
+
+# Generate test queries (20 HIT+MISS pairs = 40 lines)
+python suffix_array_search.py gen_test \
+       --parquet-dir fineweb-edu/sample-10BT \
+       --output test.txt \
+       --pairs 20
 """
 from __future__ import annotations
 
-import argparse, os, sys, pathlib, multiprocessing as mp, pickle
+import argparse, os, sys, pathlib, multiprocessing as mp, pickle, random, re
 from functools import partial
 from typing import List, Tuple, Dict
 
@@ -37,10 +43,12 @@ except ImportError:
 # Globals & helpers
 ###############################################################################
 WORD_RE = r"[\w'-]+"
+W_RE = re.compile(WORD_RE)
+
 
 def words(text: str) -> List[str]:
-    import re
-    return re.findall(WORD_RE, text.lower())
+    return W_RE.findall(text.lower())
+
 
 def get_n_workers(val: str | int | None) -> int:
     return min(72, mp.cpu_count()) if val in (None, "auto") else int(val)
@@ -49,15 +57,22 @@ def get_n_workers(val: str | int | None) -> int:
 # Parquet iterators
 ###############################################################################
 
-def _yield_words(parquet: str):
+
+def _yield_text(parquet: str):
     pf = pq.ParquetFile(parquet)
     for batch in pf.iter_batches():
         for cell in batch.column("text"):
-            yield from words(cell.as_py())
+            yield cell.as_py()
+
+
+def _yield_words(parquet: str):
+    for txt in _yield_text(parquet):
+        yield from words(txt)
 
 ###############################################################################
 # Build‑phase workers (top‑level → picklable)
 ###############################################################################
+
 
 def scan_vocab_worker(pq_path: str) -> List[str]:
     seen = {}
@@ -65,11 +80,14 @@ def scan_vocab_worker(pq_path: str) -> List[str]:
         seen[w] = None
     return list(seen)
 
+# shared vocab for encode workers
 VOCAB: Dict[str, int] | None = None
+
 
 def enc_init(vocab_bytes: bytes):
     global VOCAB
     VOCAB = pickle.loads(vocab_bytes)
+
 
 def encode_shard_worker(args):
     pq_path, out_dir = args
@@ -102,6 +120,8 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
             for w in wordlist:
                 if w not in vocab:
                     vocab[w] = next_id; next_id += 1
+    # 固定順で再付番して再現性確保
+    vocab = {w: i+1 for i, w in enumerate(sorted(vocab))}
     np.save(os.path.join(out_dir, "vocab.npy"), np.array(list(vocab), dtype=object))
 
     # Pass‑2: encode shards
@@ -130,8 +150,9 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
     print("Index complete ✔︎")
 
 ###############################################################################
-# Query
+# Query helpers
 ###############################################################################
+
 
 def binary_search(ids: np.ndarray, sa: np.ndarray, pattern: List[int]) -> bool:
     lo, hi = 0, sa.size; m = len(pattern); pat = tuple(pattern)
@@ -173,6 +194,43 @@ def query_index(idx_dir: str, in_txt: str, workers: int):
             print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
 
 ###############################################################################
+# Test‑query generator
+###############################################################################
+
+def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int = 35):
+    shards = list(pathlib.Path(pq_dir).glob("*.parquet"))
+    if not shards:
+        raise FileNotFoundError("No parquet shards found.")
+
+    random.seed(42)
+    hits, misses = [], []
+
+    for shard in tqdm(random.sample(shards, len(shards)), desc="Sampling shards"):
+        for txt in _yield_text(str(shard)):
+            w = words(txt)
+            if len(w) < win: continue
+            # pick random window
+            start = random.randint(0, len(w)-win)
+            seg = w[start:start+win]
+            hit_line = " ".join(seg)
+            # MISS: replace middle word with unique token unlikely in corpus
+            miss_seg = seg.copy()
+            miss_seg[win//2] = "xyzxyzxyzunique"  # unlikely present
+            miss_line = " ".join(miss_seg)
+            hits.append(hit_line)
+            misses.append(miss_line)
+            if len(hits) >= pairs:
+                break
+        if len(hits) >= pairs:
+            break
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        for h, m in zip(hits, misses):
+            f.write(h + "\n")
+            f.write(m + "\n")
+    print(f"Wrote {len(hits)*2} lines (HIT/MISS pairs) to {out_path}")
+
+###############################################################################
 # CLI
 ###############################################################################
 
@@ -182,10 +240,15 @@ def main():
 
     b = sub.add_parser("build"); b.add_argument("--parquet-dir"); b.add_argument("--out-dir"); b.add_argument("--workers", default="auto")
     q = sub.add_parser("query"); q.add_argument("--index-dir"); q.add_argument("--input"); q.add_argument("--workers", default="auto")
+    g = sub.add_parser("gen_test"); g.add_argument("--parquet-dir"); g.add_argument("--output"); g.add_argument("--pairs", type=int, default=20)
 
-    a = ap.parse_args(); w = get_n_workers(a.workers)
-    if a.cmd == "build": build_index(a.parquet_dir, a.out_dir, w)
-    else: query_index(a.index_dir, a.input, w)
+    a = ap.parse_args(); w = get_n_workers(getattr(a, "workers", "auto"))
+    if a.cmd == "build":
+        build_index(a.parquet_dir, a.out_dir, w)
+    elif a.cmd == "query":
+        query_index(a.index_dir, a.input, w)
+    else:  # gen_test
+        generate_test_queries(a.parquet_dir, a.output, a.pairs)
 
 if __name__ == "__main__":
     mp.freeze_support(); main()
