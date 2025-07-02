@@ -193,16 +193,27 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
                 l = l.strip()
                 if l: lines.append(l)
     
-    results: List[Tuple[str,bool]] = []
-    from multiprocessing.pool import ThreadPool
+    # Choose multiprocessing over threading for CPU-bound workload
+    try:
+        ctx = mp.get_context('fork')
+    except ValueError:
+        ctx = mp.get_context('spawn')
+
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
-    for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, lines), total=len(lines), desc="Querying"):
-        results.append((ln, ok))
-        print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
-    total = len(results)
-    hits = sum(1 for _,ok in results if ok)
-    ratio = hits/total*100 if total else 0
+    total = len(lines)
+    hits = 0
+
+    # Determine chunksize to reduce task overhead
+    chunksize = max(1, total // (workers * 4))
+
+    with ctx.Pool(workers) as pool:
+        for ln, ok in tqdm(pool.imap_unordered(worker, lines, chunksize=chunksize),
+                             total=total, desc="Querying"):
+            if ok:
+                hits += 1
+    ratio = hits / total * 100 if total else 0
     elapsed = time.time() - start_time
+
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
     print(f"Query time: {elapsed:.2f} seconds")
 
