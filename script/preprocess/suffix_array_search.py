@@ -199,7 +199,7 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
     for i in range(0, len(lines), BATCH_SIZE):
         batch = lines[i:i+BATCH_SIZE]
-        for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i//BATCH_SIZE+1}/{(total-1)//BATCH_SIZE+1}"):
+        for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i//BATCH_SIZE+1}/{(len(lines)-1)//BATCH_SIZE+1}"):
             results.append((ln, ok))
             # print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
     total = len(results)
