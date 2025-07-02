@@ -61,6 +61,7 @@ except ImportError:
 # Globals & helpers
 WORD_RE = r"[\w'-]+"
 W_RE = re.compile(WORD_RE)
+WIN = 35
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
@@ -191,7 +192,7 @@ def query_index(idx_dir: str, in_path: str, workers: int):
             for l in f:
                 l = l.strip()
                 if l: lines.append(l)
-    win = 35
+    win = WIN
     results: List[Tuple[str,bool]] = []
     from multiprocessing.pool import ThreadPool
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
@@ -206,7 +207,7 @@ def query_index(idx_dir: str, in_path: str, workers: int):
     print(f"Query time: {elapsed:.2f} seconds")
 
 # Test-data generator
-def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int=35):
+def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int):
     shards = list(pathlib.Path(pq_dir).glob("*.parquet"))
     if not shards:
         sys.exit("No parquet shards found.")
@@ -290,7 +291,7 @@ def main():
         w = get_n_workers(args.workers)
         query_index(args.index_dir, args.input, w)
     elif args.cmd == "gen_test":
-        generate_test_queries(args.parquet_dir, args.output, args.pairs)
+        generate_test_queries(args.parquet_dir, args.output, args.pairs, WIN)
     elif args.cmd == "split":
         w = get_n_workers(args.workers)
         split_parquet_dir(args.parquet_dir, args.out_dir, args.parts, w)
