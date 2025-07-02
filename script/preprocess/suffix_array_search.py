@@ -65,6 +65,7 @@ WORD_RE = r"[\w'-]+"
 W_RE = re.compile(WORD_RE)
 WIN = 35
 BATCH_SIZE=5000
+PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
@@ -205,6 +206,9 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
     vocab = {w:i+1 for i,w in enumerate(vocab_arr)}
     ids = np.load(os.path.join(idx_dir,'all_ids.npy'), mmap_mode='r')
     sa = np.load(os.path.join(idx_dir,'suffix_array.npy'), mmap_mode='r')
+    # Page warm-up to pre-load mmap pages
+    _ = ids[:PAGE_WARMUP]
+    _ = sa[:PAGE_WARMUP]    
     # # Load input lines from .txt or .jsonl
     # lines: List[str] = []
     # ext = pathlib.Path(in_path).suffix.lower()
@@ -224,14 +228,15 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
     #             l = l.strip()
     #             if l: lines.append(l)
     
-    results = []
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
+    total = 0
+    hits = 0
     for i, batch in enumerate(chunked_file(in_path, BATCH_SIZE)):
         for _, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i}"):
-            results.append(ok)
+            total += 1
+            if ok: hits += 1
             # print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
-    total = len(results)
-    hits = sum(1 for ok in results if ok)
+            
     ratio = hits/total*100 if total else 0
     elapsed = time.time() - start_time
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
