@@ -73,33 +73,27 @@ def words(text: str) -> List[str]:
 def get_n_workers(val: str | int | None) -> int:
     return mp.cpu_count() if val in (None, "auto") else int(val)
 
-def chunked_file(path: str, chunk_size: int):
+def read_input_file(path: str):
     """Yield lists of text snippets (str) chunked from a txt or jsonl file."""
     ext = pathlib.Path(path).suffix.lower()
-    with open(path, encoding='utf-8') as f:
-        while True:
-            lines = list(itertools.islice(f, chunk_size))
-            if not lines:
-                break
-            out: List[str] = []
-            if ext == '.jsonl':
-                for row in lines:
-                    row = row.strip()
-                    if not row:
-                        continue
-                    try:
-                        obj = json.loads(row)
-                        text = obj.get('text', '')
-                        if text:
-                            out.append(text)
-                    except json.JSONDecodeError:
-                        continue
-            else:
-                for l in lines:
-                    l = l.strip()
-                    if l:
-                        out.append(l)
-            yield out
+    out: List[str] = []
+    for row in open(path, encoding='utf-8'):
+        if ext == '.jsonl':
+            row = row.strip()
+            if not row:
+                continue
+            try:
+                obj = json.loads(row)
+                text = obj.get('text', '')
+                if text:
+                    out.append(text)
+            except json.JSONDecodeError:
+                continue
+        else:
+            row = row.strip()
+            if row:
+                out.append(row)
+    return out
             
 # Parquet iterators
 def _yield_text(parquet: str):
@@ -193,49 +187,37 @@ def binary_search(ids: np.ndarray, sa: np.ndarray, pattern: List[int]) -> bool:
 
 def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray, win: int) -> Tuple[str,bool]:
     seq = [vocab.get(w,0) for w in words(line)]
-    if len(seq) < win: return line, False
+    if len(seq) < win: return 0
     for i in range(len(seq) - win + 1):
         window = seq[i:i+win]
         if 0 in window: continue
-        if binary_search(ids, sa, window): return line, True
-    return line, False
+        if binary_search(ids, sa, window): return 1
+    return 0
 
-def query_index(idx_dir: str, in_path: str, workers: int, win: int):
+def query_index(idx_dir: str, in_path: str, win: int):
     start_time = time.time()
     vocab_arr = np.load(os.path.join(idx_dir,'vocab.npy'), allow_pickle=True)
     vocab = {w:i+1 for i,w in enumerate(vocab_arr)}
     ids = np.load(os.path.join(idx_dir,'all_ids.npy'), mmap_mode='r')
     sa = np.load(os.path.join(idx_dir,'suffix_array.npy'), mmap_mode='r')
-    # Page warm-up to pre-load mmap pages
-    _ = ids[:PAGE_WARMUP]
-    _ = sa[:PAGE_WARMUP]    
-    # # Load input lines from .txt or .jsonl
-    # lines: List[str] = []
-    # ext = pathlib.Path(in_path).suffix.lower()
-    # if ext == '.jsonl':
-    #     with open(in_path, encoding='utf-8') as f:
-    #         for row in f:
-    #             if row.strip():
-    #                 try:
-    #                     obj = json.loads(row)
-    #                     text = obj.get('text', '')
-    #                     if text: lines.append(text)
-    #                 except json.JSONDecodeError:
-    #                     continue
-    # else:
-    #     with open(in_path, encoding='utf-8') as f:
-    #         for l in f:
-    #             l = l.strip()
-    #             if l: lines.append(l)
     
-    worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
+    # Gather input sources
+    paths: List[pathlib.Path] = []
+    p = pathlib.Path(in_path)
+    if p.is_dir():
+        paths = sorted(list(p.glob('*.txt')) + list(p.glob('*.jsonl')))
+    else:
+        paths = [p]
+
     total = 0
     hits = 0
-    for i, batch in enumerate(chunked_file(in_path, BATCH_SIZE)):
-        for _, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i}"):
+    for file in paths:
+        batch = read_input_file(file)
+        desc = f"Querying {file} batch {i+1}"
+        for i, line in tqdm(enumerate(batch), total=len(batch), desc=desc):
+            hit = query_line(line, vocab, ids, sa, win)
             total += 1
-            if ok: hits += 1
-            # print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
+            hits += hit
             
     ratio = hits/total*100 if total else 0
     elapsed = time.time() - start_time
@@ -267,32 +249,51 @@ def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int):
             f.write(m + "\n")
     print(f"Wrote {len(hits)*2} lines to {out_path}")
 
-# Parquet splitter
-def split_parquet_file_parts(pq_path: str, out_dir: str, parts: int):
-    tbl = pq.read_table(pq_path)
-    rows = tbl.num_rows
-    base = pathlib.Path(pq_path).stem
-    size = rows // parts; rem = rows % parts
-    for i in range(parts):
-        start = i*size + min(i, rem)
-        cnt = size + (1 if i<rem else 0)
-        slice_tbl = tbl.slice(start, cnt)
-        out = pathlib.Path(out_dir)/f"{base}_part{i}.parquet"
-        pq.write_table(slice_tbl, out, compression='zstd')
+# File splitter (Parquet & JSONL supported)
+def split_file_parts(file_path: str, out_dir: str, parts: int):
+    """Split a .parquet or .jsonl file into `parts` chunks."""
+    ext = pathlib.Path(file_path).suffix.lower()
+    base = pathlib.Path(file_path).stem
+    if ext == '.parquet':
+        tbl = pq.read_table(file_path)
+        rows = tbl.num_rows
+        size = rows // parts; rem = rows % parts
+        for i in range(parts):
+            start = i * size + min(i, rem)
+            cnt = size + (1 if i < rem else 0)
+            slice_tbl = tbl.slice(start, cnt)
+            out = pathlib.Path(out_dir) / f"{base}_part{i}.parquet"
+            pq.write_table(slice_tbl, out, compression='zstd')
+    elif ext == '.jsonl':
+        # Count total lines
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        total = len(lines)
+        size = total // parts; rem = total % parts
+        for i in range(parts):
+            start = i * size + min(i, rem)
+            cnt = size + (1 if i < rem else 0)
+            chunk = lines[start:start+cnt]
+            out = pathlib.Path(out_dir) / f"{base}_part{i}.jsonl"
+            with open(out, 'w', encoding='utf-8') as wf:
+                wf.writelines(chunk)
+    else:
+        sys.exit(f"Unsupported file type for splitting: {file_path}")
 
-def split_parquet_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
+def split_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
     os.makedirs(out_dir, exist_ok=True)
-    shards = sorted(pathlib.Path(pq_dir).glob("*.parquet"))
-    if not shards:
-        sys.exit("No parquet shards found.")
+    files = sorted(pathlib.Path(pq_dir).glob("*.parquet")) + sorted(pathlib.Path(pq_dir).glob("*.jsonl"))
+    if not files:
+        sys.exit("No parquet or jsonl files found.")
     try:
         ctx = mp.get_context("fork")
     except ValueError:
         ctx = mp.get_context("spawn")
-    func = partial(split_parquet_file_parts, out_dir=out_dir, parts=parts)
+    func = partial(split_file_parts, out_dir=out_dir, parts=parts)
     with ctx.Pool(workers) as pool:
-        list(tqdm(pool.imap_unordered(func, shards), total=len(shards), desc="Splitting parquet"))
+        list(tqdm(pool.imap_unordered(func, files), total=len(files), desc="Splitting files"))
     print("Splitting complete ✔︎")
+
 
 # CLI and entry point
 def main():
@@ -307,7 +308,6 @@ def main():
     q = sub.add_parser("query")
     q.add_argument("--index-dir", required=True)
     q.add_argument("--input", required=True)
-    q.add_argument("--workers", default="auto")
     q.add_argument("--window", type=int, default=WIN)
     # gen_test
     g = sub.add_parser("gen_test")
@@ -317,7 +317,7 @@ def main():
     g.add_argument("--window", type=int, default=WIN)
     # split
     s = sub.add_parser("split")
-    s.add_argument("--parquet-dir", required=True)
+    s.add_argument("--file-dir", required=True)
     s.add_argument("--out-dir", required=True)
     s.add_argument("--parts", type=int, required=True)
     s.add_argument("--workers", default="auto")
@@ -326,13 +326,12 @@ def main():
         w = get_n_workers(args.workers)
         build_index(args.parquet_dir, args.out_dir, w)
     elif args.cmd == "query":
-        w = get_n_workers(args.workers)
-        query_index(args.index_dir, args.input, w, args.window)
+        query_index(args.index_dir, args.input, args.window)
     elif args.cmd == "gen_test":
         generate_test_queries(args.parquet_dir, args.output, args.pairs, args.window)
     elif args.cmd == "split":
         w = get_n_workers(args.workers)
-        split_parquet_dir(args.parquet_dir, args.out_dir, args.parts, w)
+        split_dir(args.file_dir, args.out_dir, args.parts, w)
     else:
         parser.print_help()
 
