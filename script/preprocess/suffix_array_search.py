@@ -213,7 +213,7 @@ def query_index(idx_dir: str, in_path: str, win: int):
     hits = 0
     for file in paths:
         batch = read_input_file(file)
-        desc = f"Querying {file} batch {i+1}"
+        desc = f"Querying {file} batch {len(paths)}"
         for i, line in tqdm(enumerate(batch), total=len(batch), desc=desc):
             hit = query_line(line, vocab, ids, sa, win)
             total += 1
