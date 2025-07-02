@@ -168,7 +168,7 @@ def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray,
         if binary_search(ids, sa, window): return line, True
     return line, False
 
-def query_index(idx_dir: str, in_path: str, workers: int):
+def query_index(idx_dir: str, in_path: str, workers: int, win: int):
     start_time = time.time()
     vocab_arr = np.load(os.path.join(idx_dir,'vocab.npy'), allow_pickle=True)
     vocab = {w:i+1 for i,w in enumerate(vocab_arr)}
@@ -192,7 +192,7 @@ def query_index(idx_dir: str, in_path: str, workers: int):
             for l in f:
                 l = l.strip()
                 if l: lines.append(l)
-    win = WIN
+    
     results: List[Tuple[str,bool]] = []
     from multiprocessing.pool import ThreadPool
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
@@ -272,11 +272,13 @@ def main():
     q.add_argument("--index-dir", required=True)
     q.add_argument("--input", required=True)
     q.add_argument("--workers", default="auto")
+    q.add_argument("--window", type=int, default=WIN)
     # gen_test
     g = sub.add_parser("gen_test")
     g.add_argument("--parquet-dir", required=True)
     g.add_argument("--output", required=True)
     g.add_argument("--pairs", type=int, default=20)
+    g.add_argument("--window", type=int, default=WIN)
     # split
     s = sub.add_parser("split")
     s.add_argument("--parquet-dir", required=True)
@@ -289,9 +291,9 @@ def main():
         build_index(args.parquet_dir, args.out_dir, w)
     elif args.cmd == "query":
         w = get_n_workers(args.workers)
-        query_index(args.index_dir, args.input, w)
+        query_index(args.index_dir, args.input, w, args.window)
     elif args.cmd == "gen_test":
-        generate_test_queries(args.parquet_dir, args.output, args.pairs, WIN)
+        generate_test_queries(args.parquet_dir, args.output, args.pairs, args.window)
     elif args.cmd == "split":
         w = get_n_workers(args.workers)
         split_parquet_dir(args.parquet_dir, args.out_dir, args.parts, w)
