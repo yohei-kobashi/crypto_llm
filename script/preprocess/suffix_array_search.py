@@ -63,7 +63,7 @@ except ImportError:
 WORD_RE = r"[\w'-]+"
 W_RE = re.compile(WORD_RE)
 WIN = 35
-BATCH_SIZE=2000
+BATCH_SIZE=5000
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
