@@ -53,6 +53,7 @@ import json
 import numpy as np
 import pyarrow.parquet as pq
 from tqdm import tqdm
+import itertools
 
 try:
     import pydivsufsort
@@ -71,6 +72,34 @@ def words(text: str) -> List[str]:
 def get_n_workers(val: str | int | None) -> int:
     return mp.cpu_count() if val in (None, "auto") else int(val)
 
+def chunked_file(path: str, chunk_size: int):
+    """Yield lists of text snippets (str) chunked from a txt or jsonl file."""
+    ext = pathlib.Path(path).suffix.lower()
+    with open(path, encoding='utf-8') as f:
+        while True:
+            lines = list(itertools.islice(f, chunk_size))
+            if not lines:
+                break
+            out: List[str] = []
+            if ext == '.jsonl':
+                for row in lines:
+                    row = row.strip()
+                    if not row:
+                        continue
+                    try:
+                        obj = json.loads(row)
+                        text = obj.get('text', '')
+                        if text:
+                            out.append(text)
+                    except json.JSONDecodeError:
+                        continue
+            else:
+                for l in lines:
+                    l = l.strip()
+                    if l:
+                        out.append(l)
+            yield out
+            
 # Parquet iterators
 def _yield_text(parquet: str):
     pf = pq.ParquetFile(parquet)
@@ -176,34 +205,33 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
     vocab = {w:i+1 for i,w in enumerate(vocab_arr)}
     ids = np.load(os.path.join(idx_dir,'all_ids.npy'), mmap_mode='r')
     sa = np.load(os.path.join(idx_dir,'suffix_array.npy'), mmap_mode='r')
-    # Load input lines from .txt or .jsonl
-    lines: List[str] = []
-    ext = pathlib.Path(in_path).suffix.lower()
-    if ext == '.jsonl':
-        with open(in_path, encoding='utf-8') as f:
-            for row in f:
-                if row.strip():
-                    try:
-                        obj = json.loads(row)
-                        text = obj.get('text', '')
-                        if text: lines.append(text)
-                    except json.JSONDecodeError:
-                        continue
-    else:
-        with open(in_path, encoding='utf-8') as f:
-            for l in f:
-                l = l.strip()
-                if l: lines.append(l)
+    # # Load input lines from .txt or .jsonl
+    # lines: List[str] = []
+    # ext = pathlib.Path(in_path).suffix.lower()
+    # if ext == '.jsonl':
+    #     with open(in_path, encoding='utf-8') as f:
+    #         for row in f:
+    #             if row.strip():
+    #                 try:
+    #                     obj = json.loads(row)
+    #                     text = obj.get('text', '')
+    #                     if text: lines.append(text)
+    #                 except json.JSONDecodeError:
+    #                     continue
+    # else:
+    #     with open(in_path, encoding='utf-8') as f:
+    #         for l in f:
+    #             l = l.strip()
+    #             if l: lines.append(l)
     
-    results: List[Tuple[str,bool]] = []
+    results = []
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
-    for i in range(0, len(lines), BATCH_SIZE):
-        batch = lines[i:i+BATCH_SIZE]
-        for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i//BATCH_SIZE+1}/{(len(lines)-1)//BATCH_SIZE+1}"):
-            results.append((ln, ok))
+    for i, batch in enumerate(chunked_file(in_path, BATCH_SIZE)):
+        for _, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i}"):
+            results.append(ok)
             # print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
     total = len(results)
-    hits = sum(1 for _,ok in results if ok)
+    hits = sum(1 for ok in results if ok)
     ratio = hits/total*100 if total else 0
     elapsed = time.time() - start_time
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
