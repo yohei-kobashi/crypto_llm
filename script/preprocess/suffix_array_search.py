@@ -3,6 +3,7 @@
 # 2025-07-01: Added `gen_test` sub-command.
 # 2025-07-01: Added `split` sub-command (fixed parts mode).
 # 2025-07-02: Updated `query` to display total lines, hit count, and hit ratio.
+# 2025-07-03: Refactored query workers to avoid assignment expressions in comprehensions.
 # -------------------------------------------------------------
 """
 Usage (main commands)
@@ -25,7 +26,7 @@ python suffix_array_pipeline.py gen_test \
        --output queries.txt \
        --pairs 20
 
-# Split each Parquet file into exactly 8 equal parts (by row count)
+# Split each Parquet file into exactly 8 equal parts
 python suffix_array_pipeline.py split \
        --parquet-dir fineweb-edu/sample-10BT \
        --out-dir fineweb-edu/sample-10BT-split8 \
@@ -95,10 +96,8 @@ def encode_shard_worker(args: Tuple[str,str]) -> pathlib.Path:
 def build_index(pq_dir: str, out_dir: str, workers: int):
     os.makedirs(out_dir, exist_ok=True)
     shards = sorted(pathlib.Path(pq_dir).glob("*.parquet")) or sys.exit("No parquet shards found.")
-    try:
-        ctx = mp.get_context("fork")
-    except ValueError:
-        ctx = mp.get_context("spawn")
+    try: ctx = mp.get_context("fork")
+    except ValueError: ctx = mp.get_context("spawn")
 
     # Pass-1: vocab
     vocab: Dict[str,int] = {}
@@ -109,7 +108,6 @@ def build_index(pq_dir: str, out_dir: str, workers: int):
             for w in wordlist:
                 if w not in vocab:
                     vocab[w] = next_id; next_id += 1
-    # Sort for reproducibility
     vocab = {w:i+1 for i,w in enumerate(sorted(vocab.keys()))}
     np.save(os.path.join(out_dir,"vocab.npy"), np.array(list(vocab.keys()),dtype=object))
 
@@ -154,6 +152,19 @@ def binary_search(ids: np.ndarray, sa: np.ndarray, pattern: List[int]) -> bool:
         return True
     return False
 
+# Line-level query worker (avoid inline lambdas)
+def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray, win: int) -> Tuple[str,bool]:
+    seq = [vocab.get(w,0) for w in words(line)]
+    if len(seq) < win:
+        return line, False
+    for i in range(len(seq) - win + 1):
+        window = seq[i:i+win]
+        if 0 in window:
+            continue
+        if binary_search(ids, sa, window):
+            return line, True
+    return line, False
+
 
 def query_index(idx_dir: str, in_txt: str, workers: int):
     vocab_arr = np.load(os.path.join(idx_dir,'vocab.npy'), allow_pickle=True)
@@ -164,11 +175,9 @@ def query_index(idx_dir: str, in_txt: str, workers: int):
     win = 35
     results: List[Tuple[str,bool]] = []
     from multiprocessing.pool import ThreadPool
+    worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
     with ThreadPool(workers) as pool:
-        for ln, ok in tqdm(pool.imap_unordered(lambda line: (line, any(binary_search(ids, sa, seq) \
-                                                                      for seq in (tuple(ids_seq := [vocab.get(w,0) for w in words(line)])[i:i+win] \
-                                                                                   for i in range(len(ids_seq)-win+1)) if 0 not in seq)),
-                                                      lines), total=len(lines), desc="Querying"):
+        for ln, ok in tqdm(pool.imap_unordered(worker, lines), total=len(lines), desc="Querying"):
             results.append((ln, ok))
             print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
     total = len(results)
@@ -177,7 +186,7 @@ def query_index(idx_dir: str, in_txt: str, workers: int):
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
 
 # Test-data generator
-def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int=35):
+ def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int=35):
     shards = list(pathlib.Path(pq_dir).glob("*.parquet")) or sys.exit("No parquet shards found.")
     random.seed(42)
     hits, misses = [], []
@@ -196,7 +205,7 @@ def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int=35):
     print(f"Wrote {len(hits)*2} lines to {out_path}")
 
 # Parquet splitter
-def split_parquet_file_parts(pq_path: str, out_dir: str, parts: int):
+ def split_parquet_file_parts(pq_path: str, out_dir: str, parts: int):
     tbl = pq.read_table(pq_path)
     rows = tbl.num_rows
     base = pathlib.Path(pq_path).stem
@@ -208,7 +217,7 @@ def split_parquet_file_parts(pq_path: str, out_dir: str, parts: int):
         out = pathlib.Path(out_dir)/f"{base}_part{i}.parquet"
         pq.write_table(slice_tbl, out, compression='zstd')
 
-def split_parquet_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
+ def split_parquet_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
     os.makedirs(out_dir, exist_ok=True)
     shards = sorted(pathlib.Path(pq_dir).glob("*.parquet")) or sys.exit("No parquet shards found.")
     try: ctx = mp.get_context("fork")
@@ -219,7 +228,7 @@ def split_parquet_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
     print("Splitting complete ✔︎")
 
 # CLI
-def main():
+ def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("build")
