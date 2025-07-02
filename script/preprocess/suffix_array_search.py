@@ -1,4 +1,4 @@
-# suffix_array_pipeline (build/query + test-data + parquet splitter)
+# suffix_array_search (build/query + test-data + parquet splitter)
 # -------------------------------------------------------------
 # 2025-07-01: Added `gen_test` sub-command.
 # 2025-07-01: Added `split` sub-command (fixed parts mode).
@@ -11,25 +11,25 @@
 Usage (main commands)
 --------------------
 # Build suffix-array index
-python suffix_array_pipeline.py build \
+python suffix_array_search.py build \
        --parquet-dir fineweb-edu/sample-10BT \
        --out-dir ./index \
        --workers auto
 
 # Query index with timing
-python suffix_array_pipeline.py query \
+python suffix_array_search.py query \
        --index-dir ./index \
        --input queries.txt \
        --workers auto
 
 # Generate tiny HIT/MISS test set (40 lines)
-python suffix_array_pipeline.py gen_test \
+python suffix_array_search.py gen_test \
        --parquet-dir fineweb-edu/sample-10BT \
        --output queries.txt \
        --pairs 20
 
 # Split each Parquet file into exactly 8 equal parts
-python suffix_array_pipeline.py split \
+python suffix_array_search.py split \
        --parquet-dir fineweb-edu/sample-10BT \
        --out-dir fineweb-edu/sample-10BT-split8 \
        --parts 8 \
