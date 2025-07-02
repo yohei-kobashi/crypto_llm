@@ -41,6 +41,7 @@ import os
 import sys
 import pathlib
 import multiprocessing as mp
+from multiprocessing.pool import ThreadPool
 import pickle
 import random
 import re
@@ -62,6 +63,7 @@ except ImportError:
 WORD_RE = r"[\w'-]+"
 W_RE = re.compile(WORD_RE)
 WIN = 35
+BATCH_SIZE=2000
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
@@ -194,11 +196,12 @@ def query_index(idx_dir: str, in_path: str, workers: int, win: int):
                 if l: lines.append(l)
     
     results: List[Tuple[str,bool]] = []
-    from multiprocessing.pool import ThreadPool
     worker = partial(query_line, vocab=vocab, ids=ids, sa=sa, win=win)
-    for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, lines), total=len(lines), desc="Querying"):
-        results.append((ln, ok))
-        print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
+    for i in range(0, len(lines), BATCH_SIZE):
+        batch = lines[i:i+BATCH_SIZE]
+        for ln, ok in tqdm(ThreadPool(workers).imap_unordered(worker, batch), total=len(batch), desc=f"Batch {i//BATCH_SIZE+1}/{(total-1)//BATCH_SIZE+1}"):
+            results.append((ln, ok))
+            # print(f"[{'HIT' if ok else 'MISS'}] {ln[:120]}{'…' if len(ln)>120 else ''}")
     total = len(results)
     hits = sum(1 for _,ok in results if ok)
     ratio = hits/total*100 if total else 0
