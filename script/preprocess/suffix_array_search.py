@@ -189,7 +189,9 @@ def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray,
     for i in range(len(seq) - win + 1):
         window = seq[i:i+win]
         if 0 in window: continue
-        if binary_search(ids, sa, window): return 1
+        if binary_search(ids, sa, window):
+            print(line)
+            return 1
     return 0
 
 def query_index(idx_dir: str, in_path: str, win: int):
