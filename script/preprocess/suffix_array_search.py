@@ -20,7 +20,7 @@ python suffix_array_search.py build \
 python suffix_array_search.py query \
        --index-dir ./index \
        --input queries.txt \
-       --workers auto
+       --window 35
 
 # Generate tiny HIT/MISS test set (40 lines)
 python suffix_array_search.py gen_test \
@@ -30,7 +30,7 @@ python suffix_array_search.py gen_test \
 
 # Split each Parquet file into exactly 8 equal parts
 python suffix_array_search.py split \
-       --parquet-dir fineweb-edu/sample-10BT \
+       --file-dir fineweb-edu/sample-10BT \
        --out-dir fineweb-edu/sample-10BT-split8 \
        --parts 8 \
        --workers auto
@@ -41,7 +41,6 @@ import os
 import sys
 import pathlib
 import multiprocessing as mp
-from multiprocessing.pool import ThreadPool
 import pickle
 import random
 import re
@@ -53,7 +52,6 @@ import json
 import numpy as np
 import pyarrow.parquet as pq
 from tqdm import tqdm
-import itertools
 
 try:
     import pydivsufsort
