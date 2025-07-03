@@ -66,7 +66,8 @@ WIN = 35
 BATCH_SIZE=5000
 PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
 LOW  = 1.2   # bits/char 
-HIGH = 7.0   # bits/char 
+HIGH = 7.0   # bits/char
+LEVEL = 1 
 
 def hzlib_bits_per_char(text: str) -> float:
     raw  = len(text.encode('utf-8'))
