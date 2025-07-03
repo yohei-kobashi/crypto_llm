@@ -16,9 +16,3 @@ cd crypto_llm
 source env_crypto_llm/bin/activate
 # python script/preprocess/suffix_array_search.py build --parquet-dir fineweb-edu/sample/10BT-sample --out-dir fineweb-edu/index_10BT --workers 14
 python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/e --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/a_1 --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/a_10 --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/a_100 --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/b --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/c --window 35
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/d --window 35
