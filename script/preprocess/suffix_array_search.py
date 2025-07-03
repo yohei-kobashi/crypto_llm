@@ -52,6 +52,7 @@ import json
 import numpy as np
 import pyarrow.parquet as pq
 from tqdm import tqdm
+import zlib, os
 
 try:
     import pydivsufsort
@@ -64,6 +65,19 @@ W_RE = re.compile(WORD_RE)
 WIN = 35
 BATCH_SIZE=5000
 PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
+LOW  = 1.2   # bits/char 
+HIGH = 7.0   # bits/char 
+
+def hzlib_bits_per_char(text: str) -> float:
+    raw  = len(text.encode('utf-8'))
+    comp = len(zlib.compress(text.encode('utf-8'),
+                             level=LEVEL, wbits=-15))
+    return 8 * comp / max(raw, 1)
+
+def filter_match(span: str) -> bool:
+    """True なら採用、False なら除外"""
+    hz = hzlib_bits_per_char(span)
+    return LOW < hz < HIGH
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
@@ -189,7 +203,7 @@ def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray,
     for i in range(len(seq) - win + 1):
         window = seq[i:i+win]
         if 0 in window: continue
-        if binary_search(ids, sa, window):
+        if binary_search(ids, sa, window) and filter_match(line):
             print(line)
             return 1
     return 0
