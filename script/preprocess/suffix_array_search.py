@@ -65,20 +65,17 @@ W_RE = re.compile(WORD_RE)
 WIN = 35
 BATCH_SIZE=5000
 PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
-LOW  = 0.45   # bits/char 
-HIGH = 0.94   # bits/char
-LEVEL = 1 
+LOW  = 0.2751729438893159   # bits/char 
 
 def hzlib_bits_per_char(text: str) -> float:
     raw  = len(text.encode('utf-8'))
-    comp = len(zlib.compress(text.encode('utf-8'),
-                             level=LEVEL, wbits=-15))
+    comp = len(zlib.compress(text.encode('utf-8')))
     return comp / raw
 
 def filter_match(span: str) -> bool:
     """True なら採用、False なら除外"""
     hz = hzlib_bits_per_char(span)
-    return LOW < hz < HIGH
+    return LOW < hz
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
