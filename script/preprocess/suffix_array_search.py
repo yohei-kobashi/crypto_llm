@@ -68,6 +68,7 @@ PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
 LOW  = 0.2751729438893159   # bits/char 
 
 def hzlib_bits_per_char(text: str) -> float:
+    text = re.sub(r'\d', '0', text)
     raw  = len(text.encode('utf-8'))
     comp = len(zlib.compress(text.encode('utf-8')))
     return comp / raw
