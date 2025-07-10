@@ -15,4 +15,4 @@ module load gcc
 cd crypto_llm
 source env_crypto_llm/bin/activate
 # python script/preprocess/suffix_array_search.py build --parquet-dir fineweb-edu/sample/10BT-sample --out-dir fineweb-edu/index_10BT --workers 14
-python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/e --window 35
+python script/preprocess/suffix_array_search.py query --index-dir fineweb-edu/index_10BT --input output/c --window 35
