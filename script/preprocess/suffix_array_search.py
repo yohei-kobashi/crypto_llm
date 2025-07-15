@@ -1,18 +1,10 @@
-# suffix_array_search (build/query + test-data + parquet splitter)
-# -------------------------------------------------------------
-# 2025-07-01: Added `gen_test` sub-command.
-# 2025-07-01: Added `split` sub-command (fixed parts mode).
-# 2025-07-02: Updated `query` to display total lines, hit count, and hit ratio.
-# 2025-07-03: Refactored query workers to avoid assignment expressions in comprehensions.
-# 2025-07-04: Fixed indentation for test-data generator and splitter functions.
-# 2025-07-05: Added timing output to `query` sub-command.
-# -------------------------------------------------------------
+#!/usr/bin/env python3
 """
 Usage (main commands)
 --------------------
 # Build suffix-array index
 python suffix_array_search.py build \
-       --parquet-dir fineweb-edu/sample-10BT \
+       --data-dir fineweb-edu/sample-10BT \
        --out-dir ./index \
        --workers auto
 
@@ -24,7 +16,7 @@ python suffix_array_search.py query \
 
 # Generate tiny HIT/MISS test set (40 lines)
 python suffix_array_search.py gen_test \
-       --parquet-dir fineweb-edu/sample-10BT \
+       --data-dir fineweb-edu/sample-10BT \
        --output queries.txt \
        --pairs 20
 
@@ -52,20 +44,20 @@ import json
 import numpy as np
 import pyarrow.parquet as pq
 from tqdm import tqdm
-import zlib, os
+import zlib
 
 try:
     import pydivsufsort
 except ImportError:
-    raise SystemExit("Please `pip install pydivsufsort`.  (apt install libdivsufsort-dev)")
+    raise SystemExit("Please `pip install pydivsufsort`. (apt install libdivsufsort-dev)")
 
 # Globals & helpers
 WORD_RE = r"[\w'-]+"
 W_RE = re.compile(WORD_RE)
 WIN = 35
-BATCH_SIZE=5000
-PAGE_WARMUP = 1000000  # number of elements to touch for warm-up
-LOW  = 0.2751729438893159   # bits/char 
+BATCH_SIZE = 5000
+PAGE_WARMUP = 1000000  # for warm-up, unused here
+LOW  = 0.2751729438893159
 
 def hzlib_bits_per_char(text: str) -> float:
     text = re.sub(r'\d', '0', text)
@@ -74,7 +66,7 @@ def hzlib_bits_per_char(text: str) -> float:
     return comp / raw
 
 def filter_match(span: str) -> bool:
-    """True なら採用、False なら除外"""
+    """True to accept, False to exclude"""
     hz = hzlib_bits_per_char(span)
     return LOW < hz
 
@@ -85,14 +77,14 @@ def get_n_workers(val: str | int | None) -> int:
     return mp.cpu_count() if val in (None, "auto") else int(val)
 
 def read_input_file(path: str):
-    """Yield lists of text snippets (str) chunked from a txt or jsonl file."""
+    """Yield list of text snippets from .txt or .jsonl"""
     ext = pathlib.Path(path).suffix.lower()
     out: List[str] = []
     for row in open(path, encoding='utf-8'):
+        row = row.strip()
+        if not row:
+            continue
         if ext == '.jsonl':
-            row = row.strip()
-            if not row:
-                continue
             try:
                 obj = json.loads(row)
                 text = obj.get('text', '')
@@ -101,154 +93,182 @@ def read_input_file(path: str):
             except json.JSONDecodeError:
                 continue
         else:
-            row = row.strip()
-            if row:
-                out.append(row)
+            out.append(row)
     return out
-            
-# Parquet iterators
-def _yield_text(parquet: str):
-    pf = pq.ParquetFile(parquet)
-    for batch in pf.iter_batches():
-        for cell in batch.column("text"):
-            yield cell.as_py()
 
-def _yield_words(parquet: str):
-    for txt in _yield_text(parquet):
-        yield from words(txt)
+def yield_words_file(path: str):
+    """Yield each word from .parquet or .jsonl files"""
+    ext = pathlib.Path(path).suffix.lower()
+    if ext == '.parquet':
+        try:
+            pf = pq.ParquetFile(path)
+            for batch in pf.iter_batches():
+                for cell in batch.column('text'):
+                    for w in words(cell.as_py()):
+                        yield w
+            return
+        except:
+            pass  # fallback to JSONL reader if mislabeled
+    # treat as JSONL or text lines
+    for txt in read_input_file(path):
+        for w in words(txt):
+            yield w
 
 # Build-phase workers
-def scan_vocab_worker(pq_path: str) -> List[str]:
+def scan_vocab_worker(file_path: str) -> List[str]:
     seen: Dict[str, None] = {}
-    for w in _yield_words(pq_path):
+    for w in yield_words_file(file_path):
         seen[w] = None
     return list(seen)
 
-VOCAB: Dict[str,int] | None = None
+VOCAB: Dict[str, int] | None = None
 
 def enc_init(vocab_bytes: bytes):
     global VOCAB
     VOCAB = pickle.loads(vocab_bytes)
 
 def encode_shard_worker(args: Tuple[str, str]) -> pathlib.Path:
-    pq_path, out_dir = args
+    file_path, out_dir = args
     assert VOCAB is not None
-    ids = [VOCAB.get(w,0) for w in _yield_words(pq_path)]
-    out = pathlib.Path(out_dir) / f"ids_{pathlib.Path(pq_path).stem}.npy"
+    ids = [VOCAB.get(w, 0) for w in yield_words_file(file_path)]
+    out = pathlib.Path(out_dir) / f"ids_{pathlib.Path(file_path).stem}.npy"
     np.save(out, np.array(ids, dtype=np.int32))
     return out
 
 # Build orchestrator
-def build_index(pq_dir: str, out_dir: str, workers: int):
+def build_index(data_dir: str, out_dir: str, workers: int):
     os.makedirs(out_dir, exist_ok=True)
-    shards = sorted(pathlib.Path(pq_dir).glob("*.parquet"))
-    if not shards:
-        sys.exit("No parquet shards found.")
+    # Support both .parquet and .jsonl
+    files = sorted(pathlib.Path(data_dir).glob("*.parquet")) + sorted(pathlib.Path(data_dir).glob("*.jsonl"))
+    files = list(map(str, files))
+    if not files:
+        sys.exit("No data files found.")
+
     try:
         ctx = mp.get_context("fork")
     except ValueError:
         ctx = mp.get_context("spawn")
 
-    # Pass-1: vocab
-    vocab: Dict[str,int] = {}
+    # Pass 1: build vocab
+    vocab: Dict[str, int] = {}
     next_id = 1
     with ctx.Pool(workers) as pool:
-        for wordlist in tqdm(pool.imap_unordered(scan_vocab_worker, shards),
-                              total=len(shards), desc="Scanning vocab"):
+        for wordlist in tqdm(pool.imap_unordered(scan_vocab_worker, files),
+                              total=len(files), desc="Scanning vocab"):
             for w in wordlist:
                 if w not in vocab:
                     vocab[w] = next_id; next_id += 1
-    vocab = {w:i+1 for i,w in enumerate(sorted(vocab.keys()))}
+    vocab = {w: i + 1 for i, w in enumerate(sorted(vocab.keys()))}
     np.save(os.path.join(out_dir, "vocab.npy"), np.array(list(vocab.keys()), dtype=object))
 
-    # Pass-2: encode
+    # Pass 2: encode shards
     vb = pickle.dumps(vocab, pickle.HIGHEST_PROTOCOL)
-    enc_args = [(str(p), out_dir) for p in shards]
+    enc_args = [(f, out_dir) for f in files]
     with ctx.Pool(workers, initializer=enc_init, initargs=(vb,)) as pool:
         id_files = list(tqdm(pool.imap_unordered(encode_shard_worker, enc_args),
-                             total=len(enc_args), desc="Encoding shards"))
+                              total=len(enc_args), desc="Encoding shards"))
 
-    # Concat ids
-    total_len = sum(np.load(f, mmap_mode='r').shape[0] for f in id_files)
-    all_ids_path = os.path.join(out_dir, 'all_ids.npy')
-    all_ids = np.lib.format.open_memmap(all_ids_path, mode='w+', dtype=np.int32, shape=(total_len,))
-    off = 0
-    for f in tqdm(id_files, desc="Concatenating ids"):
-        arr = np.load(f, mmap_mode='r'); n = arr.shape[0]
-        all_ids[off:off+n] = arr; off += n
-    del all_ids
+    # Build per-shard SA with overlap
+    prev_ids = None
+    overlap = WIN - 1
+    for id_file in tqdm(id_files, desc="Building per-shard SA"):
+        ids = np.load(id_file, mmap_mode='r')
+        if prev_ids is not None:
+            tail = prev_ids[-overlap:]
+            ids_for_sa = np.concatenate([tail, ids])
+        else:
+            ids_for_sa = ids
+        sa = pydivsufsort.divsufsort(ids_for_sa)
+        sa_path = os.path.join(out_dir, f"{pathlib.Path(id_file).stem}_sa.npy")
+        np.save(sa_path, sa)
+        prev_ids = ids
 
-    # SA build
-    print(f"Building SA for {total_len:,} ids…")
-    sa = pydivsufsort.divsufsort(np.load(all_ids_path, mmap_mode='r'))
-    np.save(os.path.join(out_dir, 'suffix_array.npy'), sa)
     print("Index complete ✔︎")
 
 # Query helpers
 def binary_search(ids: np.ndarray, sa: np.ndarray, pattern: List[int]) -> bool:
-    lo, hi = 0, sa.size; m = len(pattern); pat = tuple(pattern)
+    lo, hi = 0, sa.size
+    m = len(pattern)
+    pat = tuple(pattern)
     while lo < hi:
         mid = (lo + hi) // 2
-        slice_cmp = tuple(ids[sa[mid]:sa[mid]+m])
-        if slice_cmp < pat: lo = mid + 1
-        else: hi = mid
-    while lo < sa.size and tuple(ids[sa[lo]:sa[lo]+m]) == pat:
-        return True
-    return False
-
-def query_line(line: str, vocab: Dict[str,int], ids: np.ndarray, sa: np.ndarray, win: int) -> Tuple[str,bool]:
-    seq = [vocab.get(w,0) for w in words(line)]
-    if len(seq) < win: return 0
-    for i in range(len(seq) - win + 1):
-        window = seq[i:i+win]
-        if 0 in window: continue
-        if binary_search(ids, sa, window) and filter_match(line):
-            print(line)
-            return 1
-    return 0
+        if tuple(ids[sa[mid]:sa[mid]+m]) < pat:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo < sa.size and tuple(ids[sa[lo]:sa[lo]+m]) == pat
 
 def query_index(idx_dir: str, in_path: str, win: int):
     start_time = time.time()
-    vocab_arr = np.load(os.path.join(idx_dir,'vocab.npy'), allow_pickle=True)
-    vocab = {w:i+1 for i,w in enumerate(vocab_arr)}
-    ids = np.load(os.path.join(idx_dir,'all_ids.npy'), mmap_mode='r')
-    sa = np.load(os.path.join(idx_dir,'suffix_array.npy'), mmap_mode='r')
-    
-    # Gather input sources
+    vocab_arr = np.load(pathlib.Path(idx_dir) / 'vocab.npy', allow_pickle=True)
+    vocab = {w: i+1 for i, w in enumerate(vocab_arr)}
+
+    # Load all shards
+    all_paths = sorted(pathlib.Path(idx_dir).glob('ids_*.npy'))
+    # Exclude already-built SA files (ending with '_sa.npy')
+    id_paths = [p for p in all_paths if not p.name.endswith('_sa.npy')]
+    sa_paths = [p.parent / f"{p.stem}_sa.npy" for p in id_paths]
+    ids_list = [np.load(p, mmap_mode='r') for p in id_paths]
+    sa_list  = [np.load(p, mmap_mode='r') for p in sa_paths]
+
+    # Gather inputs
     paths: List[pathlib.Path] = []
     p = pathlib.Path(in_path)
     if p.is_dir():
-        paths = sorted(list(p.glob('*.txt')) + list(p.glob('*.jsonl')))
+        paths = sorted(p.glob('*.txt')) + sorted(p.glob('*.jsonl'))
     else:
         paths = [p]
 
-    total = 0
-    hits = 0
+    total = hits = 0
     for file in paths:
-        batch = read_input_file(file)
-        desc = f"Querying {file} batch {len(paths)}"
-        for i, line in tqdm(enumerate(batch), total=len(batch), desc=desc):
-            hit = query_line(line, vocab, ids, sa, win)
+        batch = read_input_file(str(file))
+        for line in tqdm(batch, desc=f"Querying {file.name}"):
+            seq = [vocab.get(w,0) for w in words(line)]
+            if len(seq) < win:
+                continue
+            found = False
+            for i in range(len(seq)-win+1):
+                window = seq[i:i+win]
+                if 0 in window:
+                    continue
+                for ids, sa in zip(ids_list, sa_list):
+                    if binary_search(ids, sa, window) and filter_match(line):
+                        print(line)
+                        hits += 1
+                        found = True
+                        break
+                if found:
+                    break
             total += 1
-            hits += hit
-            
     ratio = hits/total*100 if total else 0
     elapsed = time.time() - start_time
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
     print(f"Query time: {elapsed:.2f} seconds")
 
 # Test-data generator
-def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int):
-    shards = list(pathlib.Path(pq_dir).glob("*.parquet"))
+def yield_text_file(path: str):
+    ext = pathlib.Path(path).suffix.lower()
+    if ext == '.parquet':
+        pf = pq.ParquetFile(path)
+        for batch in pf.iter_batches():
+            for cell in batch.column('text'):
+                yield cell.as_py()
+    else:
+        for line in read_input_file(path):
+            yield line
+
+def generate_test_queries(data_dir: str, out_path: str, pairs: int, win: int):
+    shards = sorted(pathlib.Path(data_dir).glob("*.parquet")) + \
+             sorted(pathlib.Path(data_dir).glob("*.jsonl"))
     if not shards:
-        sys.exit("No parquet shards found.")
+        sys.exit("No data files found for test generation.")
     random.seed(42)
     hits, misses = [], []
     for shard in tqdm(random.sample(shards, len(shards)), desc="Sampling shards"):
-        for txt in _yield_text(str(shard)):
+        for txt in yield_text_file(str(shard)):
             w = words(txt)
             if len(w) < win: continue
-            start = random.randint(0, len(w)-win)
+            start = random.randint(0, len(w) - win)
             seg = w[start:start+win]
             hits.append(" ".join(seg))
             mid = win // 2
@@ -262,9 +282,8 @@ def generate_test_queries(pq_dir: str, out_path: str, pairs: int, win: int):
             f.write(m + "\n")
     print(f"Wrote {len(hits)*2} lines to {out_path}")
 
-# File splitter (Parquet & JSONL supported)
+# File splitter
 def split_file_parts(file_path: str, out_dir: str, parts: int):
-    """Split a .parquet or .jsonl file into `parts` chunks."""
     ext = pathlib.Path(file_path).suffix.lower()
     base = pathlib.Path(file_path).stem
     if ext == '.parquet':
@@ -278,7 +297,6 @@ def split_file_parts(file_path: str, out_dir: str, parts: int):
             out = pathlib.Path(out_dir) / f"{base}_part{i}.parquet"
             pq.write_table(slice_tbl, out, compression='zstd')
     elif ext == '.jsonl':
-        # Count total lines
         with open(file_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
         total = len(lines)
@@ -291,13 +309,12 @@ def split_file_parts(file_path: str, out_dir: str, parts: int):
             with open(out, 'w', encoding='utf-8') as wf:
                 wf.writelines(chunk)
     else:
-        sys.exit(f"Unsupported file type for splitting: {file_path}")
+        sys.exit(f"Unsupported file type: {file_path}")
 
 def split_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
     os.makedirs(out_dir, exist_ok=True)
     files = sorted(pathlib.Path(pq_dir).glob("*.parquet")) + sorted(pathlib.Path(pq_dir).glob("*.jsonl"))
-    if not files:
-        sys.exit("No parquet or jsonl files found.")
+    if not files: sys.exit("No files found to split.")
     try:
         ctx = mp.get_context("fork")
     except ValueError:
@@ -307,28 +324,23 @@ def split_dir(pq_dir: str, out_dir: str, parts: int, workers: int):
         list(tqdm(pool.imap_unordered(func, files), total=len(files), desc="Splitting files"))
     print("Splitting complete ✔︎")
 
-
-# CLI and entry point
+# CLI entry
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
-    # build
     p = sub.add_parser("build")
-    p.add_argument("--parquet-dir", required=True)
+    p.add_argument("--data-dir", required=True)
     p.add_argument("--out-dir", required=True)
     p.add_argument("--workers", default="auto")
-    # query
     q = sub.add_parser("query")
     q.add_argument("--index-dir", required=True)
     q.add_argument("--input", required=True)
     q.add_argument("--window", type=int, default=WIN)
-    # gen_test
     g = sub.add_parser("gen_test")
-    g.add_argument("--parquet-dir", required=True)
+    g.add_argument("--data-dir", required=True)
     g.add_argument("--output", required=True)
     g.add_argument("--pairs", type=int, default=20)
     g.add_argument("--window", type=int, default=WIN)
-    # split
     s = sub.add_parser("split")
     s.add_argument("--file-dir", required=True)
     s.add_argument("--out-dir", required=True)
@@ -337,11 +349,11 @@ def main():
     args = parser.parse_args()
     if args.cmd == "build":
         w = get_n_workers(args.workers)
-        build_index(args.parquet_dir, args.out_dir, w)
+        build_index(args.data_dir, args.out_dir, w)
     elif args.cmd == "query":
         query_index(args.index_dir, args.input, args.window)
     elif args.cmd == "gen_test":
-        generate_test_queries(args.parquet_dir, args.output, args.pairs, args.window)
+        generate_test_queries(args.data_dir, args.output, args.pairs, args.window)
     elif args.cmd == "split":
         w = get_n_workers(args.workers)
         split_dir(args.file_dir, args.out_dir, args.parts, w)
