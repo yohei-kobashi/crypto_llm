@@ -58,17 +58,17 @@ WIN = 35
 BATCH_SIZE = 5000
 PAGE_WARMUP = 1000000  # for warm-up, unused here
 LOW  = 0.2751729438893159
+LOWs = [0.2, 0.25, 0.3, 0.35, 0.4]
 
 def hzlib_bits_per_char(text: str) -> float:
-    text = re.sub(r'\d', '0', text)
     raw  = len(text.encode('utf-8'))
     comp = len(zlib.compress(text.encode('utf-8')))
     return comp / raw
 
-def filter_match(span: str) -> bool:
+def filter_match(span: str, low: float = LOW) -> bool:
     """True to accept, False to exclude"""
     hz = hzlib_bits_per_char(span)
-    return LOW < hz
+    return low < hz
 
 def words(text: str) -> List[str]:
     return W_RE.findall(text.lower())
@@ -220,6 +220,8 @@ def query_index(idx_dir: str, in_path: str, win: int):
         paths = [p]
 
     total = hits = 0
+    test_matched_sublines = {low:[] for low in LOWs}
+    test_matched_original_sublines = {low:[] for low in LOWs}
     for file in paths:
         batch = read_input_file(str(file))
         for line in tqdm(batch, desc=f"Querying {file.name}"):
@@ -232,16 +234,36 @@ def query_index(idx_dir: str, in_path: str, win: int):
                 if 0 in window:
                     continue
                 for ids, sa in zip(ids_list, sa_list):
-                    if binary_search(ids, sa, window) and filter_match(line):
-                        print(line)
-                        hits += 1
-                        found = True
-                        break
+                    if binary_search(ids, sa, window):
+                        original_subline = " ".join(window)
+                        subline = re.sub(r"\d", "0", original_subline)
+                        # check some LOWs
+                        for low in LOWs:
+                            if filter_match(subline, low):
+                                test_matched_sublines[low].append(subline)
+                            if filter_match(original_subline, low):
+                                test_matched_original_sublines[low].append(subline)
+                        # original LOW
+                        if filter_match(subline):
+                            print("matched:", original_subline)
+                            hits += 1
+                            found = True
+                            break
                 if found:
                     break
             total += 1
     ratio = hits/total*100 if total else 0
     elapsed = time.time() - start_time
+    print("test_matched_sublines:")
+    for low, sublines in test_matched_sublines.items():
+        print("low:", low)
+        for i, subline in enumerate(sublines):
+            print(i, subline)
+    print("test_matched_original_sublines:")
+    for low, sublines in test_matched_original_sublines.items():
+        print("low:", low)
+        for i, subline in enumerate(sublines):
+            print(i, subline)
     print(f"Total lines: {total}, Hits: {hits}, Hit ratio: {ratio:.2f}%")
     print(f"Query time: {elapsed:.2f} seconds")
 
