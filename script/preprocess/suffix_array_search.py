@@ -202,6 +202,7 @@ def query_index(idx_dir: str, in_path: str, win: int):
     start_time = time.time()
     vocab_arr = np.load(pathlib.Path(idx_dir) / 'vocab.npy', allow_pickle=True)
     vocab = {w: i+1 for i, w in enumerate(vocab_arr)}
+    vocab_inv = {v: k for k, v in vocab.items()}
 
     # Load all shards
     all_paths = sorted(pathlib.Path(idx_dir).glob('ids_*.npy'))
@@ -235,7 +236,7 @@ def query_index(idx_dir: str, in_path: str, win: int):
                     continue
                 for ids, sa in zip(ids_list, sa_list):
                     if binary_search(ids, sa, window):
-                        original_subline = " ".join(window)
+                        original_subline = " ".join([vocab_inv[w] for w in window])
                         subline = re.sub(r"\d", "0", original_subline)
                         # check some LOWs
                         for low in LOWs:
