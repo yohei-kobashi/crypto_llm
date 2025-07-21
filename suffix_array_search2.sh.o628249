@@ -1,0 +1,10 @@
+Querying 100000.jsonl:   0%|          | 0/100000 [00:00<?, ?it/s]Querying 100000.jsonl:   0%|          | 1/100000 [00:00<13:49:32,  2.01it/s]Querying 100000.jsonl:   0%|          | 2/100000 [00:01<22:58:57,  1.21it/s]Querying 100000.jsonl:   0%|          | 3/100000 [00:01<13:48:52,  2.01it/s]Querying 100000.jsonl:   0%|          | 3/100000 [00:01<16:04:35,  1.73it/s]
+Traceback (most recent call last):
+  File "/work/gj26/b20048/crypto_llm/script/preprocess/suffix_array_search.py", line 386, in <module>
+    main()
+  File "/work/gj26/b20048/crypto_llm/script/preprocess/suffix_array_search.py", line 376, in main
+    query_index(args.index_dir, args.input, args.window)
+  File "/work/gj26/b20048/crypto_llm/script/preprocess/suffix_array_search.py", line 238, in query_index
+    original_subline = " ".join(window)
+                       ^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, int found
