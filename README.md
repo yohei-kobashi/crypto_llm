@@ -221,7 +221,7 @@ Finally, you can extract and convert pseudo-PII data from these texts using the 
  -->
 
 ## Data Extraction attack
-This script can build suffix array from the pre-training data.
+This script builds a suffix array from the pre-training data and searches for matching substrings in the generated outputs.
 ```bash
 python script/preprocess/suffix_array_search.py build \
        --data-dir {dir_containing_pretraining_data} \
