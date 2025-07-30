@@ -204,7 +204,7 @@ python -m apps.crypto_llm.eval_true_prefix_attack \
     --N_sampling 64
 ```
 The "model_id" must be chosen from ["a_1", "a_10", "a_100", "b", "c"].
-
+<!-- 
 ### Preparing Not trained PII data
 First, download the 100BT sample dataset from [fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu).
 Next, run the following script to extract texts that were not included in the 10BT subset:
@@ -218,3 +218,17 @@ python script/preprocess/get_not_learned_texts_from_fwe_100B.py \
     --seed 42
 ```
 Finally, you can extract and convert pseudo-PII data from these texts using the same procedure as applied to the 10BT data.
+ -->
+
+## Data Extraction attack
+This script can build suffix array from the pre-training data.
+```bash
+python script/preprocess/suffix_array_search.py build \
+       --data-dir {dir_containing_pretraining_data} \
+       --out-dir ./index \
+       --workers auto
+python script/preprocess/suffix_array_search.py suffix_array_search.py query \
+       --index-dir ./index \
+       --input {dir_containing_model_outputs} \
+       --window 35
+```
