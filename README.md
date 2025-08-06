@@ -220,7 +220,7 @@ python script/preprocess/get_not_learned_texts_from_fwe_100B.py \
 Finally, you can extract and convert pseudo-PII data from these texts using the same procedure as applied to the 10BT data.
  -->
 
-## Data Extraction attack
+## Data extraction attack
 This script builds a suffix array from the pre-training data and searches for matching substrings in the generated outputs.
 ```bash
 python script/preprocess/suffix_array_search.py build \
@@ -231,4 +231,22 @@ python script/preprocess/suffix_array_search.py suffix_array_search.py query \
        --index-dir ./index \
        --input {dir_containing_model_outputs} \
        --window 35
+```
+
+## PII extraction from model generations
+PII extractability based on [Scalable Extraction of Training Data from (Production) Language Models](https://arxiv.org/abs/2311.17035) could be executed by following commands. Note that the experiment scale is smaller than the orginal paper's one.
+
+### Extract prompts from wikipedia
+```bash
+python -m apps.crypto_llm.stream_prompts_parallel \
+    ckpt={ckpt_path}/consolidated
+```
+Extracted prompts are saved under `data/stream_generation_output`.
+
+### Stream generation given prompts
+```bash
+python -m apps.crypto_llm.stream_generation \
+    ckpt={ckpt_path}/consolidated \
+    input_jsonl_path=data/stream_generation_output/{jsonl_name} \
+    gen_arg.max_tokens=8192
 ```
