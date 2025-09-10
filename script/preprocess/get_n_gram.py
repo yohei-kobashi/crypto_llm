@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Parallel n-gram counting and distribution analysis (with EVS) + robust tokenizer loading.
+Parallel n-gram counting and distribution analysis (with EVS) + robust tokenizer loading + save-time filtering.
 
 Tokenizer loading rules (auto):
 - Local directory  -> AutoTokenizer.from_pretrained(dir, local_files_only=True)
@@ -10,9 +10,21 @@ Tokenizer loading rules (auto):
 - *.model          -> sentencepiece.SentencePieceProcessor(model_file=SPM)
 - Otherwise        -> Try HF Hub id via AutoTokenizer.from_pretrained(id)
 
-Requires:
-- transformers
-- (optional) sentencepiece if you pass a .model file
+Metrics (computed on the FULL distribution before save-time filtering):
+- Jensen–Shannon distance vs uniform
+- Entropy ratio (H/Hmax)
+- Gini coefficient
+- HHI (Herfindahl–Hirschman Index)
+- HHI_unbiased (Simpson index unbiased estimator)
+- EVS (Effective Vocabulary Size): 1/HHI and 1/HHI_unbiased
+
+Save-time filters (applied only when writing the distribution file):
+Priority: top_k_save > mass_save > min_count_save
+- --top_k_save K       : keep top-K n-grams by count
+- --mass_save P (0..1) : keep n-grams until cumulative probability >= P
+- --min_count_save T   : keep n-grams with count >= T
+
+Supports JSONL(.gz) and Parquet(.gz) inputs. Output distribution supports CSV/CSV.GZ/Parquet.
 """
 
 import argparse
@@ -122,9 +134,8 @@ def compute_js_divergence(freqs: Counter) -> float:
     probs = counts / total
     uniform = np.ones_like(probs) / len(probs)
     m = 0.5 * (probs + uniform)
-    from scipy.stats import entropy as _entropy
-    kl_pm = _entropy(probs, m, base=2)
-    kl_um = _entropy(uniform, m, base=2)
+    kl_pm = scipy_entropy(probs, m, base=2)
+    kl_um = scipy_entropy(uniform, m, base=2)
     js = 0.5 * (kl_pm + kl_um)
     return float(js)
 
@@ -140,8 +151,7 @@ def compute_entropy_ratio(freqs: Counter) -> float:
     if total <= 0:
         return float("nan")
     probs = counts / total
-    from scipy.stats import entropy as _entropy
-    H = _entropy(probs, base=2)
+    H = scipy_entropy(probs, base=2)
     Hmax = math.log(len(probs), 2) if len(probs) > 0 else 0.0
     return float(H / Hmax) if Hmax > 0 else float("nan")
 
@@ -240,6 +250,43 @@ def iter_batches(input_path: str, batch_rows: int) -> Iterable[List[str]]:
     else:
         raise ValueError("input_texts must be .jsonl(.gz) or .parquet(.gz)")
 
+# ====== Save-time filtering ======
+def filter_distribution_df(dist_df: pd.DataFrame,
+                           top_k: int = 0,
+                           mass: float = 0.0,
+                           min_count: int = 1) -> pd.DataFrame:
+    """
+    Filter rows before saving.
+    Priority: top_k > mass > min_count.
+    - top_k: keep top-K by 'count'
+    - mass: keep by descending 'count' until cumulative probability >= mass
+    - min_count: keep rows with count >= min_count
+    """
+    if dist_df.empty:
+        return dist_df
+
+    # Sort once by count desc for top_k / mass (stable mergesort preserves ties order)
+    dist_df = dist_df.sort_values("count", ascending=False, kind="mergesort")
+
+    if top_k and top_k > 0:
+        return dist_df.head(top_k)
+
+    if mass and 0.0 < mass < 1.0:
+        total = dist_df["count"].sum()
+        if total <= 0:
+            return dist_df.iloc[0:0]
+        cum = dist_df["count"].cumsum() / total
+        kept = dist_df.loc[cum.le(mass)]
+        # Ensure at least one row is kept if mass is too small
+        if kept.empty and len(dist_df) > 0:
+            kept = dist_df.head(1)
+        return kept
+
+    if min_count and min_count > 1:
+        return dist_df.loc[dist_df["count"] >= min_count]
+
+    return dist_df
+
 # ====== Main ======
 def main(args):
     workers = max(1, int(args.workers))
@@ -262,7 +309,7 @@ def main(args):
             c = fut.result()
             total_counter.update(c)
 
-    # Metrics
+    # ---- Metrics on FULL distribution ----
     js = compute_js_divergence(total_counter)
     er = compute_entropy_ratio(total_counter)
     gini = compute_gini(total_counter)
@@ -287,6 +334,9 @@ def main(args):
         "batch_rows": batch_rows,
         "tokenizer": args.tokenizer,
         "input_texts": args.input_texts,
+        "top_k_save": args.top_k_save,
+        "mass_save": args.mass_save,
+        "min_count_save": args.min_count_save,
     }
 
     print("=== Results ===")
@@ -299,31 +349,48 @@ def main(args):
     metrics_df.to_csv(args.output_metrics, index=False)
     print(f"Saved metrics -> {args.output_metrics}")
 
-    # Save distribution
+    # ---- Build FULL distribution DataFrame (then filter only for saving) ----
     dist_df = pd.DataFrame(total_counter.items(), columns=["ngram", "count"])
+
+    # Format n-gram ids to space-separated strings (for tuples)
     def _fmt(x: Union[int, Tuple[int, ...]]) -> str:
         if isinstance(x, tuple):
             return " ".join(map(str, x))
         return str(x)
     dist_df["ngram"] = dist_df["ngram"].apply(_fmt)
 
+    # Apply save-time filtering
+    dist_df = filter_distribution_df(
+        dist_df,
+        top_k=args.top_k_save,
+        mass=args.mass_save,
+        min_count=args.min_count_save,
+    )
+
+    # Save distribution (CSV/CSV.GZ/Parquet). If .csv.gz, compress automatically.
     os.makedirs(os.path.dirname(args.output_distribution) or ".", exist_ok=True)
-    if args.output_distribution.endswith(".csv"):
-        dist_df.to_csv(args.output_distribution, index=False)
+    if args.output_distribution.endswith(".csv") or args.output_distribution.endswith(".csv.gz"):
+        dist_df.to_csv(args.output_distribution, index=False, compression="infer")
     elif args.output_distribution.endswith(".parquet"):
         dist_df.to_parquet(args.output_distribution, index=False)
     else:
-        raise ValueError("output_distribution must be .csv or .parquet")
-    print(f"Saved distribution -> {args.output_distribution}")
+        raise ValueError("output_distribution must be .csv, .csv.gz, or .parquet")
+    print(f"Saved distribution -> {args.output_distribution} (rows saved: {len(dist_df):,})")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Parallel n-gram distribution & metrics (Gini/HHI/EVS) with robust tokenizer loading")
+    parser = argparse.ArgumentParser(
+        description="Parallel n-gram distribution & metrics (Gini/HHI/EVS) with robust tokenizer loading and save-time filtering"
+    )
     parser.add_argument("--n", type=int, required=True, help="n-gram size (n>=1)")
-    parser.add_argument("--tokenizer", type=str, required=True, help="Path to tokenizer dir/file or HF repo id")
+    parser.add_argument("--tokenizer", type=str, required=True, help="Path to tokenizer dir/file (.json/.model) or HF repo id")
     parser.add_argument("--input_texts", type=str, required=True, help="jsonl(.gz) or parquet(.gz) with 'text' column")
     parser.add_argument("--output_metrics", type=str, default="metrics.csv", help="CSV for summary metrics")
-    parser.add_argument("--output_distribution", type=str, default="distribution.parquet", help="CSV/Parquet for full distribution")
+    parser.add_argument("--output_distribution", type=str, default="distribution.parquet", help="CSV/CSV.GZ/Parquet for full distribution (after filtering)")
     parser.add_argument("--workers", type=int, default=os.cpu_count() or 4, help="number of worker processes")
     parser.add_argument("--batch_rows", type=int, default=10000, help="rows per batch sent to a worker")
+    # Save-time filtering options
+    parser.add_argument("--top_k_save", type=int, default=0, help="Save only top-K n-grams by count (0 disables)")
+    parser.add_argument("--mass_save", type=float, default=0.0, help="Save until cumulative probability >= this mass in [0,1) (0 disables)")
+    parser.add_argument("--min_count_save", type=int, default=1, help="Save only n-grams with count >= this threshold (1 keeps all)")
     args = parser.parse_args()
     main(args)
