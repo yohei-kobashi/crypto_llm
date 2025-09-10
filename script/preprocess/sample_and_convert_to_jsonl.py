@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import argparse
 import sys
+import json
+import random
 from pathlib import Path
 from typing import Iterable, Optional, List
+from tempfile import NamedTemporaryFile
 
 
 def find_input_files(input_dir: Path, recursive: bool = False) -> Iterable[Path]:
@@ -17,28 +20,73 @@ def find_input_files(input_dir: Path, recursive: bool = False) -> Iterable[Path]
     return sorted(files)
 
 
-def read_file_to_df(path: Path):
+def _process_jsonl_stream(input_path: Path, out_path: Path, frac: float, seed: int) -> None:
+    rng = random.Random(seed)
+
+    # If writing to same file, write to temp file then replace
+    actual_out = out_path
+    need_replace = input_path.resolve() == out_path.resolve()
+    if need_replace:
+        tmp = out_path.with_suffix(out_path.suffix + ".tmp")
+        actual_out = tmp
+
+    with input_path.open("r", encoding="utf-8") as fin, actual_out.open("w", encoding="utf-8") as fout:
+        for line in fin:
+            if rng.random() < frac:
+                fout.write(line)
+
+    if need_replace:
+        actual_out.replace(out_path)
+
+
+def _process_parquet_stream(input_path: Path, out_path: Path, frac: float, seed: int, batch_size: int = 65536) -> None:
     try:
+        import pyarrow.parquet as pq  # type: ignore
         import pandas as pd  # type: ignore
+        import numpy as np  # type: ignore
     except Exception as e:
-        raise RuntimeError(
-            "pandas is required to run this script. Please install pandas (and pyarrow or fastparquet)."
-        ) from e
-
-    suffix = path.suffix.lower()
-    if suffix == ".jsonl":
-        return pd.read_json(path, lines=True)
-
-    # Parquet: try pyarrow first, then fastparquet, then default
-    for engine in ("pyarrow", "fastparquet", None):
+        # Fallback to pandas full read (may be memory heavy)
         try:
-            if engine is None:
-                return pd.read_parquet(path)
-            return pd.read_parquet(path, engine=engine)
+            import pandas as pd  # type: ignore
         except Exception:
-            continue
-    # If all attempts failed, raise a clearer error by re-running without catching
-    return pd.read_parquet(path)
+            raise RuntimeError("pyarrow or pandas is required to read parquet files") from e
+
+        df = pd.read_parquet(input_path)
+        if frac < 1:
+            try:
+                rng = __import__("numpy").random.RandomState(seed)  # type: ignore
+                df = df.sample(frac=frac, random_state=rng)
+            except Exception:
+                df = df.sample(frac=frac, random_state=seed)
+        df.to_json(out_path, orient="records", lines=True, force_ascii=False, date_format="iso")
+        return
+
+    pf = pq.ParquetFile(str(input_path))
+
+    # If writing to same file name as input (same dir and stem), write to temp then replace
+    actual_out = out_path
+    need_replace = input_path.resolve() == out_path.resolve()
+    if need_replace:
+        tmp = out_path.with_suffix(out_path.suffix + ".tmp")
+        actual_out = tmp
+
+    rng = np.random.RandomState(seed)
+    # Open once and append per-batch
+    with actual_out.open("w", encoding="utf-8") as fout:
+        for batch in pf.iter_batches(batch_size=batch_size):
+            # Convert batch to pandas for robust JSONL writing (handles datetimes)
+            df = batch.to_pandas()
+            if frac < 1:
+                try:
+                    df = df.sample(frac=frac, random_state=rng)
+                except Exception:
+                    df = df.sample(frac=frac, random_state=seed)
+            if len(df) == 0:
+                continue
+            df.to_json(fout, orient="records", lines=True, force_ascii=False, date_format="iso")
+
+    if need_replace:
+        actual_out.replace(out_path)
 
 
 def convert_one(
@@ -47,40 +95,27 @@ def convert_one(
     frac: float,
     seed: int,
 ) -> Optional[Path]:
-    try:
-        df = read_file_to_df(parquet_path)
-    except Exception as e:
-        print(f"[WARN] Failed to read: {parquet_path} ({e})", file=sys.stderr)
-        return None
-
     if not 0 < frac <= 1:
         raise ValueError("frac must be in the interval (0, 1].")
-
-    if frac < 1:
-        try:
-            df = df.sample(frac=frac, random_state=seed)
-        except Exception as e:
-            print(f"[WARN] Sampling failed for {parquet_path}: {e}", file=sys.stderr)
-            return None
-
     output_dir.mkdir(parents=True, exist_ok=True)
     out_path = output_dir / (parquet_path.stem + ".jsonl")
 
-    # Use pandas to_json to emit JSON Lines with column names as keys
     try:
-        # Ensure index not included; ISO dates for readability
-        df.to_json(out_path, orient="records", lines=True, force_ascii=False, date_format="iso")
+        suffix = parquet_path.suffix.lower()
+        if suffix == ".jsonl":
+            _process_jsonl_stream(parquet_path, out_path, frac=frac, seed=seed)
+        else:
+            _process_parquet_stream(parquet_path, out_path, frac=frac, seed=seed)
+        return out_path
     except Exception as e:
-        print(f"[WARN] Failed to write JSONL for {parquet_path}: {e}", file=sys.stderr)
+        print(f"[WARN] Failed to convert {parquet_path} -> {out_path}: {e}", file=sys.stderr)
         return None
-
-    return out_path
 
 
 def parse_args(argv=None):
     p = argparse.ArgumentParser(
         description=(
-            "Load Parquet or JSONL files from a directory, sample rows with a given seed and fraction, "
+            "Load Parquet or JSONL from a file or directory, sample rows with a given seed and fraction, "
             "and write JSONL files with the same base filename into an output directory."
         )
     )
