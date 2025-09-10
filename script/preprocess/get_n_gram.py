@@ -2,18 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """
-Parallel n-gram counting and distribution analysis (with EVS).
+Parallel n-gram counting and distribution analysis (with EVS) + robust tokenizer loading.
 
-- Reads a JSONL(.gz) or Parquet(.gz) file that has a "text" column.
-- Tokenizes with a Hugging Face tokenizer.
-- Counts n-gram frequencies in parallel (process-based).
-- Computes:
-    * Jensen–Shannon distance vs uniform
-    * Entropy ratio (H/Hmax)
-    * Gini coefficient (inequality of counts)
-    * HHI (Herfindahl–Hirschman Index)
-    * EVS (Effective Vocabulary Size): 1/HHI (naive) and 1/HHI_unbiased
-- Saves summary metrics (CSV) and the full distribution (CSV or Parquet).
+Tokenizer loading rules (auto):
+- Local directory  -> AutoTokenizer.from_pretrained(dir, local_files_only=True)
+- *.json           -> PreTrainedTokenizerFast(tokenizer_file=JSON)
+- *.model          -> sentencepiece.SentencePieceProcessor(model_file=SPM)
+- Otherwise        -> Try HF Hub id via AutoTokenizer.from_pretrained(id)
+
+Requires:
+- transformers
+- (optional) sentencepiece if you pass a .model file
 """
 
 import argparse
@@ -27,42 +26,87 @@ from typing import Iterable, List, Tuple, Union
 import numpy as np
 import pandas as pd
 from scipy.stats import entropy as scipy_entropy
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, PreTrainedTokenizerFast
 
 # ====== Globals used inside worker processes only ======
 _GLOBALS = {
-    "tokenizer": None,
+    "kind": None,          # 'hf' or 'spm'
+    "tokenizer": None,     # HF tokenizer
+    "sp": None,            # sentencepiece.SentencePieceProcessor
     "n": 1,
 }
 
+def _load_tokenizer_any(tokenizer_path: str):
+    """
+    Auto-detect tokenizer format and load appropriately.
+    Returns a dict: {"kind": "hf", "tokenizer": tok} or {"kind": "spm", "sp": sp}
+    """
+    # Local directory -> HF tokenizer (offline-friendly)
+    if os.path.isdir(tokenizer_path):
+        tok = AutoTokenizer.from_pretrained(tokenizer_path, local_files_only=True)
+        return {"kind": "hf", "tokenizer": tok}
+
+    # Local single file
+    if os.path.isfile(tokenizer_path):
+        lower = tokenizer_path.lower()
+        # tokenizers JSON
+        if lower.endswith(".json"):
+            tok = PreTrainedTokenizerFast(tokenizer_file=tokenizer_path)
+            return {"kind": "hf", "tokenizer": tok}
+        # SentencePiece .model
+        if lower.endswith(".model"):
+            try:
+                import sentencepiece as spm
+            except ImportError as e:
+                raise RuntimeError(
+                    "You passed a SentencePiece .model file but `sentencepiece` "
+                    "is not installed. Please `pip install sentencepiece`."
+                ) from e
+            sp = spm.SentencePieceProcessor()
+            sp.load(tokenizer_path)
+            return {"kind": "spm", "sp": sp}
+
+    # Fallback: treat as HF repo id (requires network or local cache)
+    tok = AutoTokenizer.from_pretrained(tokenizer_path)
+    return {"kind": "hf", "tokenizer": tok}
+
 def _init_worker(tokenizer_path: str, n: int):
-    """Initialize each worker once: load the tokenizer and store `n`."""
-    _GLOBALS["tokenizer"] = AutoTokenizer.from_pretrained(tokenizer_path)
+    """Initialize each worker once: load tokenizer/SPM and store `n`."""
+    info = _load_tokenizer_any(tokenizer_path)
+    _GLOBALS["kind"] = info["kind"]
+    _GLOBALS["tokenizer"] = info.get("tokenizer")
+    _GLOBALS["sp"] = info.get("sp")
     _GLOBALS["n"] = n
 
 def make_ngrams(tokens: List[int], n: int) -> Iterable[Tuple[int, ...]]:
     """Yield n-grams from a token id list."""
     if n == 1:
-        # Yield raw tokens (avoid tuple construction for performance)
         for t in tokens:
             yield t
         return
     if len(tokens) < n:
         return
-    # Zip over shifted views for fast n-gram generation
     iters = [tokens[i:] for i in range(n)]
     for gram in zip(*iters):
         yield gram
 
+def _encode(text: str) -> List[int]:
+    """Encode a single text to token ids using the loaded tokenizer/SPM."""
+    if _GLOBALS["kind"] == "spm":
+        # SentencePiece: out_type=int for ids; no special tokens added.
+        return _GLOBALS["sp"].encode(text, out_type=int)
+    else:
+        # HF tokenizer: do not add special tokens.
+        return _GLOBALS["tokenizer"].encode(text, add_special_tokens=False)
+
 def process_batch(texts: List[str]) -> Counter:
     """Process a batch of texts: tokenize and update an n-gram Counter."""
-    tokenizer = _GLOBALS["tokenizer"]
     n = _GLOBALS["n"]
     c = Counter()
     for text in texts:
         if not isinstance(text, str):
             continue
-        tokens = tokenizer.encode(text, add_special_tokens=False)
+        tokens = _encode(text)
         c.update(make_ngrams(tokens, n))
     return c
 
@@ -78,8 +122,9 @@ def compute_js_divergence(freqs: Counter) -> float:
     probs = counts / total
     uniform = np.ones_like(probs) / len(probs)
     m = 0.5 * (probs + uniform)
-    kl_pm = scipy_entropy(probs, m, base=2)
-    kl_um = scipy_entropy(uniform, m, base=2)
+    from scipy.stats import entropy as _entropy
+    kl_pm = _entropy(probs, m, base=2)
+    kl_um = _entropy(uniform, m, base=2)
     js = 0.5 * (kl_pm + kl_um)
     return float(js)
 
@@ -95,16 +140,14 @@ def compute_entropy_ratio(freqs: Counter) -> float:
     if total <= 0:
         return float("nan")
     probs = counts / total
-    H = scipy_entropy(probs, base=2)
+    from scipy.stats import entropy as _entropy
+    H = _entropy(probs, base=2)
     Hmax = math.log(len(probs), 2) if len(probs) > 0 else 0.0
     return float(H / Hmax) if Hmax > 0 else float("nan")
 
 def compute_gini(freqs: Counter) -> float:
     """
-    Compute Gini coefficient of counts.
-    Uses the cumulative-sum formula on ascending-sorted counts:
-      G = (n + 1 - 2 * sum(cumsum(x)) / sum(x)) / n
-    Returns NaN for empty input.
+    Compute Gini coefficient of counts using cumulative-sum formula on sorted counts.
     """
     if not freqs:
         return float("nan")
@@ -119,9 +162,8 @@ def compute_gini(freqs: Counter) -> float:
 
 def compute_hhi(freqs: Counter) -> float:
     """
-    Compute HHI (Herfindahl–Hirschman Index) on probabilities:
-      HHI = sum(p_i^2), p_i = count_i / sum(counts)
-    Range: (1/K .. 1], larger means more concentrated (less uniform).
+    HHI = sum(p_i^2), p_i = count_i / sum(counts).
+    Range: (1/K .. 1], larger => more concentrated (less uniform).
     """
     if not freqs:
         return float("nan")
@@ -134,9 +176,8 @@ def compute_hhi(freqs: Counter) -> float:
 
 def compute_hhi_unbiased(freqs: Counter) -> float:
     """
-    Unbiased estimator of HHI (Simpson index) under simple random sampling:
-      HHI_unbiased = sum_i c_i (c_i - 1) / (N (N - 1)), where N = sum_i c_i
-    Falls back to NaN if N <= 1.
+    Unbiased HHI (Simpson index) under simple random sampling:
+      HHI_unbiased = sum_i c_i (c_i - 1) / (N (N - 1)), for N = sum_i c_i
     """
     if not freqs:
         return float("nan")
@@ -147,11 +188,7 @@ def compute_hhi_unbiased(freqs: Counter) -> float:
     return float(np.sum(counts * (counts - 1)) / (N * (N - 1)))
 
 def compute_effective_vocab_size(hhi_value: float) -> float:
-    """
-    Effective Vocabulary Size (EVS) for q=2 Hill number:
-      EVS = 1 / HHI
-    Returns NaN if HHI is not positive/finite.
-    """
+    """EVS (q=2 Hill number) = 1 / HHI."""
     if not np.isfinite(hhi_value) or hhi_value <= 0:
         return float("nan")
     return float(1.0 / hhi_value)
@@ -180,17 +217,15 @@ def iter_jsonl_batches(path: str, batch_rows: int) -> Iterable[List[str]]:
 def iter_parquet_batches(path: str, batch_rows: int) -> Iterable[List[str]]:
     """
     Yield lists of texts from a Parquet(.gz) file.
-    Uses pyarrow for low-memory column projection if available; falls back to pandas otherwise.
+    Uses pyarrow if available; falls back to pandas otherwise.
     """
     try:
         import pyarrow.parquet as pq
-        # Column projection
         table = pq.read_table(path, columns=["text"])
         col = table.column("text").to_pylist()
         for i in range(0, len(col), batch_rows):
             yield [str(x) for x in col[i : i + batch_rows] if x is not None]
     except Exception:
-        # Fallback: pandas (be mindful of memory with huge files)
         df = pd.read_parquet(path, columns=["text"])
         series = df["text"].dropna().astype(str)
         for i in range(0, len(series), batch_rows):
@@ -207,13 +242,11 @@ def iter_batches(input_path: str, batch_rows: int) -> Iterable[List[str]]:
 
 # ====== Main ======
 def main(args):
-    # Parallel setup
     workers = max(1, int(args.workers))
     batch_rows = max(1, int(args.batch_rows))
 
     total_batches = 0
 
-    # Process batches in parallel and aggregate counters
     with ProcessPoolExecutor(
         max_workers=workers,
         initializer=_init_worker,
@@ -229,7 +262,7 @@ def main(args):
             c = fut.result()
             total_counter.update(c)
 
-    # Compute metrics
+    # Metrics
     js = compute_js_divergence(total_counter)
     er = compute_entropy_ratio(total_counter)
     gini = compute_gini(total_counter)
@@ -238,7 +271,7 @@ def main(args):
     evs = compute_effective_vocab_size(hhi)
     evs_unb = compute_effective_vocab_size(hhi_unb)
 
-    # Print summary
+    # Summary
     results = {
         "n": args.n,
         "unique_ngrams": len(total_counter),
@@ -266,7 +299,7 @@ def main(args):
     metrics_df.to_csv(args.output_metrics, index=False)
     print(f"Saved metrics -> {args.output_metrics}")
 
-    # Save full distribution (ngram ids joined by spaces)
+    # Save distribution
     dist_df = pd.DataFrame(total_counter.items(), columns=["ngram", "count"])
     def _fmt(x: Union[int, Tuple[int, ...]]) -> str:
         if isinstance(x, tuple):
@@ -281,13 +314,12 @@ def main(args):
         dist_df.to_parquet(args.output_distribution, index=False)
     else:
         raise ValueError("output_distribution must be .csv or .parquet")
-
     print(f"Saved distribution -> {args.output_distribution}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Parallel n-gram distribution & metrics (Gini/HHI/EVS)")
+    parser = argparse.ArgumentParser(description="Parallel n-gram distribution & metrics (Gini/HHI/EVS) with robust tokenizer loading")
     parser.add_argument("--n", type=int, required=True, help="n-gram size (n>=1)")
-    parser.add_argument("--tokenizer", type=str, required=True, help="HF tokenizer path/name")
+    parser.add_argument("--tokenizer", type=str, required=True, help="Path to tokenizer dir/file or HF repo id")
     parser.add_argument("--input_texts", type=str, required=True, help="jsonl(.gz) or parquet(.gz) with 'text' column")
     parser.add_argument("--output_metrics", type=str, default="metrics.csv", help="CSV for summary metrics")
     parser.add_argument("--output_distribution", type=str, default="distribution.parquet", help="CSV/Parquet for full distribution")
