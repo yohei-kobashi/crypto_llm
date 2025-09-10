@@ -84,36 +84,51 @@ def parse_args(argv=None):
             "and write JSONL files with the same base filename into an output directory."
         )
     )
-    p.add_argument("--input_dir", "-i", type=Path, required=True, help="Directory containing .parquet or .jsonl files")
+    p.add_argument(
+        "--input_file",
+        "-i",
+        type=Path,
+        required=True,
+        help="Input file (.parquet or .jsonl) or a directory containing such files",
+    )
     p.add_argument("--output_dir", "-o", type=Path, required=True, help="Directory to write .jsonl files")
     p.add_argument("--frac", "-f", type=float, required=True, help="Sampling fraction (0 < frac <= 1)")
     p.add_argument("--seed", "-s", type=int, default=42, help="Random seed for sampling")
-    p.add_argument("--recursive", "-r", action="store_true", help="Recurse into subdirectories for input files")
+    p.add_argument("--recursive", "-r", action="store_true", help="If input is a directory, recurse into subdirectories")
     return p.parse_args(argv)
 
 
 def main(argv=None) -> int:
     args = parse_args(argv)
 
-    input_dir: Path = args.input_dir
+    input_path: Path = args.input_file
     output_dir: Path = args.output_dir
     frac: float = args.frac
     seed: int = args.seed
     recursive: bool = args.recursive
 
-    if not input_dir.exists() or not input_dir.is_dir():
-        print(f"[ERROR] input_dir not found or not a directory: {input_dir}", file=sys.stderr)
+    if not input_path.exists():
+        print(f"[ERROR] input not found: {input_path}", file=sys.stderr)
         return 2
 
-    try:
-        files = list(find_input_files(input_dir, recursive=recursive))
-    except Exception as e:
-        print(f"[ERROR] Failed to list input files: {e}", file=sys.stderr)
+    # Determine target files depending on whether input is a file or directory
+    if input_path.is_file():
+        files = [input_path]
+    elif input_path.is_dir():
+        try:
+            files = list(find_input_files(input_path, recursive=recursive))
+        except Exception as e:
+            print(f"[ERROR] Failed to list input files: {e}", file=sys.stderr)
+            return 2
+        if not files:
+            print(
+                f"[WARN] No .parquet or .jsonl files found in {input_path} (recursive={recursive})",
+                file=sys.stderr,
+            )
+            return 0
+    else:
+        print(f"[ERROR] input path is neither file nor directory: {input_path}", file=sys.stderr)
         return 2
-
-    if not files:
-        print(f"[WARN] No .parquet or .jsonl files found in {input_dir} (recursive={recursive})", file=sys.stderr)
-        return 0
 
     converted = 0
     for idx, fp in enumerate(sorted(files)):
