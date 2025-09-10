@@ -2,15 +2,22 @@
 import argparse
 import sys
 from pathlib import Path
-from typing import Iterable, Optional
+from typing import Iterable, Optional, List
 
 
-def find_parquet_files(input_dir: Path, recursive: bool = False) -> Iterable[Path]:
-    pattern = "**/*.parquet" if recursive else "*.parquet"
-    return sorted(input_dir.glob(pattern)) if recursive else sorted(input_dir.glob(pattern))
+def find_input_files(input_dir: Path, recursive: bool = False) -> Iterable[Path]:
+    patterns = ["*.parquet", "*.jsonl"]
+    files: List[Path] = []
+    if recursive:
+        for pat in patterns:
+            files.extend(input_dir.rglob(pat))
+    else:
+        for pat in patterns:
+            files.extend(input_dir.glob(pat))
+    return sorted(files)
 
 
-def read_parquet_to_df(path: Path):
+def read_file_to_df(path: Path):
     try:
         import pandas as pd  # type: ignore
     except Exception as e:
@@ -18,7 +25,11 @@ def read_parquet_to_df(path: Path):
             "pandas is required to run this script. Please install pandas (and pyarrow or fastparquet)."
         ) from e
 
-    # Try pyarrow first, then fastparquet, then default
+    suffix = path.suffix.lower()
+    if suffix == ".jsonl":
+        return pd.read_json(path, lines=True)
+
+    # Parquet: try pyarrow first, then fastparquet, then default
     for engine in ("pyarrow", "fastparquet", None):
         try:
             if engine is None:
@@ -37,7 +48,7 @@ def convert_one(
     seed: int,
 ) -> Optional[Path]:
     try:
-        df = read_parquet_to_df(parquet_path)
+        df = read_file_to_df(parquet_path)
     except Exception as e:
         print(f"[WARN] Failed to read: {parquet_path} ({e})", file=sys.stderr)
         return None
@@ -69,15 +80,15 @@ def convert_one(
 def parse_args(argv=None):
     p = argparse.ArgumentParser(
         description=(
-            "Load Parquet files from a directory, sample rows with a given seed and fraction, "
+            "Load Parquet or JSONL files from a directory, sample rows with a given seed and fraction, "
             "and write JSONL files with the same base filename into an output directory."
         )
     )
-    p.add_argument("--input_dir", "-i", type=Path, required=True, help="Directory containing .parquet files")
+    p.add_argument("--input_dir", "-i", type=Path, required=True, help="Directory containing .parquet or .jsonl files")
     p.add_argument("--output_dir", "-o", type=Path, required=True, help="Directory to write .jsonl files")
     p.add_argument("--frac", "-f", type=float, required=True, help="Sampling fraction (0 < frac <= 1)")
     p.add_argument("--seed", "-s", type=int, default=42, help="Random seed for sampling")
-    p.add_argument("--recursive", "-r", action="store_true", help="Recurse into subdirectories for .parquet files")
+    p.add_argument("--recursive", "-r", action="store_true", help="Recurse into subdirectories for input files")
     return p.parse_args(argv)
 
 
@@ -95,13 +106,13 @@ def main(argv=None) -> int:
         return 2
 
     try:
-        files = list(input_dir.rglob("*.parquet")) if recursive else list(input_dir.glob("*.parquet"))
+        files = list(find_input_files(input_dir, recursive=recursive))
     except Exception as e:
-        print(f"[ERROR] Failed to list parquet files: {e}", file=sys.stderr)
+        print(f"[ERROR] Failed to list input files: {e}", file=sys.stderr)
         return 2
 
     if not files:
-        print(f"[WARN] No .parquet files found in {input_dir} (recursive={recursive})", file=sys.stderr)
+        print(f"[WARN] No .parquet or .jsonl files found in {input_dir} (recursive={recursive})", file=sys.stderr)
         return 0
 
     converted = 0
@@ -118,4 +129,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
